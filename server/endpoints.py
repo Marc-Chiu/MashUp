@@ -10,12 +10,16 @@ from flask_restx import Resource, Api
 app = Flask(__name__)
 api = Api(app)
 
+DEFAULT = 'Default'
+MENU = 'menu'
 MAIN_MENU_EP = '/MainMenu'
 MAIN_MENU_NM = "Welcome to Text Game!"
 HELLO_EP = '/hello'
 HELLO_RESP = '/hello'
 # USERS = 'users'
 USERS_EP = '/users'
+USER_MENU_EP = '/user_menu'
+USER_MENU_NM = 'User Menu'
 TYPE = 'Type'
 DATA = 'Data'
 TITLE = 'Title'
@@ -61,7 +65,7 @@ class MainMenu(Resource):
         Gets the main game menu.
         """
         return {TITLE: MAIN_MENU_NM,
-                'Default': 2,
+                DEFAULT: 2,
                 'Choices': {
                     '1': {'url': '/', 'method': 'get',
                           'text': 'List Available Characters'},
@@ -73,6 +77,33 @@ class MainMenu(Resource):
                           'method': 'get', 'text': 'Illustrating a Point!'},
                     'X': {'text': 'Exit'},
                 }}
+
+
+@api.route(f'{USER_MENU_EP}')
+# @api.route('/')
+class UserMenu(Resource):
+    """
+    This will deliver our user menu.
+    """
+    def get(self):
+        """
+        Gets the user menu.
+        """
+        return {
+                    TITLE: USER_MENU_NM,
+                    DEFAULT: '0',
+                    'Choices': {
+                        '1': {
+                                'url': '/',
+                                'method': 'get',
+                                'text': 'Get User Details',
+                        },
+                        '0': {
+                            'text': 'Return',
+                            'url': MAIN_MENU_EP,
+                        },
+                    },
+                }
 
 
 @api.route(f'{USERS_EP}')
@@ -97,5 +128,6 @@ class Users(Resource):
                     "level2": 2, "joined": '02/02/2022'
                 },
             },
+            MENU: USER_MENU_EP,
             RETURN: MAIN_MENU_EP
         }
