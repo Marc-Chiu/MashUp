@@ -15,3 +15,6 @@ def test_list_users():
     resp = TEST_CLIENT.get(ep.USERS_EP)
     resp_json = resp.get_json()
     assert isinstance(resp_json, dict)
+    assert ep.TITLE in resp_json
+    assert ep.TYPE in resp_json
+    assert ep.DATA in resp_json

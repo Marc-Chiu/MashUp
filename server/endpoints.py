@@ -10,14 +10,16 @@ from flask_restx import Resource, Api
 app = Flask(__name__)
 api = Api(app)
 
-MAIN_MENU = 'MainMenu'
+MAIN_MENU_EP = '/MainMenu'
 MAIN_MENU_NM = "Welcome to Text Game!"
 HELLO_EP = '/hello'
 HELLO_RESP = '/hello'
 # USERS = 'users'
 USERS_EP = '/users'
 TYPE = 'Type'
-DATA = 'DATA'
+DATA = 'Data'
+TITLE = 'Title'
+RETURN = 'Return'
 
 
 @api.route(HELLO_EP)
@@ -48,8 +50,8 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route(f'/{MAIN_MENU}')
-@api.route('/')
+@api.route(f'{MAIN_MENU_EP}')
+# @api.route('/')
 class MainMenu(Resource):
     """
     This will deliver our main menu.
@@ -58,20 +60,22 @@ class MainMenu(Resource):
         """
         Gets the main game menu.
         """
-        return {'Title': MAIN_MENU_NM,
+        return {TITLE: MAIN_MENU_NM,
                 'Default': 2,
                 'Choices': {
                     '1': {'url': '/', 'method': 'get',
                           'text': 'List Available Characters'},
                     '2': {'url': '/',
                           'method': 'get', 'text': 'List Active Games'},
-                    '3': {'url': f'/{USERS_EP}',
+                    '3': {'url': f'{USERS_EP}',
                           'method': 'get', 'text': 'List Users'},
+                    '4': {'url': f'{USERS_EP}',
+                          'method': 'get', 'text': 'Illustrating a Point!'},
                     'X': {'text': 'Exit'},
                 }}
 
 
-@api.route(f'/{USERS_EP}')
+@api.route(f'{USERS_EP}')
 class Users(Resource):
     """
     This class supports fetching a list of all pets.
@@ -80,4 +84,18 @@ class Users(Resource):
         """
         This method returns all users.
         """
-        return {TYPE: DATA, 'Current Users': '\nSai\nAbhishek\nKristian\n'}
+        return {
+            TYPE: DATA,
+            TITLE: 'Current Users',
+            DATA: {
+                "Callahan":
+                {
+                    "level": 0, "joined": '01/01/2019',
+                },
+                "Reddy":
+                {
+                    "level2": 2, "joined": '02/02/2022'
+                },
+            },
+            RETURN: MAIN_MENU_EP
+        }
