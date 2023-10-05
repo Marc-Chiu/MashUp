@@ -5,7 +5,8 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from flask import Flask
 from flask_restx import Resource, Api
-# import db.db as db
+
+import data.users as users
 
 app = Flask(__name__)
 api = Api(app)
@@ -118,16 +119,7 @@ class Users(Resource):
         return {
             TYPE: DATA,
             TITLE: 'Current Users',
-            DATA: {
-                "Callahan":
-                {
-                    "level": 0, "joined": '01/01/2019',
-                },
-                "Reddy":
-                {
-                    "level2": 2, "joined": '02/02/2022'
-                },
-            },
+            DATA: users.get_users(),
             MENU: USER_MENU_EP,
             RETURN: MAIN_MENU_EP
         }
