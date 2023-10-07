@@ -1,4 +1,5 @@
 A list of ideas to choose from:
 	- Comedy App: Every Week the App will send out a prompt to you and your friends. You need to write a response and at the end of the week everyone votes on the funniest response. Some feature might be you can comment on responses, you can post you promt and resposnse to app for the public to see if you think its funny enough. It would be similar to a Jack Box type game (if you ever played that). 
 	- Music Finder: Users can find music based on albums, artists, playlists, tracks. These could also be potential endpoints.
-	- Task App: Users can track and manage their daily tasks by creating, editing, completing and deleting tasks. 
+	- Task App: Users can track and manage their daily tasks by creating, editing, completing and deleting tasks.
+    - Forum Page for Research Papers: Like Stack Overflow or other question-answer forum, this would be a place for people to ask and discuss research papers 
