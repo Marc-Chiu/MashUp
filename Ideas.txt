@@ -3,3 +3,6 @@ A list of ideas to choose from:
 	- Music Finder: Users can find music based on albums, artists, playlists, tracks. These could also be potential endpoints.
 	- Task App: Users can track and manage their daily tasks by creating, editing, completing and deleting tasks.
     - Forum Page for Research Papers: Like Stack Overflow or other question-answer forum, this would be a place for people to ask and discuss research papers 
+
+Virtual Fitness Trainer:
+	- An app that provides personalized fitness and nutrition plans with AI-based coaching.
