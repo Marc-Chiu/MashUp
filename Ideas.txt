@@ -14,3 +14,6 @@ Home Hub:
 
 Virtual Fitness Trainer:
 	- An app that provides personalized fitness and nutrition plans with AI-based coaching.
+
+Tinder for restaurants:
+	- Having website that tries to match one's food taste based on preferences and quickly filter nearby restaurants that fit their need. Use API such as yelp to get database of nearby restaurants. 
