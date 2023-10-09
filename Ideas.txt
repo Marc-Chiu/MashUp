@@ -7,3 +7,10 @@ Bar Finder:
 	-Finds all the bars in the city 
 	-Can filter out the bars based off price range
 	-Uses real time to check the capacity of the bars
+Home Hub:
+	-An app designed to find homes for sale in the area
+	-Can filter out based off price range, types of homes, etc.
+	-Recommends real estate agents in your area
+
+Virtual Fitness Trainer:
+	- An app that provides personalized fitness and nutrition plans with AI-based coaching.
