@@ -13,8 +13,8 @@ on:
   workflow_dispatch:
 
 env:
-  DEMO_HOME: /home/runner/work/Frontier/Frontier/
-  PYTHONPATH: /home/runner/work/Frontier/Frontier/
+  DEMO_HOME: /home/runner/work/MashUp/MashUp/
+  PYTHONPATH: /home/runner/work/MashUp/MashUp/
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
