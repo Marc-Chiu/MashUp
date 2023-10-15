@@ -9,3 +9,4 @@ Mashup: Website where friends and family upload nearby restaurants and everyone 
 - List all liked restaurants 
 - List memembers of a group/group details
 - Make a group
+- Show reviews
