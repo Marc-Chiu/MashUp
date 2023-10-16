@@ -7,7 +7,7 @@ To create the env for a new developer, run `make dev_env`.
 
 MASHUP
 
-System Features and Design (Low Level)
+User Features
 
 User Authentication: Users should be able to download the app, register, and sign in using their phone number, email address, or social network account.
 
