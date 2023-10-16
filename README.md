@@ -29,3 +29,10 @@ User Profile: Users' profiles, which can include personal data and dietary prefe
 
 Notifications: Send push notifications for updates, new restaurant recommendations, and reservation confirmations.
 
+
+
+Implementing the Database for this App:
+
+The database will efficiently store and manage various types of data, including user profiles, restaurant information, reviews, reservations, and more. Prior to creating the database, we will design the database schema for our restaurant finder app, MASHUP. We will also create an API layer that serves as an intermediary between the database and the application. It will handle data retrieval, manipulation, and validation, ensuring that the database is protected. We will also implement strict data validation and sanitization to prevent any security vulnerabilities such as SQL injection and other attacks.
+
+
