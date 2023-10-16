@@ -21,3 +21,11 @@ Integration of Maps: Map out the locations of the restaurants. Give users the op
 
 Ratings and reviews: Publish reviews and ratings for restaurants that users may read and leave. Set up a rating system (such as 1–5 stars).
 
+Bookmarks & Favorites: Users can easily reach their favorite eateries by marking them. Create a bookmark feature to save potential restaurants for later.
+
+Reserving Method: Include a function that allows users to reserve tables at eateries. 
+
+User Profile: Users' profiles, which can include personal data and dietary preferences, can be created and edited.
+
+Notifications: Send push notifications for updates, new restaurant recommendations, and reservation confirmations.
+
