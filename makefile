@@ -17,8 +17,8 @@ github: FORCE
 all_tests: lint unit
 
 unit: FORCE
-	cd $(API_DIR); pytest $(PYTESTFLAGS) --cov=$(PKG)
-	cd $(DB_DIR); pytest $(PYTESTFLAGS) --cov=$(PKG)
+	cd $(API_DIR); pytest $(PYTESTFLAGS) --cov=$(API_DIR)
+	cd $(DB_DIR); pytest $(PYTESTFLAGS) --cov=$(DB_DIR)
 
 lint: FORCE
 	$(LINTER) $(API_DIR)/*.py
