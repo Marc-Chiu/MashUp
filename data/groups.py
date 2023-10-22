@@ -16,10 +16,10 @@ def get_groups():
     """
     groups = {
         "Foodies": {
-            MEMBERS = ["Marc"] ,
+            MEMBERS: ["Marc"] ,
         },
         "Reddy": {
-            MEMBERS = ["Red"],
+            MEMBERS: ["Red"],
         },
     }
     return users
