@@ -2,7 +2,6 @@
 This module interfaces to our groups data
 """
 
-MEMBERS = []
 MIN_Group_NAME_LEN = 2
 
 
@@ -16,10 +15,10 @@ def get_groups():
     """
     groups = {
         "Foodies": {
-            MEMBERS: ["Marc"] ,
+            'Memeber1': "Marc",
         },
         "Reddy": {
-            MEMBERS: ["Red"],
+            'Member2': "Red",
         },
     }
-    return users
+    return groups
