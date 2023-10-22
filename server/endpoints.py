@@ -8,6 +8,7 @@ from flask_restx import Resource, Api
 
 import data.games as gms
 import data.users as users
+import data.groups as grps
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,6 +26,9 @@ GAME_MENU_NM = 'Game Menu'
 USERS_EP = '/users'
 USER_MENU_EP = '/user_menu'
 USER_MENU_NM = 'User Menu'
+GROUPS_EP = '/groups'
+GROUP_MENU_EP = '/groups_menu'
+GROUP_MENU_NM = 'Group Menu'
 TYPE = 'Type'
 DATA = 'Data'
 TITLE = 'Title'
@@ -145,3 +149,20 @@ class Games(Resource):
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
         }
+
+@api.route(f'{GROUPS_EP}')
+class Groups(Resource):
+    """
+    This class supports fetching a list of all games.
+    """
+    def get(self):
+        """
+        This method returns all games.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: 'Current Groups',
+            DATA: gms.get_users(),
+            MENU: GAME_MENU_EP,
+            RETURN: MAIN_MENU_EP
+            }
