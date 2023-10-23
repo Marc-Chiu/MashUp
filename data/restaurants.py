@@ -63,3 +63,42 @@ def get_restaurants_with_min_name_length(min_length=MIN_RESTAURANT_NAME_LEN):
     restaurants = get_restaurants()
     valid_restaurants = {restaurant: data for restaurant, data in restaurants.items() if len(restaurant) >= min_length}
     return [{restaurant: valid_restaurants[restaurant]} for restaurant in valid_restaurants]
+
+def search_restaurants(search_criteria, restaurants):
+    """
+    Search and filter restaurants based on user-defined criteria.
+
+    Parameters:
+    - search_criteria (dict): A dictionary containing user-defined search criteria.
+        Example:
+        {
+            "cuisine": "Italian",
+            "location": "New York",
+            "min_rating": 4
+        }
+    - restaurants (dict): A dictionary of restaurants with their details.
+
+    Returns:
+    - A list of dictionaries, each containing information about restaurants that match the criteria.
+    """
+    matching_restaurants = []
+
+    for restaurant, data in restaurants.items():
+        cuisine = data.get("cuisine", "")
+        location = data.get("location", "")
+        rating = data.get("rating", 0)
+
+        # Check if the restaurant meets the search criteria
+        if (
+            (not search_criteria.get("cuisine") or search_criteria["cuisine"].lower() == cuisine.lower()) and
+            (not search_criteria.get("location") or search_criteria["location"].lower() == location.lower()) and
+            rating >= search_criteria.get("min_rating", 0)
+        ):
+            matching_restaurants.append({
+                "name": restaurant,
+                "cuisine": cuisine,
+                "location": location,
+                "rating": rating
+            })
+
+    return matching_restaurants
