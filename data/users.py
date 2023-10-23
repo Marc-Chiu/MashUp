@@ -3,6 +3,8 @@ This module interfaces to our user data
 """
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
+import smtplib
+import re
 
 
 def get_users():
@@ -24,16 +26,29 @@ def get_users():
     }
     return users
 
-def get_users_with_min_name_length(min_length, users):
-    """
-    Get a list of users with names of at least a specified minimum length.
-
-    Parameters:
-    - min_length (int): The minimum length of user names to include.
-    - users (dict): A dictionary of users with their details.
-
-    Returns:
-    - A list of dictionaries, each containing information about users meeting the name length criteria.
-    """
-    valid_users = {user_name: data for user_name, data in users.items() if len(user_name) >= min_length}
-    return [{user_name: valid_users[user_name]} for user_name in valid_users]
+def is_valid_email(email):
+    # A simple regex pattern for email validation
+    email_pattern = r'^[\w\.-]+@[\w\.-]+$'
+    
+    if not re.match(email_pattern, email):
+        print("Invalid email format")
+        return False
+    
+    try:
+        # Split the email address to extract the domain
+        username, domain = email.split('@')
+        
+        # DNS lookup to get the MX (Mail Exchange) records for the domain
+        records = smtplib.getmxrr(domain)
+        
+        if records:
+            # Try to connect to the mail server of the domain
+            server = smtplib.SMTP(records[0][1])
+            server.quit()
+            return True
+        else:
+            print("No MX records found for the domain")
+            return False
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
