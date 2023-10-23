@@ -23,3 +23,17 @@ def get_users():
         },
     }
     return users
+
+def get_users_with_min_name_length(min_length, users):
+    """
+    Get a list of users with names of at least a specified minimum length.
+
+    Parameters:
+    - min_length (int): The minimum length of user names to include.
+    - users (dict): A dictionary of users with their details.
+
+    Returns:
+    - A list of dictionaries, each containing information about users meeting the name length criteria.
+    """
+    valid_users = {user_name: data for user_name, data in users.items() if len(user_name) >= min_length}
+    return [{user_name: valid_users[user_name]} for user_name in valid_users]
