@@ -4,6 +4,9 @@ This module interfaces to our restaraunts data
 RATING = "Rating"
 MIN_Group_NAME_LEN = 2
 MIN_RESTAURANT_NAME_LEN = 2
+CUISINE = "Cuisine"
+ADDRESS = "Address"
+PRICE = "Price"
 
 
 def get_restaurants():
@@ -17,9 +20,15 @@ def get_restaurants():
     restaurants = {
         "Shake Shack": {
             RATING: 4,
+            PRICE: "$$",
+            CUISINE: "American",
+            ADDRESS: "123 E 6th Street"
         },
         "Caine's": {
             RATING: 5,
+            PRICE: "$$",
+            CUISINE: "American",
+            ADDRESS: "223 E 4th Street"
         },
     }
     return restaurants

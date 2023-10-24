@@ -12,3 +12,9 @@ def test_get_restaurants():
         assert isinstance(restaurant, dict)
         assert restrnts.RATING in restaurant
         assert isinstance(restaurant[restrnts.RATING], int)
+        assert restrnts.PRICE in restaurant
+        assert isinstance(restaurant[restrnts.PRICE], str)
+        assert restrnts.CUISINE in restaurant
+        assert isinstance(restaurant[restrnts.CUISINE], str)
+        assert restrnts.ADDRESS in restaurant
+        assert isinstance(restaurant[restrnts.ADDRESS], str)
