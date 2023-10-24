@@ -3,10 +3,12 @@ This is the file containing all of the endpoints for our flask app.
 The endpoint called `endpoints` will return all available endpoints.
 """
 
-from flask import Flask
-from flask_restx import Resource, Api
+from flask import Flask, request
+from flask_restx import Resource, Api, fields
 
-import data.games as gms
+import werkzeug.exceptions as wz
+
+import data.games as gm
 import data.users as users
 import data.groups as grps
 
@@ -133,6 +135,12 @@ class Users(Resource):
         }
 
 
+game_fields = api.model('NewGame', {
+    gm.NAME: fields.String,
+    gm.NUM_PLAYERS: fields.Integer,
+})
+
+
 @api.route(f'{GAMES_EP}')
 class Games(Resource):
     """
@@ -145,10 +153,24 @@ class Games(Resource):
         return {
             TYPE: DATA,
             TITLE: 'Current Games',
-            DATA: gms.get_users(),
+            DATA: gm.get_users(),
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
         }
+    
+    @api.expect(game_fields)
+    def post(self):
+        """
+        Add a game.
+        """
+        print(f'{request.json=}')
+        name = request.json[gm.NAME]
+        num_players = request.json[gm.NUM_PLAYERS]
+        try:
+            gm.add_game(name, num_players)
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
+
 
 @api.route(f'{GROUPS_EP}')
 class Groups(Resource):
@@ -162,7 +184,7 @@ class Groups(Resource):
         return {
             TYPE: DATA,
             TITLE: 'Current Groups',
-            DATA: gms.get_users(),
+            DATA: gm.get_users(),
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
             }

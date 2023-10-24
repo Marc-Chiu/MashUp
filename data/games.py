@@ -1,9 +1,10 @@
 """
 games.py: the interface to our game data.
 """
+
+NAME = 'name'
 NUM_PLAYERS = 'numPlayers'
 TEST_GAME_NAME = 'Wizards Galore'
-
 
 games = {
     'Dungeons and Dragons': {
