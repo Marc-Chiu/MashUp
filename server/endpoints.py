@@ -2,6 +2,7 @@
 This is the file containing all of the endpoints for our flask app.
 The endpoint called `endpoints` will return all available endpoints.
 """
+from http import HTTPStatus
 
 from flask import Flask, request
 from flask_restx import Resource, Api, fields
@@ -24,6 +25,7 @@ HELLO_RESP = '/hello'
 GAMES_EP = '/games'
 GAME_MENU_EP = '/game_menu'
 GAME_MENU_NM = 'Game Menu'
+GAME_ID = 'Game ID'
 # USERS = 'users'
 USERS_EP = '/users'
 USER_MENU_EP = '/user_menu'
@@ -159,6 +161,8 @@ class Games(Resource):
         }
     
     @api.expect(game_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
         """
         Add a game.
@@ -167,7 +171,8 @@ class Games(Resource):
         name = request.json[gm.NAME]
         num_players = request.json[gm.NUM_PLAYERS]
         try:
-            gm.add_game(name, num_players)
+            new_id = gm.add_game(name, num_players)
+            return{GAME_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
