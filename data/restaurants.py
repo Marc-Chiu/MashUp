@@ -119,3 +119,23 @@ def search_restaurants(search_criteria, restaurants):
             })
 
     return matching_restaurants
+
+def user_registration():
+    """
+    Allow a user to register by providing their name, date of birth, and address.
+
+    Returns:
+    - A dictionary containing the user's registration information (name, date of birth, and address).
+    """
+    print("User Registration:")
+    name = input("Enter your name: ")
+    date_of_birth = input("Enter your date of birth (YYYY-MM-DD): ")
+    address = input("Enter your address: ")
+
+    user_info = {
+        "name": name,
+        "date_of_birth": date_of_birth,
+        "address": address
+    }
+
+    return user_info
