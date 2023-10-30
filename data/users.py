@@ -4,6 +4,7 @@ This module interfaces to our user data
 
 import smtplib
 import re
+import string
 
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
@@ -55,3 +56,36 @@ def is_valid_email(email):
     except Exception as e:
         print(f"An error occurred: {e}")
         return False
+
+def create_password():
+    """
+    Prompt the user to create a password with the following requirements:
+    - Minimum length of 6 characters
+    - At least one capital letter
+    - At least one special character (e.g., !@#$%^&*())
+
+    Returns:
+    - A valid password as a string.
+    """
+    while True:
+        password = input("Create a password: ")
+
+        if len(password) < 6:
+            print("Password is too short. It must be at least 6 characters.")
+            continue
+
+        if not any(char.isupper() for char in password):
+            print("Password must contain at least one capital letter.")
+            continue
+
+        if not any(char in string.punctuation for char in password):
+            print("Password must contain at least one special character.")
+            continue
+
+        # If all requirements are met, return the password
+        return password
+
+# Example usage:
+user_password = create_password()
+print("Password created:", user_password)
+
