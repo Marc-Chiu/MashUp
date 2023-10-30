@@ -120,7 +120,6 @@ def search_restaurants(search_criteria, restaurants):
 
     return matching_restaurants
 
-<<<<<<< HEAD
 def find_restaurants_by_price(restaurants, price_range):
     """
     Find restaurants that match a specified price range.
@@ -133,12 +132,13 @@ def find_restaurants_by_price(restaurants, price_range):
     - A list of restaurants that match the specified price range.
     """
     matching_restaurants = []
+
     for restaurant in restaurants:
         if restaurant.get("price") == price_range:
             matching_restaurants.append(restaurant)
 
     return matching_restaurants
-=======
+
 
 # Function to delete a restaurant by name
 def delete_restaurant(restaurant_name):
@@ -166,4 +166,3 @@ def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
             nearest_restaurant = restaurant
 
     return nearest_restaurant
->>>>>>> e58896f19215ce1083ee5db99a5ec94abeadd8c9
