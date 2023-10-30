@@ -10,6 +10,20 @@ LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
 
 
+import hashlib
+
+# Sample restaurant app user database
+users = {}
+
+# Function to register a new user
+def register_user(username, password):
+    if username in users:
+        print("Username already exists. Please choose a different one.")
+    else:
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        users[username] = hashed_password
+        print("Registration successful for", username)
+
 def get_users():
     """
     Our Contract:
@@ -28,6 +42,18 @@ def get_users():
         },
     }
     return users
+
+# Function to authenticate a user
+def authenticate_user(username, password):
+    if username in users:
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        if users[username] == hashed_password:
+            session['username'] = username
+            return "Authentication successful. Welcome, " + username
+        else:
+            return "Authentication failed. Incorrect password."
+    else:
+        return "Authentication failed. User not found."
 
 
 def is_valid_email(email):
