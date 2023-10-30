@@ -119,3 +119,31 @@ def search_restaurants(search_criteria, restaurants):
             })
 
     return matching_restaurants
+
+
+# Function to delete a restaurant by name
+def delete_restaurant(restaurant_name):
+    if restaurant_name in restaurants:
+        restaurants.remove(restaurant_name)
+        return f"{restaurant_name} has been deleted."
+    else:
+        return f"{restaurant_name} not found in the list."
+
+# Function to find the nearest restaurant to the user's location
+def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
+    if not restaurant_data:
+        return "No restaurants available."
+
+    nearest_distance = float('inf')
+    nearest_restaurant = None
+
+    for restaurant in restaurant_data:
+        restaurant_lat = restaurant['latitude']
+        restaurant_lon = restaurant['longitude']
+        distance = haversine(user_lat, user_lon, restaurant_lat, restaurant_lon)
+
+        if distance < nearest_distance:
+            nearest_distance = distance
+            nearest_restaurant = restaurant
+
+    return nearest_restaurant
