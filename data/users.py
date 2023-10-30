@@ -85,7 +85,5 @@ def create_password():
         # If all requirements are met, return the password
         return password
 
-# Example usage:
-user_password = create_password()
-print("Password created:", user_password)
+
 
