@@ -119,3 +119,21 @@ def search_restaurants(search_criteria, restaurants):
             })
 
     return matching_restaurants
+
+def find_restaurants_by_price(restaurants, price_range):
+    """
+    Find restaurants that match a specified price range.
+
+    Parameters:
+    - restaurants (list of dictionaries): A list of restaurant dictionaries, each containing price information.
+    - price_range (str): The price range to filter by, e.g., "$", "$$", "$$$", "$$$$".
+
+    Returns:
+    - A list of restaurants that match the specified price range.
+    """
+    matching_restaurants = []
+    for restaurant in restaurants:
+        if restaurant.get("price") == price_range:
+            matching_restaurants.append(restaurant)
+
+    return matching_restaurants
