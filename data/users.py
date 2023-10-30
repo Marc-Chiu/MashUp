@@ -112,4 +112,21 @@ def create_password():
         return password
 
 
+def leave_review(restaurant_name, review_text, reviews):
+    """
+    Allow a user to leave a review for a restaurant.
 
+    Parameters:
+    - restaurant_name (str): The name of the restaurant for which the review is being left.
+    - review_text (str): The text of the review.
+    - reviews (dict): A dictionary that stores restaurant reviews.
+
+    Returns:
+    - None
+    """
+    if restaurant_name in reviews:
+        # If the restaurant already has reviews, append the new review to the list of reviews
+        reviews[restaurant_name].append(review_text)
+    else:
+        # If the restaurant has no reviews yet, create a new list with the first review
+        reviews[restaurant_name] = [review_text]
