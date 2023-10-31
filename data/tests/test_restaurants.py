@@ -1,4 +1,5 @@
 import data.restaurants as restrnts
+import pytest
 
 
 def test_get_restaurants():
@@ -18,3 +19,16 @@ def test_get_restaurants():
         assert isinstance(restaurant[restrnts.CUISINE], str)
         assert restrnts.ADDRESS in restaurant
         assert isinstance(restaurant[restrnts.ADDRESS], str)
+
+
+ADD_NAME = 'New Restaurant'
+
+
+def test_add_restaurants():
+    rating = 4
+    address = "123 blv"
+    price = "$"
+    cuisine = "Indian"
+    ret = restrnts.add_restaurant(ADD_NAME, rating, price, cuisine, address)
+    assert restrnts.exists(ADD_NAME)
+    assert isinstance(ret, str)
