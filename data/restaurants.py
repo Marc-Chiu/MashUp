@@ -150,3 +150,59 @@ def search_restaurants(search_criteria, restaurants):
 
 def exists(name: str) -> bool:
     return name in get_restaurants()
+
+
+def find_restaurants_by_price(restaurants, price_range):
+    """
+    Find restaurants that match a specified price range.
+
+    Parameters:
+    - restaurants (list of dictionaries): A list of restaurant dictionaries, each containing price information.
+    - price_range (str): The price range to filter by, e.g., "$", "$$", "$$$", "$$$$".
+
+    Returns:
+    - A list of restaurants that match the specified price range.
+    """
+    matching_restaurants = []
+
+    for restaurant in restaurants:
+        if restaurant.get("price") == price_range:
+            matching_restaurants.append(restaurant)
+
+    return matching_restaurants
+
+
+# Function to delete a restaurant by name
+def delete_restaurant(restaurant_name):
+    if restaurant_name in restaurants:
+        restaurants.remove(restaurant_name)
+        return f"{restaurant_name} has been deleted."
+    else:
+        return f"{restaurant_name} not found in the list."
+
+# Function to find the nearest restaurant to the user's location
+def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
+    if not restaurant_data:
+        return "No restaurants available."
+
+    nearest_distance = float('inf')
+    nearest_restaurant = None
+
+    for restaurant in restaurant_data:
+        restaurant_lat = restaurant['latitude']
+        restaurant_lon = restaurant['longitude']
+        distance = haversine(user_lat, user_lon, restaurant_lat, restaurant_lon)
+
+        if distance < nearest_distance:
+            nearest_distance = distance
+            nearest_restaurant = restaurant
+
+    return nearest_restaurant
+
+def leave_review(restaurant_name, review_text, reviews):
+    if restaurant_name in reviews:
+        # If the restaurant already has reviews, append the new review to the list of reviews
+        reviews[restaurant_name].append(review_text)
+    else:
+        # If the restaurant has no reviews yet, create a new list with the first review
+        reviews[restaurant_name] = [review_text]
