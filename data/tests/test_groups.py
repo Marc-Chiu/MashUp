@@ -1,4 +1,6 @@
 import data.groups as grps
+import pytest
+
 
 def test_get_groups():
      groups = grps.get_groups()
