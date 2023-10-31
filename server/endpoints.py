@@ -155,7 +155,7 @@ class Games(Resource):
         return {
             TYPE: DATA,
             TITLE: 'Current Games',
-            DATA: gm.get_users(),
+            DATA: gm.get_games(),
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
         }

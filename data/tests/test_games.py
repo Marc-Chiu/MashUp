@@ -2,10 +2,12 @@ import pytest
 
 import data.games as gm
 
+
 def test_get_test_name():
     name = gm._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
+
 
 def test_gen_id():
     _id = gm._gen_id()
