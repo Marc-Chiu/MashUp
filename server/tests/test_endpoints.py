@@ -3,6 +3,7 @@ from http.client import OK, NOT_FOUND, FORBIDDEN, NOT_ACCEPTABLE, BAD_REQUEST
 from unittest.mock import patch
 
 import data.games as gm
+import data.groups as grps
 
 import server.endpoints as ep
 
@@ -25,6 +26,13 @@ def test_list_users():
     assert ep.TITLE in resp_json
     assert ep.TYPE in resp_json
     assert ep.DATA in resp_json
+
+
+def test_groups_get():
+    resp = TEST_CLIENT.get(ep.GROUPS_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
 
 
 def test_games_get():

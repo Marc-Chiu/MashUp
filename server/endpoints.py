@@ -180,16 +180,16 @@ class Games(Resource):
 @api.route(f'{GROUPS_EP}')
 class Groups(Resource):
     """
-    This class supports fetching a list of all games.
+    This class supports fetching a list of all groups.
     """
     def get(self):
         """
-        This method returns all games.
+        This method returns all groups.
         """
         return {
             TYPE: DATA,
             TITLE: 'Current Groups',
-            DATA: gm.get_users(),
+            DATA: grps.get_groups(),
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
             }
