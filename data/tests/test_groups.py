@@ -10,4 +10,11 @@ def test_get_groups():
          assert isinstance(group, dict)
          assert isinstance(group[grps.MEMBERS], list)
          assert isinstance(group[grps.RESTAURANTS], list)
-                    
+
+ADD_NAME = 'New Game'
+
+
+def test_add_game():
+    ret = grps.add_group(ADD_NAME, "owner")
+    assert grps.exists(ADD_NAME)
+    assert isinstance(ret, str)

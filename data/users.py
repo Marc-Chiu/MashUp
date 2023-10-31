@@ -5,15 +5,17 @@ This module interfaces to our user data
 import smtplib
 import re
 import string
+import hashlib
+
 
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
 
 
-import hashlib
-
 # Sample restaurant app user database
 users = {}
+session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
+
 
 # Function to register a new user
 def register_user(username, password):
@@ -23,6 +25,7 @@ def register_user(username, password):
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         users[username] = hashed_password
         print("Registration successful for", username)
+
 
 def get_users():
     """
@@ -42,6 +45,7 @@ def get_users():
         },
     }
     return users
+
 
 # Function to authenticate a user
 def authenticate_user(username, password):
@@ -82,6 +86,7 @@ def is_valid_email(email):
     except Exception as e:
         print(f"An error occurred: {e}")
         return False
+
 
 def create_password():
     """
