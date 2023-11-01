@@ -17,7 +17,9 @@ def test_hello():
     print(f'{resp_json=}')
     assert ep.HELLO_RESP in resp_json
 
-
+"""
+This section is for User Tests
+"""
 def test_list_users():
     resp = TEST_CLIENT.get(ep.USERS_EP)
     assert resp.status_code == OK
@@ -27,7 +29,9 @@ def test_list_users():
     assert ep.TYPE in resp_json
     assert ep.DATA in resp_json
 
-
+"""
+This section is for Group Tests
+"""
 def test_groups_get():
     resp = TEST_CLIENT.get(ep.GROUPS_EP)
     assert resp.status_code == OK
@@ -35,6 +39,20 @@ def test_groups_get():
     assert isinstance(resp_json, dict)
 
 
+@patch('data.groups.add_group', side_effect=ValueError(), autospec=True)
+def test_groups_bad_add(mock_add):
+    resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
+    assert resp.status_code == NOT_ACCEPTABLE
+
+
+def test_groups_add():
+    resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
+    assert resp.status_code == OK
+
+
+"""
+This section is for Game Tests (EXAMPLE)
+"""
 def test_games_get():
     resp = TEST_CLIENT.get(ep.GAMES_EP)
     assert resp.status_code == OK
