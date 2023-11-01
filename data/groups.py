@@ -8,11 +8,11 @@ BIG_NUM = 100000000000000000000
 MIN_Group_NAME_LEN = 2
 MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
-
+TEST_GROUP_NAME = 'Coffee Lover'
+TEST_OWNER_NAME = 'Callahan'
 
 """
  Our Contract:
-     - No arguments.
      - Returns a dictionary of groups keyed on group name (a str).
      - Each user name must be the key for a dictionary.
      - Each group must have a list of memembers
@@ -23,7 +23,7 @@ groups = {
         MEMBERS: ["Marc"],
         RESTAURANTS: ["Shack Shake"],
      },
-    "Reddy": {
+    TEST_GROUP_NAME: {
         MEMBERS: ["Red"],
         RESTAURANTS: ["Caine's"],
     },
@@ -48,7 +48,8 @@ def get_test_group():
     return test_group
 
 
-def get_groups():
+
+def get_groups() -> dict:
     return groups
 
 
