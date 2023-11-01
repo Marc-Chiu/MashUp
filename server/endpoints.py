@@ -183,7 +183,7 @@ This section is for Groups
 """
 group_fields = api.model('NewGroup', {
     grps.MEMBERS: fields.String,
-    grps.RESTAURANTS: fields.Integer,
+    grps.RESTAURANTS: fields.String,
 })
 
 
