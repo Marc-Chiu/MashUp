@@ -114,11 +114,7 @@ def create_password():
             continue
 
         # If all requirements are met, return the password
-<<<<<<< HEAD
         return password
-=======
-        return password
-
 
 def leave_review(restaurant_name, review_text, reviews):
     """
@@ -138,4 +134,3 @@ def leave_review(restaurant_name, review_text, reviews):
     else:
         # If the restaurant has no reviews yet, create a new list with the first review
         reviews[restaurant_name] = [review_text]
->>>>>>> 18256ac8a2044fd53a90b032391c32f01ccee19e
