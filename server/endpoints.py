@@ -33,6 +33,7 @@ USER_MENU_NM = 'User Menu'
 GROUPS_EP = '/groups'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
+GROUP_ID = 'Group ID'
 TYPE = 'Type'
 DATA = 'Data'
 TITLE = 'Title'
@@ -176,6 +177,15 @@ class Games(Resource):
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
+"""
+This section is for Groups
+
+"""
+group_fields = api.model('NewGroup', {
+    grps.MEMBERS: fields.String,
+    grps.RESTAURANTS: fields.String,
+})
+
 
 @api.route(f'{GROUPS_EP}')
 class Groups(Resource):
@@ -193,3 +203,19 @@ class Groups(Resource):
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP
             }
+
+    @api.expect(group_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a game.
+        """
+        print(f'{request.json=}')
+        members = request.json[grps.MEMBERS]
+        resturants = request.json[grps.RESTAURANTS]
+        try:
+            new_id = grps.add_group(members, resturants)
+            return{GROUP_ID: new_id}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')

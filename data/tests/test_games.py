@@ -15,6 +15,9 @@ def test_gen_id():
     assert len(_id) == gm.ID_LEN
 
 
+def test_get_test_game():
+    assert isinstance(gm.get_test_game(), dict)
+
 def test_get_games():
     games = gm.get_games()
     assert isinstance(games, dict)
