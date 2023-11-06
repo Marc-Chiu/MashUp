@@ -50,3 +50,4 @@ def test_delete_restaurant():
     # Try to delete a non-existing restaurant and test for failure message
     result = restrnts.delete_restaurant('Fake Restaurant')
     assert result == "Fake Restaurant not found in the list."
+
