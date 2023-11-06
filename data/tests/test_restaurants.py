@@ -44,11 +44,9 @@ def test_delete_restaurant():
 
     # Delete the restaurant and test for success message
     result = restrnts.delete_restaurant('Temp Restaurant')
-    assert isinstance(result, str), "The return value must be a string."
     assert result == "Temp Restaurant has been deleted."
     assert 'Temp Restaurant' not in restrnts.restaurants
 
     # Try to delete a non-existing restaurant and test for failure message
     result = restrnts.delete_restaurant('Fake Restaurant')
-    assert isinstance(result, str), "The return value must be a string."
     assert result == "Fake Restaurant not found in the list."
