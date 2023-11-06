@@ -32,3 +32,23 @@ def test_add_restaurants():
     ret = restrnts.add_restaurant(ADD_NAME, rating, price, cuisine, address)
     assert restrnts.exists(ADD_NAME)
     assert isinstance(ret, str)
+
+def test_delete_restaurant():
+    # Add a restaurant to ensure it exists
+    restrnts.restaurants['Temp Restaurant'] = {
+        restrnts.RATING: 5,
+        restrnts.PRICE: "$$$",
+        restrnts.CUISINE: "Test Cuisine",
+        restrnts.ADDRESS: "Test Address"
+    }
+
+    # Delete the restaurant and test for success message
+    result = restrnts.delete_restaurant('Temp Restaurant')
+    assert isinstance(result, str), "The return value must be a string."
+    assert result == "Temp Restaurant has been deleted."
+    assert 'Temp Restaurant' not in restrnts.restaurants
+
+    # Try to delete a non-existing restaurant and test for failure message
+    result = restrnts.delete_restaurant('Fake Restaurant')
+    assert isinstance(result, str), "The return value must be a string."
+    assert result == "Fake Restaurant not found in the list."
