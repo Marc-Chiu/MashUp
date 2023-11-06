@@ -16,14 +16,19 @@ def test_get_users():
 
 # Test function for register_user
 def test_register_user():
-    new_username = "NewUser"
-    new_password = "securepassword123"
+    # Start with a clean users dictionary
+    users.clear()
 
-    users_before_registration = usrs.get_users()
-    assert new_username not in users_before_registration
-    usrs.register_user(new_username, new_password)
-    users_after_registration = usrs.get_users()
-    assert new_username in users_after_registration
-    hashed_password = users_after_registration[new_username]
-    assert isinstance(hashed_password, str)
-    assert len(hashed_password) > 0
+    username = "testuser"
+    password = "password123"
+
+    # Test successful registration
+    result = register_user(username, password)
+    assert result == "Registration successful for " + username
+    assert username in users
+    assert users[username] == hashlib.sha256(password.encode()).hexdigest()
+
+    # Test registration with existing username
+    result = register_user(username, password)
+    assert result == "Username already exists. Please choose a different one."
+    assert users[username] == hashlib.sha256(password.encode()).hexdigest()  # Ensure no duplicate entry was created
