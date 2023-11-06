@@ -3,3 +3,14 @@ Resources used:
 
 
 Websites:
+
+The test case created for test_register_user is designed to validate the functionality of the register_user function. 
+It begins by verifying that a new user can be successfully added to the system, ensuring the username meets the minimum length requirement set by MIN_USER_NAME_LEN. 
+Once the registration process is executed, the test checks that the user's data is stored within the users' dictionary, including an integer level and a hashed version of the password for security. 
+Moreover, the test case asserts that an attempt to register a user with an existing username does not lead to duplication in the user database, which is crucial for maintaining data integrity.
+
+The test_delete_restaurants test case, though not explicitly detailed here, would follow a similar rigorous process, focusing on verifying the functionality of a 
+hypothetical delete_restaurants function. This test would likely ensure that a restaurant, once deleted, is no longer present in the restaurant's data storage and 
+that attempting to delete a non-existent restaurant entry handles the situation gracefully, without causing errors or exceptions. The deletion process would be 
+thoroughly checked for idempotency, confirming that repeated deletion calls have no further effect once a restaurant is removed. Both test cases together ensure 
+that the user and restaurant management features of an application behave as expected, handling both the addition and removal of data correctly.
