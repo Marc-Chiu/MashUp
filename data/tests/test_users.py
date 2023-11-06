@@ -14,21 +14,26 @@ def test_get_users():
         assert usrs.LEVEL in user
         assert isinstance(user[usrs.LEVEL], int)
 
-# Test function for register_user
-def test_register_user():
-    # Start with a clean users dictionary
-    users.clear()
+# Test function for authenticate_user
+def test_authenticate_user():
+    # Prepare a username and password
+    username = "ExistingUser"
+    correct_password = "correctpassword"
+    incorrect_password = "incorrectpassword"
 
-    username = "testuser"
-    password = "password123"
+    # Register a new user
+    usrs.register_user(username, correct_password)
 
-    # Test successful registration
-    result = register_user(username, password)
-    assert result == "Registration successful for " + username
-    assert username in users
-    assert users[username] == hashlib.sha256(password.encode()).hexdigest()
+    # Attempt to authenticate with correct password
+    auth_result_correct = usrs.authenticate_user(username, correct_password)
+    assert auth_result_correct == f"Authentication successful. Welcome, {username}"
+    assert usrs.session[username] is not None  # Session should be updated
 
-    # Test registration with existing username
-    result = register_user(username, password)
-    assert result == "Username already exists. Please choose a different one."
-    assert users[username] == hashlib.sha256(password.encode()).hexdigest()  # Ensure no duplicate entry was created
+    # Attempt to authenticate with incorrect password
+    auth_result_incorrect = usrs.authenticate_user(username, incorrect_password)
+    assert auth_result_incorrect == "Authentication failed. Incorrect password."
+    assert username not in usrs.session  # Session should not be updated for failed authentication
+
+    # Attempt to authenticate a non-existing user
+    auth_result_non_existing = usrs.authenticate_user("NonExistingUser", correct_password)
+    assert auth_result_non_existing == "Authentication failed. User not found."
