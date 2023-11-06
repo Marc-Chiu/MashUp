@@ -13,6 +13,7 @@ def test_get_users():
         assert isinstance(user, dict)
         assert usrs.LEVEL in user
         assert isinstance(user[usrs.LEVEL], int)
+<<<<<<< HEAD
 
 def test_register_user():
     # Test case 1: Register a new user with a username that meets the minimum length requirement
@@ -36,3 +37,15 @@ def test_register_user():
     
     # Clean up after test
     del users[test_username]
+=======
+
+def test_get_pasaswords():
+    passwords = usrs.get_passwords()
+    assert isinstance(passwords, dict)
+    assert len(users) > 0 
+    for key in passwords:
+        assert isinstance(key,str)
+        assert len(key) >= usrs.MIN_PASSWORD_LEN
+        password = passwords[key]
+        assert isinstance(password, dict)
+>>>>>>> 271f924b09f22d4d9dd2e05517295015464a0375
