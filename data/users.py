@@ -52,10 +52,9 @@ def get_passwords():
         "Reddy": "resturant2",
     }
     return passwords
-<<<<<<< HEAD
-=======
 
->>>>>>> bcb683ff65897be6e8267327da60a69248bcfcf1
+
+
 
 # Function to authenticate a user
 def authenticate_user(username, password):
@@ -144,3 +143,25 @@ def leave_review(restaurant_name, review_text, reviews):
     else:
         # If the restaurant has no reviews yet, create a new list with the first review
         reviews[restaurant_name] = [review_text]
+
+def change_password(username, old_password, new_password, users):
+    """
+    Change a user's password in a user database.
+
+    Args:
+    username (str): The username for which to change the password.
+    old_password (str): The old password to be verified.
+    new_password (str): The new password to set.
+    user_database (dict): A dictionary representing the user database, where keys are usernames and values are passwords.
+
+    Returns:
+    str: A message indicating the result of the password change.
+    """
+    if username in users:
+        if users[username] == old_password:
+            users[username] = new_password
+            return f"Password for {username} changed successfully."
+        else:
+            return "Old password is incorrect."
+    else:
+        return "Username not found in the database."
