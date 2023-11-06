@@ -46,15 +46,12 @@ def get_users():
     }
     return users
 
-<<<<<<< HEAD
 def get_passwords():
     passwords = {
         "Callahan": resturant1,
         "Reddy": resturant2,
     }
     return passwords
-=======
->>>>>>> 0ab61f15261aa560afc7641247aa2b0bbe9ea5aa
 
 # Function to authenticate a user
 def authenticate_user(username, password):
