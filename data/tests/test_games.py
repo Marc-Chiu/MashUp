@@ -2,16 +2,21 @@ import pytest
 
 import data.games as gm
 
+
 def test_get_test_name():
     name = gm._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
+
 
 def test_gen_id():
     _id = gm._gen_id()
     assert isinstance(_id, str)
     assert len(_id) == gm.ID_LEN
 
+
+def test_get_test_game():
+    assert isinstance(gm.get_test_game(), dict)
 
 def test_get_games():
     games = gm.get_games()

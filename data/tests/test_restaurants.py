@@ -1,4 +1,5 @@
 import data.restaurants as restrnts
+import pytest
 
 
 def test_get_restaurants():
@@ -18,3 +19,35 @@ def test_get_restaurants():
         assert isinstance(restaurant[restrnts.CUISINE], str)
         assert restrnts.ADDRESS in restaurant
         assert isinstance(restaurant[restrnts.ADDRESS], str)
+
+
+ADD_NAME = 'New Restaurant'
+
+
+def test_add_restaurants():
+    rating = 4
+    address = "123 blv"
+    price = "$"
+    cuisine = "Indian"
+    ret = restrnts.add_restaurant(ADD_NAME, rating, price, cuisine, address)
+    assert restrnts.exists(ADD_NAME)
+    assert isinstance(ret, str)
+
+def test_delete_restaurant():
+    # Add a restaurant to ensure it exists
+    restrnts.restaurants['Temp Restaurant'] = {
+        restrnts.RATING: 5,
+        restrnts.PRICE: "$$$",
+        restrnts.CUISINE: "Test Cuisine",
+        restrnts.ADDRESS: "Test Address"
+    }
+
+    # Delete the restaurant and test for success message
+    result = restrnts.delete_restaurant('Temp Restaurant')
+    assert result == "Temp Restaurant has been deleted."
+    assert 'Temp Restaurant' not in restrnts.restaurants
+
+    # Try to delete a non-existing restaurant and test for failure message
+    result = restrnts.delete_restaurant('Fake Restaurant')
+    assert result == "Fake Restaurant not found in the list."
+
