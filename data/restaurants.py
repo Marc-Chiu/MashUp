@@ -175,7 +175,7 @@ def find_restaurants_by_price(restaurants, price_range):
 # Function to delete a restaurant by name
 def delete_restaurant(restaurant_name):
     if restaurant_name in restaurants:
-        restaurants.remove(restaurant_name)
+        del restaurants[restaurant_name]
         return f"{restaurant_name} has been deleted."
     else:
         return f"{restaurant_name} not found in the list."
