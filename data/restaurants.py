@@ -2,6 +2,8 @@
 This module interfaces to our restaraunts data
 """
 import random
+from haversine import haversine
+
 
 ID_LEN = 24
 BIG_NUM = 100000000000000000000
@@ -180,6 +182,7 @@ def delete_restaurant(restaurant_name):
     else:
         return f"{restaurant_name} not found in the list."
 
+
 # Function to find the nearest restaurant to the user's location
 def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
     if not restaurant_data:
@@ -198,6 +201,7 @@ def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
             nearest_restaurant = restaurant
 
     return nearest_restaurant
+
 
 def leave_review(restaurant_name, review_text, reviews):
     if restaurant_name in reviews:
