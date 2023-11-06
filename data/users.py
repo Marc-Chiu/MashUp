@@ -13,8 +13,19 @@ MIN_USER_NAME_LEN = 2
 MIN_PASSWORD_LEN = 8
 
 
-# Sample restaurant app user database
-users = {}
+# Sample restaurant app user databas
+users = {
+    "Callahan": {
+        LEVEL: 0,
+    },
+    "Reddy": {
+        LEVEL: 1,
+    },
+}
+passwords = {
+    "Callahan": "resturant1",
+    "Reddy": "resturant2",
+}
 session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
 
 
@@ -22,38 +33,18 @@ def register_user(username, password):
     if username in users:
         print("Username already exists. Please choose a different one.")
     else:
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        users[username] = {LEVEL: 0, 'password': hashed_password}
+        # hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        users[username] = {LEVEL: 0}
+        passwords[username] = password
         print("Registration successful for", username)
 
 
 def get_users():
-    """
-    Our Contract:
-        - No arguments.
-        - Returns a dictionary of users keyed on user name (a str).
-        - Each user name must be the key for a dictionary.
-        - That dictionary must at least include a LEVEL member that has an
-        int value.
-    """
-    users = {
-        "Callahan": {
-            LEVEL: 0,
-        },
-        "Reddy": {
-            LEVEL: 1,
-        },
-    }
     return users
 
+
 def get_passwords():
-    passwords = {
-        "Callahan": "resturant1",
-        "Reddy": "resturant2",
-    }
     return passwords
-
-
 
 
 # Function to authenticate a user
@@ -125,6 +116,7 @@ def create_password():
         # If all requirements are met, return the password
         return password
 
+
 def leave_review(restaurant_name, review_text, reviews):
     """
     Allow a user to leave a review for a restaurant.
@@ -144,7 +136,8 @@ def leave_review(restaurant_name, review_text, reviews):
         # If the restaurant has no reviews yet, create a new list with the first review
         reviews[restaurant_name] = [review_text]
 
-def change_password(username, old_password, new_password, users):
+
+def change_password(username, old_password, new_password, passwords):
     """
     Change a user's password in a user database.
 
@@ -157,9 +150,9 @@ def change_password(username, old_password, new_password, users):
     Returns:
     str: A message indicating the result of the password change.
     """
-    if username in users:
-        if users[username] == old_password:
-            users[username] = new_password
+    if username in passwords:
+        if passwords[username] == old_password:
+            passwords[username] = new_password
             return f"Password for {username} changed successfully."
         else:
             return "Old password is incorrect."
