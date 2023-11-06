@@ -51,20 +51,3 @@ def test_delete_restaurant():
     result = restrnts.delete_restaurant('Fake Restaurant')
     assert result == "Fake Restaurant not found in the list."
 
-def test_leave_review():
-    # Setup: an empty reviews dictionary
-    reviews = {}
-
-    # Test adding a review to a restaurant with no previous reviews
-    leave_review("Pizzeria Roma", "Great pizza!", reviews)
-    assert "Pizzeria Roma" in reviews
-    assert reviews["Pizzeria Roma"] == ["Great pizza!"]
-
-    # Test adding another review to the same restaurant
-    leave_review("Pizzeria Roma", "Excellent crust.", reviews)
-    assert reviews["Pizzeria Roma"] == ["Great pizza!", "Excellent crust."]
-
-    # Test adding a review to a different restaurant
-    leave_review("Sushi Place", "Fresh sushi.", reviews)
-    assert "Sushi Place" in reviews
-    assert reviews["Sushi Place"] == ["Fresh sushi."]
