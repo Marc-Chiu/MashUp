@@ -12,3 +12,13 @@ def test_get_users():
         assert isinstance(user, dict)
         assert usrs.LEVEL in user
         assert isinstance(user[usrs.LEVEL], int)
+
+def test_get_pasaswords():
+    passwords = usrs.get_passwords()
+    assert isinstance(passwords, dict)
+    assert len(users) > 0 
+    for key in passwords:
+        assert isinstance(key,str)
+        assert len(key) >= usrs.MIN_PASSWORD_LEN
+        password = passwords[key]
+        assert isinstance(password, dict)

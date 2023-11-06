@@ -8,6 +8,7 @@ import string
 
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
+MIN_PASSWORD_LEN = 8
 
 
 import hashlib
@@ -42,6 +43,13 @@ def get_users():
         },
     }
     return users
+
+def get_passwords():
+    passwords = {
+        "Callahan": resturant1,
+        "Reddy": resturant2,
+    }
+    return passwords
 
 # Function to authenticate a user
 def authenticate_user(username, password):
