@@ -18,13 +18,12 @@ users = {}
 session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
 
 
-# Function to register a new user
 def register_user(username, password):
     if username in users:
         print("Username already exists. Please choose a different one.")
     else:
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        users[username] = hashed_password
+        users[username] = {LEVEL: 0, 'password': hashed_password}
         print("Registration successful for", username)
 
 
