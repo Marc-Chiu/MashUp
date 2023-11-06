@@ -158,9 +158,8 @@ class Games(Resource):
             TITLE: 'Current Games',
             DATA: gm.get_games(),
             MENU: GAME_MENU_EP,
-            RETURN: MAIN_MENU_EP
-        }
-    
+            RETURN: MAIN_MENU_EP}
+
     @api.expect(game_fields)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
@@ -173,7 +172,7 @@ class Games(Resource):
         num_players = request.json[gm.NUM_PLAYERS]
         try:
             new_id = gm.add_game(name, num_players)
-            return{GAME_ID: new_id}
+            return {GAME_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
