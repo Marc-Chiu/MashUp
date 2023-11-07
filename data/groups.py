@@ -30,6 +30,7 @@ groups = {
     },
 }
 
+
 def _get_test_members():
     name = 'Hah-Young'
     rand_part = random.randint(0, BIG_NUM)
@@ -47,7 +48,6 @@ def get_test_group():
     test_group[MEMBERS] = _get_test_members()
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
-
 
 
 def get_groups() -> dict:
