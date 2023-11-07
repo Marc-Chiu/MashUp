@@ -38,7 +38,7 @@ def test_get_games():
 def test_add_game_dup_name(temp_game):
     dup_name = temp_game
     with pytest.raises(ValueError):
-        gm.add_game(gm.dup_name, 4)
+        gm.add_game(dup_name, 4)
 
 
 def test_add_game_blank_name():
