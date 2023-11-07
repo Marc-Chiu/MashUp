@@ -12,6 +12,7 @@ import werkzeug.exceptions as wz
 import data.games as gm
 import data.users as users
 import data.groups as grps
+import data.restaurants as restrnts
 
 app = Flask(__name__)
 api = Api(app)
@@ -34,6 +35,10 @@ GROUPS_EP = '/groups'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
+RESTAURANTS_EP = '/restaurants'
+RESTAURANTS_MENU_EP = '/restaurants_menu'
+RESTAURANTS_MENU_NM = 'Restaurant Menu'
+RESTAURANT_ID = 'Restaurant ID'
 TYPE = 'Type'
 DATA = 'Data'
 TITLE = 'Title'
@@ -178,6 +183,7 @@ class Games(Resource):
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
+
 """
 This section is for Groups
 
@@ -219,6 +225,44 @@ class Groups(Resource):
             new_id = grps.add_group(members, resturants)
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
-            return{GROUP_ID: new_id}
+            return {GROUP_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+
+"""
+This section is for Restaurants
+"""
+@api.route(f'{RESTAURANTS_EP}')
+class Groups(Resource):
+    """
+    This class supports fetching a list of all groups.
+    """
+    def get(self):
+        """
+        This method returns all groups.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: 'Current RESTAURANTS',
+            DATA: restrnts.get_restaurants(),
+            MENU: RESTAURANTS_MENU_EP,
+            RETURN: MAIN_MENU_EP
+            }
+
+    @api.expect(group_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a game.
+        """
+        print(f'{request.json=}')
+        try:
+            new_id = restrnts.add_restaurant('name', 3, '$$', 'Thai', 'Phuket Drive')
+            if new_id is None:
+                raise wz.ServiceUnavailable('We have a technical problem.')
+            return {RESTAURANT_ID: new_id}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
+

@@ -13,7 +13,10 @@ MIN_RESTAURANT_NAME_LEN = 2
 CUISINE = "Cuisine"
 ADDRESS = "Address"
 PRICE = "Price"
-
+MOCK_ID = '0' * ID_LEN
+TEST_NAME = 'TEST'
+NAME = 'name'
+MEMBERS = 'members'
 
 """
 Our Contract:
@@ -37,7 +40,29 @@ restaurants = {
          CUISINE: "American",
          ADDRESS: "223 E 4th Street"
      },
+     TEST_NAME: {
+         RATING: 3,
+         PRICE: "$$",
+         CUISINE: "Japanese",
+         ADDRESS: "test road"
+     },
 }
+
+
+def _get_test_name():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
+
+
+def get_test_restaurant():
+    test_restaurant = {}
+    test_restaurant[NAME] = _get_test_name()
+    test_restaurant[RATING] = 2
+    test_restaurant[PRICE] = "$$$"
+    test_restaurant[CUISINE] = "Tacos"
+    test_restaurant[ADDRESS] = "abc ave"
+    return test_restaurant
 
 
 def get_restaurants():

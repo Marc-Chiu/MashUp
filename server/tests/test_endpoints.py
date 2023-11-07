@@ -15,6 +15,8 @@ import data.games as gm
 
 import data.groups as grps
 
+import data.restaurants as restrnts
+
 import server.endpoints as ep
 
 TEST_CLIENT = ep.app.test_client()
@@ -117,3 +119,22 @@ def test_games_add_db_failure(mock_add):
                    + 'skip')
 def test_that_doesnt_work():
     assert False
+
+
+"""
+This section is for Restaurant Tests
+"""
+def test_restaurants_get():
+    resp = TEST_CLIENT.get(ep.RESTAURANTS_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
+@patch('data.restaurants.add_restaurant', return_value=restrnts.MOCK_ID, autspec=True)
+def test_restaurant_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_game
+    """
+    resp = TEST_CLIENT.post(ep.RESTAURANTS_EP, json=restrnts.get_test_restaurant())
+    assert resp.status_code == OK
