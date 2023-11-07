@@ -85,6 +85,9 @@ def _gen_id() -> str:
     _id = _id.rjust(ID_LEN, '0')
     return _id
 
+def get_name(game):
+    return game.get(MEMBERS, '')
+
 
 def exists(name: str) -> bool:
     return name in get_groups()

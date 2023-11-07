@@ -1,6 +1,15 @@
 import data.groups as grps
 import pytest
 
+
+@pytest.fixture(scope='function')
+def temp_group():
+    member = grps._get_test_members()
+    ret = grps.add_group(member, 0)
+    return member
+    # delete the group!
+
+
 def test_get_test_members():
     members = grps._get_test_members()
     assert isinstance(members, str)
@@ -29,12 +38,13 @@ def test_get_groups():
          assert isinstance(group[grps.RESTAURANTS], list)
 
 
-def test_add_group_dup_name():
+def test_add_group_dup_name(temp_group):
     """
     Make sure a duplicate group name raises a ValueError.
     """
+    dup_group_name = temp_group
     with pytest.raises(ValueError):
-        grps.add_group(grps.TEST_GROUP_NAME, grps.TEST_OWNER_NAME)
+        grps.add_group(grps.dup_group_name, grps.TEST_OWNER_NAME)
 
 
 def test_add_group_blank_name():

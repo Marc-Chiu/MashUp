@@ -75,10 +75,6 @@ def test_groups_add_db_failure(mock_add):
     assert resp.status_code == SERVICE_UNAVAILABLE
 
 
-@pytest.mark.skip('This test is failing, but it is just an example of using '
-                   + 'skip')
-def test_that_doesnt_work():
-    assert False
 
 """
 This section is for Game Tests (EXAMPLE)
@@ -116,3 +112,8 @@ def test_games_add_db_failure(mock_add):
     resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
     assert resp.status_code == SERVICE_UNAVAILABLE
 
+
+@pytest.mark.skip('This test is failing, but it is just an example of using '
+                   + 'skip')
+def test_that_doesnt_work():
+    assert False
