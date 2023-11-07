@@ -44,7 +44,7 @@ def test_add_group_dup_name(temp_group):
     """
     dup_group_name = temp_group
     with pytest.raises(ValueError):
-        grps.add_group(grps.dup_group_name, grps.TEST_OWNER_NAME)
+        grps.add_group(dup_group_name, grps.TEST_OWNER_NAME)
 
 
 def test_add_group_blank_name():
