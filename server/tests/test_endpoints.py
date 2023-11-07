@@ -1,8 +1,18 @@
-from http.client import OK, NOT_FOUND, FORBIDDEN, NOT_ACCEPTABLE, BAD_REQUEST
+from http.client import (
+    BAD_REQUEST,
+    FORBIDDEN,
+    NOT_ACCEPTABLE,
+    NOT_FOUND,
+    OK,
+    SERVICE_UNAVAILABLE,
+)
 
 from unittest.mock import patch
 
+import pytest
+
 import data.games as gm
+
 import data.groups as grps
 
 import server.endpoints as ep
@@ -12,9 +22,7 @@ TEST_CLIENT = ep.app.test_client()
 
 def test_hello():
     resp = TEST_CLIENT.get(ep.HELLO_EP)
-    print(f'{resp=}')
     resp_json = resp.get_json()
-    print(f'{resp_json=}')
     assert ep.HELLO_RESP in resp_json
 
 """
@@ -39,16 +47,38 @@ def test_groups_get():
     assert isinstance(resp_json, dict)
 
 
+@patch('data.groups.add_group', return_value=grps.MOCK_ID, autospec=True)
+def test_groups_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_group.
+    """
+    resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
+    assert resp.status_code == OK
+
+
 @patch('data.groups.add_group', side_effect=ValueError(), autospec=True)
 def test_groups_bad_add(mock_add):
+    """
+    Testing we do the right thing with a value error from add_group.
+    """
     resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
     assert resp.status_code == NOT_ACCEPTABLE
 
 
-def test_groups_add():
-    resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
-    assert resp.status_code == OK
 
+@patch('data.groups.add_group', return_value=None)
+def test_groups_add_db_failure(mock_add):
+    """
+    Testing we do the right thing with a null ID return from add_game.
+    """
+    resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
+    assert resp.status_code == SERVICE_UNAVAILABLE
+
+
+@pytest.mark.skip('This test is failing, but it is just an example of using '
+                   + 'skip')
+def test_that_doesnt_work():
+    assert False
 
 """
 This section is for Game Tests (EXAMPLE)
@@ -60,18 +90,29 @@ def test_games_get():
     assert isinstance(resp_json, dict)
 
 
-@patch('data.games.add_game', side_effect=ValueError(), autospec=True)
-def test_games_bad_add(mock_add):
-    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
-    assert resp.status_code == NOT_ACCEPTABLE
-
-
-def test_games_add():
+@patch('data.games.add_game', return_value=gm.MOCK_ID, autospec=True)
+def test_games_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_game.
+    """
     resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
     assert resp.status_code == OK
 
 
-@pytest.mark.skip('This test is failing, but it is just an example of using '
-                   + 'skip')
-def test_that_doesnt_work():
-    assert False
+@patch('data.games.add_game', side_effect=ValueError(), autospec=True)
+def test_games_bad_add(mock_add):
+    """
+    Testing we do the right thing with a value error from add_game.
+    """
+    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
+    assert resp.status_code == NOT_ACCEPTABLE
+
+
+@patch('data.games.add_game', return_value=None)
+def test_games_add_db_failure(mock_add):
+    """
+    Testing we do the right thing with a null ID return from add_game.
+    """
+    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
+    assert resp.status_code == SERVICE_UNAVAILABLE
+

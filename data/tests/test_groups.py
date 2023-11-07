@@ -30,11 +30,17 @@ def test_get_groups():
 
 
 def test_add_group_dup_name():
+    """
+    Make sure a duplicate group name raises a ValueError.
+    """
     with pytest.raises(ValueError):
         grps.add_group(grps.TEST_GROUP_NAME, grps.TEST_OWNER_NAME)
 
 
 def test_add_group_blank_name():
+    """
+    Make sure a blank group name raises a ValueError.
+    """
     with pytest.raises(ValueError):
         grps.add_group('', 'owner')
 

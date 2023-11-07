@@ -6,6 +6,7 @@ import random
 ID_LEN = 24
 BIG_NUM = 100000000000000000000
 MIN_Group_NAME_LEN = 2
+MOCK_ID = '0' * ID_LEN
 MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
 TEST_GROUP_NAME = 'Coffee Lover'

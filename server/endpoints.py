@@ -172,6 +172,8 @@ class Games(Resource):
         num_players = request.json[gm.NUM_PLAYERS]
         try:
             new_id = gm.add_game(name, num_players)
+            if new_id is None:
+                raise wz.ServiceUnavailable('We have a technical problem.')
             return {GAME_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
@@ -215,6 +217,8 @@ class Groups(Resource):
         resturants = request.json[grps.RESTAURANTS]
         try:
             new_id = grps.add_group(members, resturants)
+            if new_id is None:
+                raise wz.ServiceUnavailable('We have a technical problem.')
             return{GROUP_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
