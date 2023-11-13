@@ -71,3 +71,13 @@ def test_remove_user():
     assert usrs.remove_user(test_username) == True, "User removal should return True"
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
+
+def test_user_preferences():
+    test_username = "John"
+    test_password = "testpassword"
+    usrs.register_user(test_username, test_password)
+    assert test_username in usrs.get_users()
+    assert test_username in usrs.user_preferences
+    assert usrs.add_preferences(test_username,"japanese") == True, "Preferences should be equal"
+    assert usrs.add_preferences("Travis","japanese") == False, "Preferences should be equal"
+

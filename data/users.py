@@ -22,6 +22,11 @@ users = {
         LEVEL: 1,
     },
 }
+user_preferences =\
+    {
+    "Callahan": ["japanese", "thai"],
+    "Reddy": ["indian", "italian"],
+}
 passwords = {
     "Callahan": "resturant1",
     "Reddy": "resturant2",
@@ -165,6 +170,16 @@ def remove_user(username):
         del passwords[username]
         print(f"User {username} has been removed.")
         return True
+    else:
+        print("User not found.")
+        return False
+
+def add_preferences(name, cuisine):
+    if users[name]:
+        if cuisine not in users[name]:
+            user_preferences[name].append(cuisine)
+            print(f"Cuisine {cuisine} has been added to {name} preferences")
+            return True
     else:
         print("User not found.")
         return False
