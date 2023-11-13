@@ -158,3 +158,13 @@ def change_password(username, old_password, new_password, passwords):
             return "Old password is incorrect."
     else:
         return "Username not found in the database."
+
+def remove_user(username):
+    if username in users:
+        del users[username]
+        del passwords[username]
+        print(f"User {username} has been removed.")
+        return True
+    else:
+        print("User not found.")
+        return False
