@@ -4,7 +4,7 @@ This module interfaces to our groups data
 import random
 
 ID_LEN = 24
-BIG_NUM = 100000000000000000000
+BIG_NUM = 100_000_000_000_000_000_000
 MIN_Group_NAME_LEN = 2
 MOCK_ID = '0' * ID_LEN
 NAME = "Name"
@@ -54,6 +54,13 @@ def get_test_group():
     test_group[MEMBERS] = _get_test_members()
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
+
+
+def del_group(name: str):
+    if name in groups:
+        del groups[name]
+    else:
+        raise ValueError(f'Delete failure: {name} not in database.')
 
 
 def get_groups() -> dict:

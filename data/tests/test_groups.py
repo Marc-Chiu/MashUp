@@ -4,10 +4,11 @@ import pytest
 
 @pytest.fixture(scope='function')
 def temp_group():
-    member = grps._get_test_members()
-    ret = grps.add_group(member, 0)
-    return member
-    # delete the group!
+    name = grps._get_test_name()
+    ret = grps.add_group(name, 0)
+    yield name
+    if grps.exists(name):
+        grps.del_group(name)
 
 
 def test_get_test_name():
@@ -32,7 +33,7 @@ def test_get_test_group():
     assert isinstance(grps.get_test_group(), dict)
 
 
-def test_get_groups():
+def test_get_groups(temp_group):
      groups = grps.get_groups()
      assert isinstance(groups, dict)
      assert len(groups) > 0
@@ -42,6 +43,7 @@ def test_get_groups():
          assert isinstance(group, dict)
          assert isinstance(group[grps.MEMBERS], list)
          assert isinstance(group[grps.RESTAURANTS], list)
+     assert grps.exists(temp_group)
 
 
 def test_add_group_dup_name(temp_group):
@@ -59,6 +61,19 @@ def test_add_group_blank_name():
     """
     with pytest.raises(ValueError):
         grps.add_group('', 'owner')
+
+
+def test_del_group(temp_group):
+    name = temp_group
+    grps.del_group(name)
+    assert not grps.exists(name)
+
+
+def test_del_group_not_there():
+    name = grps._get_test_name()
+    with pytest.raises(ValueError):
+        grps.del_group(name)
+
 
 ADD_NAME = 'New Group'
 
