@@ -49,10 +49,11 @@ def test_get_groups(temp_group):
 def test_add_group_dup_name(temp_group):
     """
     Make sure a duplicate group name raises a ValueError.
+    `temp_game` is the name of the game that our fixture added.
     """
     dup_group_name = temp_group
     with pytest.raises(ValueError):
-        grps.add_group(dup_group_name, grps.TEST_OWNER_NAME)
+        grps.add_group(temp_group, 'owner')
 
 
 def test_add_group_blank_name():
