@@ -61,3 +61,13 @@ def test_change_password():
     result = usrs.change_password(username, old_password, new_password, passwords)
     print(passwords)
     assert(passwords[username], new_password)
+
+def test_remove_user():
+    test_username = "testuser_for_removal"
+    test_password = "testpassword"
+    usrs.register_user(test_username, test_password)
+
+    assert test_username in usrs.get_users()
+    assert usrs.remove_user(test_username) == True, "User removal should return True"
+    assert test_username not in usrs.get_users()
+    assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
