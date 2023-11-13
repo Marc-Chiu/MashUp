@@ -7,6 +7,7 @@ ID_LEN = 24
 BIG_NUM = 100000000000000000000
 MIN_Group_NAME_LEN = 2
 MOCK_ID = '0' * ID_LEN
+NAME = "Name"
 MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
 TEST_GROUP_NAME = 'Coffee Lover'
@@ -30,9 +31,13 @@ groups = {
     },
 }
 
+def _get_test_name():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
 
 def _get_test_members():
-    name = 'Hah-Young'
+    name = 'John'
     rand_part = random.randint(0, BIG_NUM)
     return name + str(rand_part)
 
@@ -45,6 +50,7 @@ def _get_test_resturants():
 
 def get_test_group():
     test_group = {}
+    test_group[NAME] = _get_test_name()
     test_group[MEMBERS] = _get_test_members()
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group

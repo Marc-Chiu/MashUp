@@ -10,6 +10,12 @@ def temp_group():
     # delete the group!
 
 
+def test_get_test_name():
+    name = grps._get_test_name()
+    assert isinstance(name, str)
+    assert len(name) > 0
+
+
 def test_get_test_members():
     members = grps._get_test_members()
     assert isinstance(members, str)
