@@ -2,6 +2,7 @@
 This module interfaces to our groups data
 """
 import random
+import data.db_connect as dbc
 
 ID_LEN = 24
 BIG_NUM = 100_000_000_000_000_000_000
@@ -12,6 +13,7 @@ MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
 TEST_GROUP_NAME = 'Coffee Lover'
 TEST_OWNER_NAME = 'Callahan'
+GROUP_COLLECT = 'groups'
 
 """
  Our Contract:
@@ -20,6 +22,7 @@ TEST_OWNER_NAME = 'Callahan'
      - Each group must have a list of memembers
      - Each group must have a list of liked restaurants
 """
+
 groups = {
     "Foodies": {
         MEMBERS: ["Marc"],
@@ -31,10 +34,13 @@ groups = {
     },
 }
 
+#groups = {}
+
 def _get_test_name():
     name = 'test'
     rand_part = random.randint(0, BIG_NUM)
     return name + str(rand_part)
+
 
 def _get_test_members():
     name = 'John'
@@ -57,24 +63,33 @@ def get_test_group():
 
 
 def del_group(name: str):
-    if name in groups:
+    if exists(name):
+        # dbc.del_one(GAMES_COLLECT, {NAME: name})
         del groups[name]
     else:
         raise ValueError(f'Delete failure: {name} not in database.')
 
 
 def get_groups() -> dict:
+    #dbc.connecet_db()
+    #return dbc.fetch_all_as_dict(NAME, GROUPS_COLLECT)
     return groups
 
 
 def add_group(group_name: str, owner: str):
-    if group_name in groups:
+    if exists(group_name):
         raise ValueError(f'Sorry {group_name} is already taken')
     if not group_name:
         raise ValueError('Group name cannot be empty')
     groups[group_name] = {
             MEMBERS: [owner],
             RESTAURANTS: []}
+    # group = {}
+    # group[group_name] = {
+    #   MEMBERS: [owner],
+    #   RESTAURANTS: []}
+    # _id = dbc.insert_one(GROUP_COLLECT, group)
+    # return _id is not None
     return _gen_id()
 
 
