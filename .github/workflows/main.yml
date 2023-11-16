@@ -13,7 +13,6 @@ on:
   workflow_dispatch:
 
 env:
-  DEMO_HOME: /home/runner/work/MashUp/MashUp/
   PYTHONPATH: /home/runner/work/MashUp/MashUp/
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -40,7 +39,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install MongoDB
+      - name: Install MongoDB in a Docker container.
         uses: supercharge/mongodb-github-action@1.8.0
 
       - name: Install Python packages.
@@ -48,7 +47,6 @@ jobs:
 
       - name: Run Python tests.
         run:
-            echo "PYTHONPATH=${PYTHONPATH}"
             make all_tests
         
           # - name: Deploy to PythonAnywhere
