@@ -81,7 +81,7 @@ ADD_NAME = 'New Group'
 
 def test_add_group():
     new_name = grps._get_test_name()
-    ret = grps.add_game(new_name, 4)
+    ret = grps.add_group(new_name, 4)
     assert grps.exists(new_name)
     assert isinstance(ret, bool)
-    grps.del_game(new_name)
+    grps.del_group(new_name)
