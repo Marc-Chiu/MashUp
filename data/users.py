@@ -22,15 +22,13 @@ users = {
         LEVEL: 1,
     },
 }
-user_preferences =\
-    {
-    "Callahan": ["japanese", "thai"],
-    "Reddy": ["indian", "italian"],
-}
+
+
 passwords = {
     "Callahan": "resturant1",
     "Reddy": "resturant2",
 }
+
 session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
 
 
@@ -121,25 +119,25 @@ def create_password():
         # If all requirements are met, return the password
         return password
 
+## add later
+# def leave_review(restaurant_name, review_text, reviews):
+#     """
+#     Allow a user to leave a review for a restaurant.
 
-def leave_review(restaurant_name, review_text, reviews):
-    """
-    Allow a user to leave a review for a restaurant.
+#     Parameters:
+#     - restaurant_name (str): The name of the restaurant for which the review is being left.
+#     - review_text (str): The text of the review.
+#     - reviews (dict): A dictionary that stores restaurant reviews.
 
-    Parameters:
-    - restaurant_name (str): The name of the restaurant for which the review is being left.
-    - review_text (str): The text of the review.
-    - reviews (dict): A dictionary that stores restaurant reviews.
-
-    Returns:
-    - None
-    """
-    if restaurant_name in reviews:
-        # If the restaurant already has reviews, append the new review to the list of reviews
-        reviews[restaurant_name].append(review_text)
-    else:
-        # If the restaurant has no reviews yet, create a new list with the first review
-        reviews[restaurant_name] = [review_text]
+#     Returns:
+#     - None
+#     """
+#     if restaurant_name in reviews:
+#         # If the restaurant already has reviews, append the new review to the list of reviews
+#         reviews[restaurant_name].append(review_text)
+#     else:
+#         # If the restaurant has no reviews yet, create a new list with the first review
+#         reviews[restaurant_name] = [review_text]
 
 
 def change_password(username, old_password, new_password, passwords):
@@ -164,6 +162,7 @@ def change_password(username, old_password, new_password, passwords):
     else:
         return "Username not found in the database."
 
+
 def remove_user(username):
     if username in users:
         del users[username]
@@ -174,12 +173,13 @@ def remove_user(username):
         print("User not found.")
         return False
 
-def add_preferences(name, cuisine):
-    if users[name]:
-        if cuisine not in users[name]:
-            user_preferences[name].append(cuisine)
-            print(f"Cuisine {cuisine} has been added to {name} preferences")
-            return True
-    else:
-        print("User not found.")
-        return False
+
+# def add_preferences(name, cuisine):
+#     if users[name]:
+#         if cuisine not in users[name]:
+#             user_preferences[name].append(cuisine)
+#             print(f"Cuisine {cuisine} has been added to {name} preferences")
+#             return True
+#     else:
+#         print("User not found.")
+#         return False

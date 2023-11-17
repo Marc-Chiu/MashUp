@@ -143,46 +143,6 @@ class Users(Resource):
         }
 
 
-game_fields = api.model('NewGame', {
-    gm.NAME: fields.String,
-    gm.NUM_PLAYERS: fields.Integer,
-})
-
-
-@api.route(f'{GAMES_EP}')
-class Games(Resource):
-    """
-    This class supports fetching a list of all games.
-    """
-    def get(self):
-        """
-        This method returns all games.
-        """
-        return {
-            TYPE: DATA,
-            TITLE: 'Current Games',
-            DATA: gm.get_games(),
-            MENU: GAME_MENU_EP,
-            RETURN: MAIN_MENU_EP}
-
-    @api.expect(game_fields)
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
-    def post(self):
-        """
-        Add a game.
-        """
-        print(f'{request.json=}')
-        name = request.json[gm.NAME]
-        num_players = request.json[gm.NUM_PLAYERS]
-        try:
-            new_id = gm.add_game(name, num_players)
-            if new_id is None:
-                raise wz.ServiceUnavailable('We have a technical problem.')
-            return {GAME_ID: new_id}
-        except ValueError as e:
-            raise wz.NotAcceptable(f'{str(e)}')
-
 
 """
 This section is for Groups
@@ -233,8 +193,18 @@ class Groups(Resource):
 """
 This section is for Restaurants
 """
+restaurants_field = api.model('NewRestaurant', {
+    restrnts.NAME: fields.String,
+    restrnts.RATING: fields.Integer,
+    restrnts.PRICE: fields.String,
+    restrnts.CUISINE: fields.String,
+    restrnts.ADDRESS: fields.String,
+})
+
+
+
 @api.route(f'{RESTAURANTS_EP}')
-class Groups(Resource):
+class Restaurants(Resource):
     """
     This class supports fetching a list of all groups.
     """
@@ -258,8 +228,13 @@ class Groups(Resource):
         Add a game.
         """
         print(f'{request.json=}')
+        name = request.json[restrnts.NAME]
+        rating = request.json[restrnts.RATING]
+        price = request.json[restrnts.PRICE]
+        cuisine = request.json[restrnts.CUISINE]
+        address = request.json[restrnts.ADDRESS]
         try:
-            new_id = restrnts.add_restaurant('name', 3, '$$', 'Thai', 'Phuket Drive')
+            new_id = restrnts.add_restaurant(name, rating, price, cuisine, address)
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {RESTAURANT_ID: new_id}

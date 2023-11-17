@@ -17,6 +17,7 @@ MOCK_ID = '0' * ID_LEN
 TEST_NAME = 'TEST'
 NAME = 'name'
 MEMBERS = 'members'
+MENU = 'MENU'
 
 """
 Our Contract:
@@ -175,10 +176,6 @@ def search_restaurants(search_criteria, restaurants):
     return matching_restaurants
 
 
-def exists(name: str) -> bool:
-    return name in get_restaurants()
-
-
 def find_restaurants_by_price(restaurants, price_range):
     """
     Find restaurants that match a specified price range.
@@ -235,3 +232,7 @@ def leave_review(restaurant_name, review_text, reviews):
     else:
         # If the restaurant has no reviews yet, create a new list with the first review
         reviews[restaurant_name] = [review_text]
+
+
+def exists(name: str) -> bool:
+    return name in get_restaurants()
