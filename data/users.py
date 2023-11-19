@@ -173,6 +173,11 @@ def remove_user(username):
         print("User not found.")
         return False
 
+def get_user_info(username):
+    if username in users:
+        return users[username]
+    else:
+        return "User not found."
 
 # def add_preferences(name, cuisine):
 #     if users[name]:
