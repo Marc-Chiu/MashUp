@@ -90,6 +90,20 @@ def _gen_id() -> str:
 def get_group(group):
     return group.get(MEMBERS, '')
 
+def get_restaurants(group: str) -> list:
+    if group in get_groups():
+        return groups[group][RESTAURANTS]
+    else:
+        raise ValueError(f'{group} does not exist')
+
+
+def restaurant_exists(group: str, restaurant: str) -> bool:
+    if group in get_groups():
+        if restaurant in groups:
+            return restaurant in get_groups()
+    else:
+        raise ValueError(f'{group} does not exist')
+
 
 def exists(name: str) -> bool:
     return name in get_groups()

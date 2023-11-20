@@ -2,6 +2,10 @@ import data.groups as grps
 import pytest
 
 
+ADD_NAME = 'New Group'
+TEST_RESTAURANT = "Domino's"
+
+
 @pytest.fixture(scope='function')
 def temp_group():
     name = grps._get_test_name()
@@ -21,6 +25,12 @@ def test_get_test_members():
     members = grps._get_test_members()
     assert isinstance(members, str)
     assert len(members) > 0
+
+
+def test_get_test_restaurants():
+    restaurant = grps._get_test_resturants()
+    assert isinstance(restaurant, str)
+    assert len(restaurant) > 0
 
 
 def test_gen_id():
@@ -45,6 +55,13 @@ def test_get_groups(temp_group):
          assert isinstance(group[grps.RESTAURANTS], list)
      assert grps.exists(temp_group)
 
+def test_get_restaurants(temp_group):
+    name = temp_group
+    restaurants = grps.get_restaurants(name)
+    assert isinstance(restaurants, list)
+    if len(restaurants) > 0:
+        for restaurant in restaurants:
+            assert isinstance(restaurant, str)
 
 def test_add_group_dup_name(temp_group):
     """
@@ -76,10 +93,14 @@ def test_del_group_not_there():
         grps.del_group(name)
 
 
-ADD_NAME = 'New Group'
-
-
 def test_add_group():
     ret = grps.add_group(ADD_NAME, "owner")
     assert grps.exists(ADD_NAME)
     assert isinstance(ret, str)
+    grps.del_group(ADD_NAME)
+
+
+def test_add_restaurant(temp_group):
+    name = temp_group
+    group = grps.add_restaurant(name, TEST_RESTAURANT)
+    assert TEST_RESTAURANT in grps.get_restaurants(name)
