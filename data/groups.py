@@ -2,7 +2,7 @@
 This module interfaces to our groups data
 """
 import random
-import data.db_connect as dbc
+# import data.db_connect as dbc
 
 ID_LEN = 24
 BIG_NUM = 100_000_000_000_000_000_000
@@ -34,33 +34,6 @@ groups = {
     },
 }
 
-#groups = {}
-
-def _get_test_name():
-    name = 'test'
-    rand_part = random.randint(0, BIG_NUM)
-    return name + str(rand_part)
-
-
-def _get_test_members():
-    name = 'John'
-    rand_part = random.randint(0, BIG_NUM)
-    return name + str(rand_part)
-
-
-def _get_test_resturants():
-    name = 'Starbucks'
-    rand_part = random.randint(0, BIG_NUM)
-    return name + str(rand_part)
-
-
-def get_test_group():
-    test_group = {}
-    test_group[NAME] = _get_test_name()
-    test_group[MEMBERS] = _get_test_members()
-    test_group[RESTAURANTS] = _get_test_resturants()
-    return test_group
-
 
 def del_group(name: str):
     if exists(name):
@@ -71,8 +44,8 @@ def del_group(name: str):
 
 
 def get_groups() -> dict:
-    #dbc.connecet_db()
-    #return dbc.fetch_all_as_dict(NAME, GROUPS_COLLECT)
+    # dbc.connecet_db()
+    # return dbc.fetch_all_as_dict(NAME, GROUPS_COLLECT)
     return groups
 
 
@@ -114,9 +87,36 @@ def _gen_id() -> str:
     return _id
 
 
-def get_name(game):
-    return game.get(MEMBERS, '')
+def get_group(group):
+    return group.get(MEMBERS, '')
 
 
 def exists(name: str) -> bool:
     return name in get_groups()
+
+
+# all tests
+def _get_test_name():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
+
+
+def _get_test_members():
+    name = 'John'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
+
+
+def _get_test_resturants():
+    name = 'Starbucks'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
+
+
+def get_test_group():
+    test_group = {}
+    test_group[NAME] = _get_test_name()
+    test_group[MEMBERS] = _get_test_members()
+    test_group[RESTAURANTS] = _get_test_resturants()
+    return test_group
