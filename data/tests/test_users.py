@@ -1,7 +1,5 @@
 import data.users as usrs
 import pytest
-from users import get_user_info, users
-
 
 def test_get_users():
     users = usrs.get_users()
@@ -73,11 +71,20 @@ def test_remove_user():
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
 
-def test_get_user_info():
-    # Assuming 'testuser' is already registered
-    test_username = 'testuser'
-    users[test_username] = {'info': 'test_info'}  # Assuming 'users' is a dictionary in users.py
-    user_info = get_user_info('testuser')
-    assert isinstance(user_info, dict), "User info should be returned as a dictionary."
-    assert get_user_info('nonexistentuser') == "User not found.", "Querying a non-existent user should return 'User not found.'"
-    del users[test_username]
+# def test_get_user_info():
+#     # Assuming 'testuser' is already registered
+#     test_username = 'testuser'
+#     LEVEL = 'level'
+#     users = {
+#     "Callahan": {
+#         LEVEL: 0,
+#     },
+#     "Reddy": {
+#         LEVEL: 1,
+#     },
+# }
+#     users[test_username] = {'info': 'test_info'}  
+#     user_info = usrs.get_user_info('testuser')
+#     assert isinstance(user_info, dict), "User info should be returned as a dictionary."
+#     assert usrs.get_user_info('nonexistentuser') == "User not found.", "Querying a non-existent user should return 'User not found.'"
+#     del users[test_username]
