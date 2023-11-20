@@ -8,8 +8,9 @@ The project idea is to create an application that allows friends and family to u
 - Hah-Young Kim
 - Swanyee Aung
 - Tahmid Asif
+- Notes: https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing
 
-# Requirements:
+## Requirements:
 ### User Endpoints:
 - Add new user (Sign up)
 - User sign in
@@ -18,7 +19,7 @@ The project idea is to create an application that allows friends and family to u
 - Get user info
 
 ### Group Endpoints:
-- Create a group - foodies
+- Create a group (ex: foodies)
 - Delete a group
 - List all group names 
 - Get details of a specific group (members, favorite restaurants)
