@@ -174,6 +174,9 @@ def remove_user(username):
         return False
 
 def get_user_info(username):
+    """ 
+    get_user_info will return a users information including email etc. 
+    """
     if username in users:
         return users[username]
     else:

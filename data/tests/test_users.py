@@ -71,7 +71,12 @@ def test_remove_user():
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
 
-def test_get_user_info():
+def test_get_user_info_valid_user():
+    test_username = "Reddy"
+    result = usrs.get_user_info(test_username)
+    assert result == {"level": 1}
+
+def test_get_user_info_invalid_user():
     # Assuming 'testuser' is already registered
     test_username = 'testuser'
     result = usrs.get_user_info(test_username)
@@ -80,3 +85,4 @@ def test_get_user_info():
     # assert isinstance(user_info, dict), "User info should be returned as a dictionary."
     # assert usrs.get_user_info('nonexistentuser') == "User not found.", "Querying a non-existent user should return 'User not found.'"
     # del users[test_username]
+
