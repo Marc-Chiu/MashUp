@@ -49,6 +49,15 @@ def test_groups_get():
     assert isinstance(resp_json, dict)
 
 
+@patch('data.groups.del_group', autospec=True)
+def test_groups_del(mock_del):
+    """
+    Testing we do the right thing with a call to del_group that succeeds.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_GROUP_EP}/AnyName')
+    assert resp.status_code == OK
+
+
 @patch('data.groups.add_group', return_value=grps.MOCK_ID, autospec=True)
 def test_groups_add(mock_add):
     """
