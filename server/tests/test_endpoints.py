@@ -58,6 +58,15 @@ def test_groups_del(mock_del):
     assert resp.status_code == OK
 
 
+@patch('data.groups.del_group', side_effect=ValueError(), autospec=True)
+def test_groups_bad_del(mock_del):
+    """
+    Testing we do the right thing with a value error from del_group.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_GROUP_EP}/AnyName')
+    assert resp.status_code == NOT_FOUND
+
+
 @patch('data.groups.add_group', return_value=grps.MOCK_ID, autospec=True)
 def test_groups_add(mock_add):
     """
