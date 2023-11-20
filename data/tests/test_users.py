@@ -1,5 +1,6 @@
 import data.users as usrs
 import pytest
+from users import get_user_info
 
 
 def test_get_users():
