@@ -17,21 +17,18 @@ import data.restaurants as restrnts
 app = Flask(__name__)
 api = Api(app)
 
+DELETE = 'delete'
 DEFAULT = 'Default'
 MENU = 'menu'
 MAIN_MENU_EP = '/MainMenu'
-MAIN_MENU_NM = "Welcome to Text Game!"
+MAIN_MENU_NM = "Welcome to MashUp!"
 HELLO_EP = '/hello'
 HELLO_RESP = '/hello'
-GAMES_EP = '/games'
-GAME_MENU_EP = '/game_menu'
-GAME_MENU_NM = 'Game Menu'
-GAME_ID = 'Game ID'
-# USERS = 'users'
 USERS_EP = '/users'
 USER_MENU_EP = '/user_menu'
 USER_MENU_NM = 'User Menu'
 GROUPS_EP = '/groups'
+DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -148,6 +145,24 @@ class Users(Resource):
 This section is for Groups
 
 """
+@api.route(f'{DEL_GROUP_EP}/<name>')
+class DelGroup(Resource):
+    """
+    Deletes a group by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, name):
+        """
+        Deletes a group by name.
+        """
+        try:
+            grps.del_group(name)
+            return {name: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
 group_fields = api.model('NewGroup', {
     grps.MEMBERS: fields.String,
     grps.RESTAURANTS: fields.String,
@@ -167,7 +182,7 @@ class Groups(Resource):
             TYPE: DATA,
             TITLE: 'Current Groups',
             DATA: grps.get_groups(),
-            MENU: GAME_MENU_EP,
+            MENU: GROUP_MENU_EP,
             RETURN: MAIN_MENU_EP
             }
 
@@ -220,7 +235,7 @@ class Restaurants(Resource):
             RETURN: MAIN_MENU_EP
             }
 
-    @api.expect(group_fields)
+    @api.expect(restaurants_field)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
@@ -240,4 +255,3 @@ class Restaurants(Resource):
             return {RESTAURANT_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
-
