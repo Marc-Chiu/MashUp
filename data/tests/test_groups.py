@@ -14,6 +14,9 @@ def temp_group():
     if grps.exists(name):
         grps.del_group(name)
 
+def test_get_group_details():
+    test_group = grps.groups
+    assert isinstance(grps.get_group_details(test_group["Foodies"]), dict)
 
 def test_get_test_name():
     name = grps._get_test_name()

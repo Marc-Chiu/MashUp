@@ -134,3 +134,14 @@ def get_test_group():
     test_group[MEMBERS] = _get_test_members()
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
+
+
+def get_group_details(group_name: str) -> dict:
+    if exists(group_name):
+        group_details = {
+            MEMBERS: groups[group_name][MEMBERS],
+            RESTAURANTS: groups[group_name][RESTAURANTS],
+        }
+        return group_details
+    else:
+        raise ValueError(f'{group_name} does not exist')
