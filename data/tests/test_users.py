@@ -20,10 +20,10 @@ def test_register_user():
     test_username = "testuser"
     test_password = "testpassword123"
     assert len(test_username) >= usrs.MIN_USER_NAME_LEN, "Username should meet the minimum length requirement"
-
+    
     # Perform the registration
     usrs.register_user(test_username, test_password)
-
+    
     # Check if the user was added and if the password is correctly hashed
     users = usrs.get_users()
     passwords = usrs.get_passwords()
@@ -32,11 +32,11 @@ def test_register_user():
     assert usrs.LEVEL in users[test_username], "User data should have a level"
     assert isinstance(users[test_username][usrs.LEVEL], int), "User level should be an integer"
     assert passwords[test_username]==test_password, "Password should be correctly hashed"
-
+    
     # Test case 2: Try to register a user with an existing username
     # usrs.register_user(test_username, test_password)
     # assert len(users) == 1, "Duplicate user should not be added"
-
+    
     # Clean up after test
     del users[test_username]
 
@@ -44,7 +44,7 @@ def test_register_user():
 def test_get_pasaswords():
     passwords = usrs.get_passwords()
     assert isinstance(passwords, dict)
-    assert len(passwords) > 0
+    assert len(passwords) > 0 
     for key in passwords:
         assert isinstance(key,str)
         assert len(passwords[key]) >= usrs.MIN_PASSWORD_LEN
@@ -72,12 +72,8 @@ def test_remove_user():
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
 
-# def test_user_preferences():
-#     test_username = "John"
-#     test_password = "testpassword"
-#     usrs.register_user(test_username, test_password)
-#     assert test_username in usrs.get_users()
-#     assert test_username in usrs.user_preferences
-#     assert usrs.add_preferences(test_username,"japanese") == True, "Preferences should be equal"
-#     assert usrs.add_preferences("Travis","japanese") == False, "Preferences should be equal"
-
+def test_get_user_info():
+    # Assuming 'testuser' is already registered
+    user_info = get_user_info('testuser')
+    assert isinstance(user_info, dict), "User info should be returned as a dictionary."
+    assert get_user_info('nonexistentuser') == "User not found.", "Querying a non-existent user should return 'User not found.'"
