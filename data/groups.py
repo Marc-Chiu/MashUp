@@ -2,6 +2,7 @@
 This module interfaces to our groups data
 """
 import random
+from data import users as usrs
 # import data.db_connect as dbc
 
 ID_LEN = 24
@@ -14,6 +15,8 @@ RESTAURANTS = "Restaurants"
 TEST_GROUP_NAME = 'Coffee Lover'
 TEST_OWNER_NAME = 'Callahan'
 GROUP_COLLECT = 'groups'
+TEST_RESTAURANT = "Domino's"
+TEST_MEMEBER = "John Doe"
 
 """
  Our Contract:
@@ -80,6 +83,26 @@ def remove_restaurant(group_name: str, restaurant: str):
     return groups
 
 
+def add_member(group_name: str, user: str):
+    if group_name in groups:
+        if user in usrs.get_users():
+            groups[group_name][MEMBERS].append(user)
+        else:
+            raise ValueError(f'{user} does not exist')
+    else:
+        raise ValueError(f'{group_name} does not exist')
+
+
+def remove_memember(group_name: str, user: str):
+    if group_name in groups:
+        if user in groups[group_name]:
+            groups[group_name][MEMBERS].remove(user)
+        else:
+            raise ValueError(f'{user} is not in {group_name}')
+    else:
+        raise ValueError(f'{group_name} does not exist')
+
+
 def _gen_id() -> str:
     _id = random.randint(0, BIG_NUM)
     _id = str(_id)
@@ -89,6 +112,11 @@ def _gen_id() -> str:
 
 def get_group(group):
     return group.get(MEMBERS, '')
+
+
+def get_members(group_name):
+    return groups[group_name][MEMBERS]
+
 
 def get_restaurants(group: str) -> list:
     if group in get_groups():

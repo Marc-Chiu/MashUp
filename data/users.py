@@ -11,6 +11,7 @@ import hashlib
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
 MIN_PASSWORD_LEN = 8
+TEST_USER = 'John Doe'
 
 
 # Sample restaurant app user databas
@@ -20,6 +21,9 @@ users = {
     },
     "Reddy": {
         LEVEL: 1,
+    },
+    TEST_USER: {
+        LEVEL: 1
     },
 }
 
@@ -173,9 +177,10 @@ def remove_user(username):
         print("User not found.")
         return False
 
+
 def get_user_info(username):
-    """ 
-    get_user_info will return a users information including email etc. 
+    """
+    get_user_info will return a users information including email etc.
     """
     if username in users:
         return users[username]

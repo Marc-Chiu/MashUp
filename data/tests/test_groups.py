@@ -3,7 +3,6 @@ import pytest
 
 
 ADD_NAME = 'New Group'
-TEST_RESTAURANT = "Domino's"
 
 
 @pytest.fixture(scope='function')
@@ -107,5 +106,11 @@ def test_add_group():
 
 def test_add_restaurant(temp_group):
     name = temp_group
-    group = grps.add_restaurant(name, TEST_RESTAURANT)
-    assert TEST_RESTAURANT in grps.get_restaurants(name)
+    group = grps.add_restaurant(name, grps.TEST_RESTAURANT)
+    assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
+
+
+def test_add_member(temp_group):
+    name = temp_group
+    group = grps.add_member(name, grps.TEST_MEMEBER)
+    assert grps.TEST_MEMEBER in grps.get_members(name)
