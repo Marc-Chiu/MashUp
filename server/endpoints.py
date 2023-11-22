@@ -18,6 +18,7 @@ app = Flask(__name__)
 api = Api(app)
 
 DELETE = 'delete'
+ADD = 'add'
 DEFAULT = 'Default'
 MENU = 'menu'
 MAIN_MENU_EP = '/MainMenu'
@@ -29,6 +30,7 @@ USER_MENU_EP = '/user_menu'
 USER_MENU_NM = 'User Menu'
 GROUPS_EP = '/groups'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
+ADD_MEMBER_EP = f'{GROUPS_EP}/{ADD}'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -163,6 +165,24 @@ class DelGroup(Resource):
             raise wz.NotFound(f'{str(e)}')
 
 
+@api.route(f'{ADD_MEMBER_EP}/<group>/<name>')
+class AddMember(Resource):
+    """
+    Add a member by name
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def post(self, name, group):
+        """
+        add a member to a group by name.
+        """
+        try:
+            grps.add_member(group, name)
+            return {name: 'added'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
 group_fields = api.model('NewGroup', {
     grps.MEMBERS: fields.String,
     grps.RESTAURANTS: fields.String,
@@ -191,7 +211,7 @@ class Groups(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
         """
-        Add a game.
+        Add a group.
         """
         print(f'{request.json=}')
         members = request.json[grps.MEMBERS]

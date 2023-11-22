@@ -56,16 +56,6 @@ def _get_test_name():
     return name + str(rand_part)
 
 
-def get_test_restaurant():
-    test_restaurant = {}
-    test_restaurant[NAME] = _get_test_name()
-    test_restaurant[RATING] = 2
-    test_restaurant[PRICE] = "$$$"
-    test_restaurant[CUISINE] = "Tacos"
-    test_restaurant[ADDRESS] = "abc ave"
-    return test_restaurant
-
-
 def get_restaurants():
     return restaurants
 
@@ -90,34 +80,13 @@ def add_restaurant(name: str, rating: int, price: str, cuisine: str, address: st
     return _gen_id()
 
 
-def get_restaurant_by_name(restaurant_name):
-    """
-    Get restaurant details by name.
-
-    Parameters:
-    - restaurant_name (str): The name of the restaurant to retrieve.
-
-    Returns:
-    - A dictionary containing the restaurant's information, e.g rating
-    - Returns None if the restaurant is not found.
-    """
+def get_restaurant_by_name(restaurant_name: str):
     if restaurant_name in restaurants:
         return restaurants[restaurant_name]
-    return "Restaurant does not exist"
+    raise ValueError(f'{restaurant_name} does not exist')
 
 
 def get_highly_rated_restaurants(min_rating=4):
-    """
-    Get a list of highly rated restaurants.
-
-    Parameters:
-    - min_rating (int): The minimum rating for a restaurant to be considered
-    highly rated.
-
-    Returns:
-    - A list of dictionaries, each containing information about highly rated
-    restaurants.
-    """
     highly_rated_restaurants = [restaurant for restaurant, data in restaurants.items() if data[RATING] >= min_rating]
     return [{restaurant: restaurants[restaurant]} for restaurant in highly_rated_restaurants]
 
@@ -176,7 +145,7 @@ def search_restaurants(search_criteria, restaurants):
     return matching_restaurants
 
 
-def find_restaurants_by_price(restaurants, price_range):
+def find_restaurants_by_price(restaurants, price_range="$$"):
     """
     Find restaurants that match a specified price range.
 
@@ -236,3 +205,14 @@ def leave_review(restaurant_name, review_text, reviews):
 
 def exists(name: str) -> bool:
     return name in get_restaurants()
+
+
+def get_test_restaurant():
+    test_restaurant = {}
+    test_restaurant[NAME] = _get_test_name()
+    test_restaurant[RATING] = 2
+    test_restaurant[PRICE] = "$$$"
+    test_restaurant[CUISINE] = "Tacos"
+    test_restaurant[ADDRESS] = "abc ave"
+    return test_restaurant
+
