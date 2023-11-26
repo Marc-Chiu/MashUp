@@ -208,6 +208,8 @@ def delete_review(restaurant_name, target_review_text, reviews):
         for review_stars, review_text in reviews:
             if review_text == target_review_text:
                 reviews[restaurant_name].remove([review_stars, review_text])
+    else:
+        return f"{restaurant_name} not found in reviews."
 
 def exists(name: str) -> bool:
     return name in get_restaurants()
