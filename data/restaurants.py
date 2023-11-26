@@ -194,13 +194,14 @@ def find_nearest_restaurant(user_lat, user_lon, restaurant_data):
     return nearest_restaurant
 
 
-def leave_review(restaurant_name, review_text, reviews):
+def leave_review(restaurant_name, review_text, review_stars, reviews):
     if restaurant_name in reviews:
         # If the restaurant already has reviews, append the new review to the list of reviews
-        reviews[restaurant_name].append(review_text)
+        reviews[restaurant_name].append([review_stars, review_text])
+
     else:
         # If the restaurant has no reviews yet, create a new list with the first review
-        reviews[restaurant_name] = [review_text]
+        reviews[restaurant_name] = [review_stars, review_text]
 
 
 def exists(name: str) -> bool:
