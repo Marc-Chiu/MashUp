@@ -203,6 +203,11 @@ def leave_review(restaurant_name, review_text, review_stars, reviews):
         # If the restaurant has no reviews yet, create a new list with the first review
         reviews[restaurant_name] = [review_stars, review_text]
 
+def delete_review(restaurant_name, target_review_text, reviews):
+    if restaurant_name in reviews:
+        for review_stars, review_text in reviews:
+            if review_text == target_review_text:
+                reviews[restaurant_name].remove([review_stars, review_text])
 
 def exists(name: str) -> bool:
     return name in get_restaurants()
