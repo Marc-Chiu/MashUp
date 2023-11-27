@@ -38,7 +38,8 @@ def test_get_test_restaurants():
 
 def test_group_size():
     foodies = grps.groups["Foodies"]
-    assert grps.get_group_size(foodies) == 2
+    expected_size = grps.get_group_size(foodies)
+    assert expected_size == 2
 
 def test_gen_id():
     _id = grps._gen_id()
