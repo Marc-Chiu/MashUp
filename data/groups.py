@@ -164,7 +164,7 @@ def get_test_group():
     return test_group
 
 def get_group_size(group_name: str) -> dict:
-    if exists(group_name):
+    if group_name in groups:
         return len(groups[group_name])
     else:
         return 0
