@@ -36,6 +36,9 @@ def test_get_test_restaurants():
     assert isinstance(restaurant, str)
     assert len(restaurant) > 0
 
+def test_group_size():
+    foodies = grps.groups["Foodies"]
+    assert grps.get_group_size(foodies) == 2
 
 def test_gen_id():
     _id = grps._gen_id()

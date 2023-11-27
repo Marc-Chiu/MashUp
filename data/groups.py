@@ -163,7 +163,11 @@ def get_test_group():
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
 
-
+def get_group_size(group_name: str) -> dict:
+    if exists(group_name):
+        return len(groups[group_name])
+    else:
+        return 0
 def get_group_details(group_name: str) -> dict:
     if exists(group_name):
         group_details = {
