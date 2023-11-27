@@ -163,7 +163,7 @@ def get_test_group():
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
 
-def get_group_size(group_name: str) -> dict:
+def get_group_size(group_name: str) -> tuple:
     if group_name in groups:
         return len(groups[group_name])
     else:
