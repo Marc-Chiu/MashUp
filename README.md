@@ -21,6 +21,7 @@ The project idea is to create an application that allows friends and family to u
 ### Group Endpoints:
 - Create a group (ex: foodies)
 - Delete a group
+- Get size of a group (# of members)
 - List all group names 
 - Get details of a specific group (members, favorite restaurants)
 - List all restaurants in group

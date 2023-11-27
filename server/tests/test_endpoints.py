@@ -9,7 +9,6 @@ from http.client import (
 
 from unittest.mock import patch
 import pytest
-import data.games as gm
 import data.groups as grps
 import data.restaurants as restrnts
 import server.endpoints as ep

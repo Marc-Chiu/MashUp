@@ -9,7 +9,6 @@ from flask_restx import Resource, Api, fields
 
 import werkzeug.exceptions as wz
 
-import data.games as gm
 import data.users as users
 import data.groups as grps
 import data.restaurants as restrnts
