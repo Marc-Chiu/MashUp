@@ -6,12 +6,15 @@ import smtplib
 import re
 import string
 import hashlib
+import data.db_connect as dbc
 
 
 LEVEL = 'level'
 MIN_USER_NAME_LEN = 2
 MIN_PASSWORD_LEN = 8
 TEST_USER = 'John Doe'
+USERNAME = 'username'
+USERS_COLLECT = "users"
 
 
 # Sample restaurant app user databas
@@ -47,6 +50,11 @@ def register_user(username, password):
 
 
 def get_users():
+    dbc.connect_db()
+    return dbc.fetch_all_as_dict(USERNAME, USERS_COLLECT)
+
+
+def old_get_users():
     return users
 
 

@@ -132,6 +132,7 @@ class Users(Resource):
         """
         This method returns all users.
         """
+
         return {
             TYPE: DATA,
             TITLE: 'Current Users',

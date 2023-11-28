@@ -1,6 +1,7 @@
 import data.users as usrs
 import pytest
 
+@pytest.mark.skip("skip till we connect to mogno")
 def test_get_users():
     users = usrs.get_users()
     assert isinstance(users, dict)
@@ -14,6 +15,7 @@ def test_get_users():
         assert isinstance(user[usrs.LEVEL], int)
 
 
+@pytest.mark.skip("skip till we connect to mogno")
 def test_register_user():
     # Test case 1: Register a new user with a username that meets the minimum length requirement
     test_username = "testuser"
@@ -61,6 +63,8 @@ def test_change_password():
     print(passwords)
     assert(passwords[username], new_password)
 
+
+@pytest.mark.skip("skip till we connect to mogno")
 def test_remove_user():
     test_username = "testuser_for_removal"
     test_password = "testpassword"
@@ -71,11 +75,14 @@ def test_remove_user():
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
 
+
 def test_get_user_info_valid_user():
     test_username = "Reddy"
     result = usrs.get_user_info(test_username)
     assert result == {"level": 1}
 
+
+@pytest.mark.skip("skip till we connect to mogno")
 def test_get_user_info_invalid_user():
     # Assuming 'testuser' is already registered
     test_username = 'testuser'
