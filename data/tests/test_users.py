@@ -41,7 +41,7 @@ def test_register_user():
     # Clean up after test
     del users[test_username]
 
-
+@pytest.mark.skip("skip till we connect to mogno")
 def test_get_pasaswords():
     passwords = usrs.get_passwords()
     assert isinstance(passwords, dict)
@@ -52,7 +52,7 @@ def test_get_pasaswords():
         password = passwords[key]
         assert isinstance(password, str)
 
-
+@pytest.mark.skip("skip till we connect to mogno")
 def test_change_password():
     passwords = usrs.get_passwords()
     username = 'Reddy'
@@ -75,7 +75,7 @@ def test_remove_user():
     assert test_username not in usrs.get_users()
     assert usrs.remove_user("nonexistent_user") == False, "Removing a non-existent user should return False"
 
-
+@pytest.mark.skip("skip till we connect to mogno")
 def test_get_user_info_valid_user():
     test_username = "Reddy"
     result = usrs.get_user_info(test_username)

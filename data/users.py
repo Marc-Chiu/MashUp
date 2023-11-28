@@ -9,7 +9,7 @@ import hashlib
 import data.db_connect as dbc
 
 
-LEVEL = 'level'
+PASSWORD = 'password'
 MIN_USER_NAME_LEN = 2
 MIN_PASSWORD_LEN = 8
 TEST_USER = 'John Doe'
@@ -17,36 +17,45 @@ USERNAME = 'username'
 USERS_COLLECT = "users"
 
 
-# Sample restaurant app user databas
-users = {
+# Sample restaurant app user database
+users_old = {
     "Callahan": {
-        LEVEL: 0,
+        PASSWORD: 'password1',
     },
     "Reddy": {
-        LEVEL: 1,
+        PASSWORD: 'password2',
     },
     TEST_USER: {
-        LEVEL: 1
+        PASSWORD: 'test_password'
     },
 }
 
+# Basic CRUD Operations
 
-passwords = {
-    "Callahan": "resturant1",
-    "Reddy": "resturant2",
-}
-
-session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
+def exists(name: str) -> bool:
+    dbc.connect_db()
+    return dbc.fetch_one(USERS_COLLECT, {USERNAME: name})
 
 
 def register_user(username, password):
-    if username in users:
+    if exists(username):
         print("Username already exists. Please choose a different one.")
     else:
         # hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        users[username] = {LEVEL: 0}
-        passwords[username] = password
-        print("Registration successful for", username)
+        user = {}
+        user[USERNAME] = username
+        user[PASSWORD] = password
+        dbc.connect_db()
+        _id = dbc.insert_one(USERS_COLLECT, user)
+        return _id is not None
+
+
+def get_user(username):
+    if exists(username):
+        dbc.connect_db()
+        return dbc.fetch_one(USERS_COLLECT, username)
+    else:
+        return "User not found."
 
 
 def get_users():
@@ -54,82 +63,14 @@ def get_users():
     return dbc.fetch_all_as_dict(USERNAME, USERS_COLLECT)
 
 
-def old_get_users():
-    return users
-
-
-def get_passwords():
-    return passwords
-
-
-# Function to authenticate a user
-def authenticate_user(username, password):
-    if username in users:
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        if users[username] == hashed_password:
-            session['username'] = username
-            return "Authentication successful. Welcome, " + username
-        else:
-            return "Authentication failed. Incorrect password."
+def del_user(username):
+    if exists(username):
+        dbc.connect_db()
+        return dbc.del_one(USERS_COLLECT, {USERNAME: username})
     else:
-        return "Authentication failed. User not found."
+        raise ValueError(f'Delete failure: {username} not in database.')
 
 
-def is_valid_email(email):
-    # A simple regex pattern for email validation
-    email_pattern = r'^[\w\.-]+@[\w\.-]+$'
-
-    if not re.match(email_pattern, email):
-        print("Invalid email format")
-        return False
-
-    try:
-        # Split the email address to extract the domain
-        username, domain = email.split('@')
-
-        # DNS lookup to get the MX (Mail Exchange) records for the domain
-        records = smtplib.getmxrr(domain)
-
-        if records:
-            # Try to connect to the mail server of the domain
-            server = smtplib.SMTP(records[0][1])
-            server.quit()
-            return True
-        else:
-            print("No MX records found for the domain")
-            return False
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return False
-
-
-def create_password():
-    """
-    Prompt the user to create a password with the following requirements:
-    - Minimum length of 6 characters
-    - At least one capital letter
-    - At least one special character (e.g., !@#$%^&*())
-
-    Returns:
-    - A valid password as a string.
-    """
-    while True:
-        password = input("Create a password: ")
-
-        if len(password) < 6:
-            print("Password is too short. It must be at least 6 characters.")
-            continue
-
-        if not any(char.isupper() for char in password):
-            print("Password must contain at least one capital letter.")
-            continue
-
-        if not any(char in string.punctuation for char in password):
-            print("Password must contain at least one special character.")
-            continue
-
-        # If all requirements are met, return the password
-        return password
 
 # add later
 # def leave_review(restaurant_name, review_text, reviews):
@@ -152,48 +93,8 @@ def create_password():
 #         reviews[restaurant_name] = [review_text]
 
 
-def change_password(username, old_password, new_password, passwords):
-    """
-    Change a user's password in a user database.
 
-    Args:
-    username (str): The username for which to change the password.
-    old_password (str): The old password to be verified.
-    new_password (str): The new password to set.
-    user_database (dict): A dictionary representing the user database, where keys are usernames and values are passwords.
-
-    Returns:
-    str: A message indicating the result of the password change.
-    """
-    if username in passwords:
-        if passwords[username] == old_password:
-            passwords[username] = new_password
-            return f"Password for {username} changed successfully."
-        else:
-            return "Old password is incorrect."
-    else:
-        return "Username not found in the database."
-
-
-def remove_user(username):
-    if username in users:
-        del users[username]
-        del passwords[username]
-        print(f"User {username} has been removed.")
-        return True
-    else:
-        print("User not found.")
-        return False
-
-
-def get_user_info(username):
-    """
-    get_user_info will return a users information including email etc.
-    """
-    if username in users:
-        return users[username]
-    else:
-        return "User not found."
+# Functions that don't make sense at the moment
 
 # def add_preferences(name, cuisine):
 #     if users[name]:
@@ -203,4 +104,99 @@ def get_user_info(username):
 #             return True
 #     else:
 #         print("User not found.")
+#         return False
+
+
+# def create_password():
+#     """
+#     Prompt the user to create a password with the following requirements:
+#     - Minimum length of 6 characters
+#     - At least one capital letter
+#     - At least one special character (e.g., !@#$%^&*())
+
+#     Returns:
+#     - A valid password as a string.
+#     """
+#     while True:
+#         password = input("Create a password: ")
+
+#         if len(password) < 6:
+#             print("Password is too short. It must be at least 6 characters.")
+#             continue
+
+#         if not any(char.isupper() for char in password):
+#             print("Password must contain at least one capital letter.")
+#             continue
+
+#         if not any(char in string.punctuation for char in password):
+#             print("Password must contain at least one special character.")
+#             continue
+#       If all requirements are met, return the password
+#       return password
+
+
+# def change_password(username, old_password, new_password, passwords):
+#     """
+#     Change a user's password in a user database.
+
+#     Args:
+#     username (str): The username for which to change the password.
+#     old_password (str): The old password to be verified.
+#     new_password (str): The new password to set.
+#     user_database (dict): A dictionary representing the user database, where keys are usernames and values are passwords.
+
+#     Returns:
+#     str: A message indicating the result of the password change.
+#     """
+#     if username in passwords:
+#         if passwords[username] == old_password:
+#             passwords[username] = new_password
+#             return f"Password for {username} changed successfully."
+#         else:
+#             return "Old password is incorrect."
+#     else:
+#         return "Username not found in the database."
+
+
+# session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
+
+
+# # Function to authenticate a user
+# def authenticate_user(username, password):
+#     users = get_users()
+#     if username in users:
+#         hashed_password = hashlib.sha256(password.encode()).hexdigest()
+#         if users[username] == hashed_password:
+#             session['username'] = username
+#             return "Authentication successful. Welcome, " + username
+#         else:
+#             return "Authentication failed. Incorrect password."
+#     else:
+#         return "Authentication failed. User not found."
+
+# def is_valid_email(email):
+#     # A simple regex pattern for email validation
+#     email_pattern = r'^[\w\.-]+@[\w\.-]+$'
+
+#     if not re.match(email_pattern, email):
+#         print("Invalid email format")
+#         return False
+
+#     try:
+#         # Split the email address to extract the domain
+#         username, domain = email.split('@')
+
+#         # DNS lookup to get the MX (Mail Exchange) records for the domain
+#         records = smtplib.getmxrr(domain)
+
+#         if records:
+#             # Try to connect to the mail server of the domain
+#             server = smtplib.SMTP(records[0][1])
+#             server.quit()
+#             return True
+#         else:
+#             print("No MX records found for the domain")
+#             return False
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
 #         return False

@@ -19,42 +19,34 @@ api = Api(app)
 DELETE = 'delete'
 ADD = 'add'
 DEFAULT = 'Default'
+
+TYPE = 'Type'
+DATA = 'Data'
+TITLE = 'Title'
+RETURN = 'Return'
+
 MENU = 'menu'
 MAIN_MENU_EP = '/MainMenu'
 MAIN_MENU_NM = "Welcome to MashUp!"
-HELLO_EP = '/hello'
-HELLO_RESP = '/hello'
+
 USERS_EP = '/users'
+ADD_USER_EP = f'{USERS_EP}/{ADD}'
+DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
 USER_MENU_NM = 'User Menu'
+USER_ID = 'User ID'
+
 GROUPS_EP = '/groups'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/{ADD}'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
+
 RESTAURANTS_EP = '/restaurants'
 RESTAURANTS_MENU_EP = '/restaurants_menu'
 RESTAURANTS_MENU_NM = 'Restaurant Menu'
 RESTAURANT_ID = 'Restaurant ID'
-TYPE = 'Type'
-DATA = 'Data'
-TITLE = 'Title'
-RETURN = 'Return'
-
-
-@api.route(HELLO_EP)
-class HelloWorld(Resource):
-    """
-    The purpose of the HelloWorld class is to have a simple test to see if the
-    app is working at all.
-    """
-    def get(self):
-        """
-        A trivial endpoint to see if the server is running.
-        It just answers with "hello world."
-        """
-        return {HELLO_RESP: 'world'}
 
 
 @api.route('/endpoints')
@@ -123,6 +115,12 @@ class UserMenu(Resource):
                 }
 
 
+user_fields = api.model('NewUser', {
+    users.USERNAME: fields.String,
+    users.PASSWORD: fields.String,
+})
+
+
 @api.route(f'{USERS_EP}')
 class Users(Resource):
     """
@@ -140,6 +138,42 @@ class Users(Resource):
             MENU: USER_MENU_EP,
             RETURN: MAIN_MENU_EP
         }
+
+
+    @api.expect(user_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a user.
+        """
+        username = request.json[users.USERNAME]
+        password = request.json[users.PASSWORD]
+        try:
+            new_id = users.register_user(username, password)
+            if new_id is None:
+                raise wz.ServiceUnavailable('We have a technical problem.')
+            return {USER_ID: new_id}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{DEL_USER_EP}/<username>')
+class DelUser(Resource):
+    """
+    Deletes a user by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, username):
+        """
+        Deletes a user by name.
+        """
+        try:
+            users.del_user(username)
+            return {username: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
 
 
 
