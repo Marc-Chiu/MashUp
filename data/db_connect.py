@@ -30,7 +30,6 @@ def connect_db():
                                  + 'to use Mongo in the cloud.')
             print("Connecting to Mongo in the cloud.")
             client = pm.MongoClient(f'mongodb+srv://mmc9967:{password}@frontier.5dsrn7a.mongodb.net/{USER_DB}?retryWrites=true&w=majority')
-            #mongodb+srv://mmc9967:<password>@frontier.5dsrn7a.mongodb.net/?retryWrites=true&w=majority
             # PA recommends these settings:
             # + 'connectTimeoutMS=30000&'
             # + 'socketTimeoutMS=None
@@ -77,7 +76,7 @@ def fetch_all(collection, db=USER_DB):
 
 def fetch_all_as_dict(key, collection, db=USER_DB):
     ret = {}
-    print(f'{client=}')
+    #print(client[db][collection].find())
     for doc in client[db][collection].find():
         del doc[MONGO_ID]
         ret[doc[key]] = doc

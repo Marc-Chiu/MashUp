@@ -16,7 +16,7 @@ TEST_GROUP_NAME = 'Coffee Lover'
 TEST_OWNER_NAME = 'Callahan'
 GROUP_COLLECT = 'groups'
 TEST_RESTAURANT = "Domino's"
-TEST_MEMEBER = "John Doe"
+TEST_MEMEBER = usrs.TEST_USER
 
 """
  Our Contract:
@@ -85,7 +85,7 @@ def remove_restaurant(group_name: str, restaurant: str):
 
 def add_member(group_name: str, user: str):
     if group_name in groups:
-        if user in usrs.get_users():
+        if usrs.exists(user):
             groups[group_name][MEMBERS].append(user)
         else:
             raise ValueError(f'{user} does not exist')
@@ -163,11 +163,14 @@ def get_test_group():
     test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
 
+
 def get_group_size(group_name: str) -> tuple:
     if group_name in groups:
         return len(groups[group_name])
     else:
         return 0
+
+
 def get_group_details(group_name: str) -> dict:
     if exists(group_name):
         group_details = {

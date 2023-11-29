@@ -29,6 +29,7 @@ def test_list_users():
     assert ep.TYPE in resp_json
     assert ep.DATA in resp_json
 
+
 """
 This section is for Group Tests
 """

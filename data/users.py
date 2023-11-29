@@ -2,33 +2,33 @@
 This module interfaces to our user data
 """
 
-import smtplib
-import re
-import string
-import hashlib
+# import smtplib
+# import re
+# import string
+# import hashlib
 import data.db_connect as dbc
 
 
-PASSWORD = 'password'
 MIN_USER_NAME_LEN = 2
 MIN_PASSWORD_LEN = 8
-TEST_USER = 'John Doe'
+TEST_USER = 'test'
 USERNAME = 'username'
+PASSWORD = 'password'
 USERS_COLLECT = "users"
 
 
-# Sample restaurant app user database
-users_old = {
-    "Callahan": {
-        PASSWORD: 'password1',
-    },
-    "Reddy": {
-        PASSWORD: 'password2',
-    },
-    TEST_USER: {
-        PASSWORD: 'test_password'
-    },
-}
+# # Sample restaurant app user database
+# users_old = {
+#     "Callahan": {
+#         PASSWORD: 'password1',
+#     },
+#     "Reddy": {
+#         PASSWORD: 'password2',
+#     },
+#     TEST_USER: {
+#         PASSWORD: 'test_password'
+#     },
+# }
 
 # Basic CRUD Operations
 
@@ -55,7 +55,7 @@ def get_user(username):
         dbc.connect_db()
         return dbc.fetch_one(USERS_COLLECT, username)
     else:
-        return "User not found."
+        raise ValueError(f'{username} not found')
 
 
 def get_users():
@@ -69,7 +69,6 @@ def del_user(username):
         return dbc.del_one(USERS_COLLECT, {USERNAME: username})
     else:
         raise ValueError(f'Delete failure: {username} not in database.')
-
 
 
 # add later
@@ -91,7 +90,6 @@ def del_user(username):
 #     else:
 #         # If the restaurant has no reviews yet, create a new list with the first review
 #         reviews[restaurant_name] = [review_text]
-
 
 
 # Functions that don't make sense at the moment
