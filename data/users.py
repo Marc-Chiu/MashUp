@@ -17,19 +17,6 @@ PASSWORD = 'password'
 USERS_COLLECT = "users"
 
 
-# # Sample restaurant app user database
-# users_old = {
-#     "Callahan": {
-#         PASSWORD: 'password1',
-#     },
-#     "Reddy": {
-#         PASSWORD: 'password2',
-#     },
-#     TEST_USER: {
-#         PASSWORD: 'test_password'
-#     },
-# }
-
 # Basic CRUD Operations
 
 def exists(name: str) -> bool:
@@ -39,7 +26,7 @@ def exists(name: str) -> bool:
 
 def register_user(username, password):
     if exists(username):
-        print("Username already exists. Please choose a different one.")
+        raise ValueError("Username already exists. Please choose a different one.")
     else:
         # hashed_password = hashlib.sha256(password.encode()).hexdigest()
         user = {}
