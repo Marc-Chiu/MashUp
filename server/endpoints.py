@@ -218,9 +218,9 @@ class AddMember(Resource):
 
 
 group_fields = api.model('NewGroup', {
-    grps.NAME: fields.String,
-    grps.MEMBERS: fields.String,
-    grps.RESTAURANTS: fields.String,
+    grps.GROUP_NAME: fields.String,
+    grps.MEMBERS: fields.List(cls_or_instance=fields.String),
+    #grps.RESTAURANTS: fields.List(cls_or_instance=fields.String),
 })
 
 
@@ -249,11 +249,11 @@ class Groups(Resource):
         Add a group.
         """
         print(f'{request.json=}')
-        name = request.json[grps.NAME]
+        group_name = request.json[grps.GROUP_NAME]
         members = request.json[grps.MEMBERS]
-        resturants = request.json[grps.RESTAURANTS]
+        #restaurants = request.json[grps.RESTAURANTS]
         try:
-            new_id = grps.add_group(name, members)
+            new_id = grps.add_group(group_name, members,)
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {GROUP_ID: new_id}
