@@ -1,7 +1,7 @@
 import data.users as usrs
 import pytest
 
-# @pytest.mark.skip("skip till we connect to mogno")
+@pytest.mark.skip("skip till we connect to mogno")
 def test_get_users():
     users = usrs.get_users()
     assert isinstance(users, dict)
