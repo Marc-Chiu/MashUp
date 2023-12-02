@@ -19,13 +19,19 @@ The project idea is to create an application that allows friends and family to u
 - Get user info
 
 ### Group Endpoints:
-- Create a group (ex: foodies)
+- Create a group
 - Delete a group
-- Get size of a group (# of members)
-- List all group names 
-- Get details of a specific group (members, favorite restaurants)
-- List all restaurants in group
-- Delete a member (leave a group)
+- Get all groups’ details
+- Get group size (# of members)
+- List all group names (not including members or restaurants)
+- Add member to group
+- Delete a member from a group
+- List all members in a group
+- Get details of a specific group (list all members & favorite restaurants under that group)
+- Add a restaurant to a group
+- Delete a restaurant from a group
+- List all restaurants in a group
+
 
 ### Restaurant Endpoints:
 - Filter By Name
