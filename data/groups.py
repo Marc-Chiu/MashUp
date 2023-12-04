@@ -71,6 +71,16 @@ def add_group(group_name: str, owner: str):
     _id = dbc.insert_one(GROUPS_COLLECT, group)
     return _id is not None
 
+def add_member(group_name: str, user: str):
+    groups = get_groups() 
+    if group_name in groups:
+        if usrs.exists(user):
+            groups[group_name][MEMBERS].append(user)
+        else:
+            raise ValueError(f'{user} does not exist')
+    else:
+        raise ValueError(f'{group_name} does not exist')
+
 
 # def add_restaurant(group_name: str, restaurant: str):
 #     if restaurant in groups[group_name][RESTAURANTS]:
@@ -84,16 +94,6 @@ def add_group(group_name: str, owner: str):
 #         raise ValueError(f'{restaurant} is not in your list')
 #     groups[group_name][RESTAURANTS].remove(restaurant)
 #     return groups
-
-
-# def add_member(group_name: str, user: str):
-#     if group_name in groups:
-#         if usrs.exists(user):
-#             groups[group_name][MEMBERS].append(user)
-#         else:
-#             raise ValueError(f'{user} does not exist')
-#     else:
-#         raise ValueError(f'{group_name} does not exist')
 
 
 # def remove_memember(group_name: str, user: str):
