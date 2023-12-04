@@ -1,7 +1,7 @@
 """
 This module interfaces to our groups data
 """
-# import random
+import random
 from data import users as usrs
 import data.db_connect as dbc
 
@@ -136,11 +136,11 @@ def add_member(group_name: str, user: str):
 #         raise ValueError(f'{group} does not exist')
 
 
-# # all tests
-# def _get_test_name():
-#     name = 'test'
-#     rand_part = random.randint(0, BIG_NUM)
-#     return name + str(rand_part)
+# all tests
+def _get_test_name():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
 
 
 # def _get_test_members():
