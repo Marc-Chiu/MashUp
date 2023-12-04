@@ -118,6 +118,7 @@ class UserMenu(Resource):
 user_fields = api.model('NewUser', {
     users.USERNAME: fields.String,
     users.PASSWORD: fields.String,
+    users.OLD_PASSWORD: fields.String,
 })
 
 
@@ -156,6 +157,26 @@ class Users(Resource):
             return {USER_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+
+    @api.expect(user_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Acceptable')
+    def put(self):
+        """
+        Update a user's information.
+        """
+        username = request.json[users.USERNAME]
+        old_password = request.json[users.OLD_PASSWORD]
+        new_password = request.json[users.PASSWORD]
+        try:
+            new_id = users.change_password(username, old_password, new_password)
+            if not new_id:
+                raise wz.NotFound('User not found.')
+            return {"message": "User updated successfully"}
+        except Exception as e:
+            # Handle other exceptions as necessary
+            raise wz.ServiceUnavailable(f'Error: {str(e)}')
 
 
 @api.route(f'{DEL_USER_EP}/<username>')

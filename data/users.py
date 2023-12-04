@@ -14,6 +14,7 @@ MIN_PASSWORD_LEN = 8
 TEST_USER = 'test'
 USERNAME = 'username'
 PASSWORD = 'password'
+OLD_PASSWORD = 'old password'
 USERS_COLLECT = "users"
 
 
@@ -58,25 +59,19 @@ def del_user(username):
         raise ValueError(f'Delete failure: {username} not in database.')
 
 
-# add later
-# def leave_review(restaurant_name, review_text, reviews):
-#     """
-#     Allow a user to leave a review for a restaurant.
-
-#     Parameters:
-#     - restaurant_name (str): The name of the restaurant for which the review is being left.
-#     - review_text (str): The text of the review.
-#     - reviews (dict): A dictionary that stores restaurant reviews.
-
-#     Returns:
-#     - None
-#     """
-#     if restaurant_name in reviews:
-#         # If the restaurant already has reviews, append the new review to the list of reviews
-#         reviews[restaurant_name].append(review_text)
-#     else:
-#         # If the restaurant has no reviews yet, create a new list with the first review
-#         reviews[restaurant_name] = [review_text]
+# no way to update as of now that I know of.
+def change_password(username, old_password, new_password):
+    if exists(username):
+        dbc.connect_db()
+        users = dbc.fetch_all_as_dict(USERNAME, USERS_COLLECT)
+        user = users[username]
+        if user[PASSWORD] == old_password:
+            user[PASSWORD] = new_password
+            return True
+        else:
+            raise ValueError(f'{old_password} does not match password')
+    else:
+        raise ValueError(f'{username} does not exists')
 
 
 # Functions that don't make sense at the moment
@@ -119,32 +114,7 @@ def del_user(username):
 #       If all requirements are met, return the password
 #       return password
 
-
-# def change_password(username, old_password, new_password, passwords):
-#     """
-#     Change a user's password in a user database.
-
-#     Args:
-#     username (str): The username for which to change the password.
-#     old_password (str): The old password to be verified.
-#     new_password (str): The new password to set.
-#     user_database (dict): A dictionary representing the user database, where keys are usernames and values are passwords.
-
-#     Returns:
-#     str: A message indicating the result of the password change.
-#     """
-#     if username in passwords:
-#         if passwords[username] == old_password:
-#             passwords[username] = new_password
-#             return f"Password for {username} changed successfully."
-#         else:
-#             return "Old password is incorrect."
-#     else:
-#         return "Username not found in the database."
-
-
 # session = {}  # session was used earlier and not defined in authenticate_user not sure what you wanted
-
 
 # # Function to authenticate a user
 # def authenticate_user(username, password):
@@ -185,3 +155,24 @@ def del_user(username):
 #     except Exception as e:
 #         print(f"An error occurred: {e}")
 #         return False
+
+
+# add later
+# def leave_review(restaurant_name, review_text, reviews):
+#     """
+#     Allow a user to leave a review for a restaurant.
+
+#     Parameters:
+#     - restaurant_name (str): The name of the restaurant for which the review is being left.
+#     - review_text (str): The text of the review.
+#     - reviews (dict): A dictionary that stores restaurant reviews.
+
+#     Returns:
+#     - None
+#     """
+#     if restaurant_name in reviews:
+#         # If the restaurant already has reviews, append the new review to the list of reviews
+#         reviews[restaurant_name].append(review_text)
+#     else:
+#         # If the restaurant has no reviews yet, create a new list with the first review
+#         reviews[restaurant_name] = [review_text]

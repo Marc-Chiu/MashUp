@@ -45,7 +45,6 @@ def insert_one(collection, doc, db=USER_DB):
     """
     Insert a single doc into collection.
     """
-    print(f'{db=}')
     return client[db][collection].insert_one(doc)
 
 
@@ -64,7 +63,7 @@ def del_one(collection, filt, db=USER_DB):
     """
     Find with a filter and return on the first doc found.
     """
-    client[db][collection].delete_one(filt)
+    return client[db][collection].delete_one(filt)
 
 
 def fetch_all(collection, db=USER_DB):
@@ -76,9 +75,7 @@ def fetch_all(collection, db=USER_DB):
 
 def fetch_all_as_dict(key, collection, db=USER_DB):
     ret = {}
-    # print(client[db][collection].find())
     for doc in client[db][collection].find():
         del doc[MONGO_ID]
-        print(key)
         ret[doc[key]] = doc
     return ret
