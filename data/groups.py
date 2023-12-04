@@ -44,12 +44,11 @@ def exists(name: str) -> bool:
     return dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: name})
 
 
-def del_group(name: str):
-    if exists(name):
-        # dbc.del_one(GAMES_COLLECT, {NAME: name})
-        del get_groups()[name]
+def del_group(group_name: str):
+    if exists(group_name):
+        return dbc.del_one(GROUPS_COLLECT, {GROUP_NAME: group_name})
     else:
-        raise ValueError(f'Delete failure: {name} not in database.')
+        raise ValueError(f'Delete failure: {group_name} not in database.')
 
 
 def get_groups() -> dict:
