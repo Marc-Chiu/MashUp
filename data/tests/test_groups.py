@@ -9,10 +9,9 @@ ADD_NAME = 'New Group'
 def temp_group():
     name = grps._get_test_name()
     ret = grps.add_group(name, 0)
-    yield name
+    yield ret
     if grps.exists(name):
         grps.del_group(name)
-    return ret
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_group_details():
