@@ -117,7 +117,6 @@ def test_add_restaurant(temp_group):
     grps.add_restaurant(name, grps.TEST_RESTAURANT)
     assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
 
-@pytest.mark.skip("skip till we connect to mogno")
 def test_add_member(temp_group):
     name = temp_group
     grps.add_member(name, grps.TEST_MEMEBER)
