@@ -77,9 +77,9 @@ def add_member(group_name: str, user: str):
         if usrs.exists(user):
             groups[group_name][MEMBERS].append(user)
         else:
-            raise ValueError(f'{user} does not exist')
+            raise ValueError(f'User {user} does not exist')
     else:
-        raise ValueError(f'{group_name} does not exist')
+        raise ValueError(f'Group {group_name} does not exist')
 
 
 # def add_restaurant(group_name: str, restaurant: str):
