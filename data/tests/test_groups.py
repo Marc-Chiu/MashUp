@@ -12,6 +12,7 @@ def temp_group():
     yield name
     if grps.exists(name):
         grps.del_group(name)
+    return ret
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_group_details():
@@ -117,7 +118,7 @@ def test_add_restaurant(temp_group):
     grps.add_restaurant(name, grps.TEST_RESTAURANT)
     assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
 
-def test_add_member(temp_group):
-    name = temp_group
+def test_add_member():
+    name = temp_group()
     grps.add_member(name, grps.TEST_MEMEBER)
     assert grps.TEST_MEMEBER in grps.get_members(name)
