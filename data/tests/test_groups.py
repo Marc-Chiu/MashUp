@@ -2,16 +2,18 @@ import data.groups as grps
 import pytest
 
 
-ADD_NAME = 'New Group'
+ADD_NAME = 'TEST NEW GROUP'
 
 
 @pytest.fixture(scope='function')
 def temp_group():
     name = grps._get_test_name()
-    ret = grps.add_group(name, 0)
+    member = grps._get_test_members()
+    ret = grps.add_group(name, member)
+    yield name
     if grps.exists(name):
-        yield ret
         grps.del_group(name)
+
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_group_details():
@@ -20,11 +22,13 @@ def test_get_group_details():
     actual_details = grps.get_group_details(test_group_name)
     assert actual_details == expected_details
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_get_test_name():
     name = grps._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
+
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_members():
@@ -32,28 +36,33 @@ def test_get_test_members():
     assert isinstance(members, str)
     assert len(members) > 0
 
+
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_restaurants():
     restaurant = grps._get_test_resturants()
     assert isinstance(restaurant, str)
     assert len(restaurant) > 0
 
+
 @pytest.mark.skip("skip till we connect to mogno")
 def test_group_size():
     expected_size = grps.get_group_size("Foodies")
     assert expected_size == 2
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_gen_id():
     _id = grps._gen_id()
     assert isinstance(_id, str)
     assert len(_id) == grps.ID_LEN
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_group():
     assert isinstance(grps.get_test_group(), dict)
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("skip till we connect to mogno")
 def test_get_groups(temp_group):
      groups = grps.get_groups()
      assert isinstance(groups, dict)
@@ -63,8 +72,9 @@ def test_get_groups(temp_group):
          assert isinstance(key, str)
          assert isinstance(group, dict)
          assert isinstance(group[grps.MEMBERS], list)
-         assert isinstance(group[grps.RESTAURANTS], list)
+         #assert isinstance(group[grps.RESTAURANTS], list)
      assert grps.exists(temp_group)
+
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_get_restaurants(temp_group):
@@ -74,48 +84,57 @@ def test_get_restaurants(temp_group):
     if len(restaurants) > 0:
         for restaurant in restaurants:
             assert isinstance(restaurant, str)
-@pytest.mark.skip("skip till we connect to mogno")
+
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group_dup_name(temp_group):
     """
     Make sure a duplicate group name raises a ValueError.
     `temp_game` is the name of the game that our fixture added.
     """
-    dup_group_name = temp_group
     with pytest.raises(ValueError):
-        grps.add_group(temp_group, 'owner')
+        grps.add_group(temp_group, 'test_member')
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group_blank_name():
     """
     Make sure a blank group name raises a ValueError.
     """
     with pytest.raises(ValueError):
-        grps.add_group('', 'owner')
+        grps.add_group('', 'test_member')
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo)
 def test_del_group(temp_group):
     name = temp_group
     grps.del_group(name)
     assert not grps.exists(name)
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_del_group_not_there():
     name = grps._get_test_name()
     with pytest.raises(ValueError):
         grps.del_group(name)
 
-@pytest.mark.skip("skip till we connect to mogno")
+
+#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group():
-    ret = grps.add_group(ADD_NAME, "owner")
-    assert grps.exists(ADD_NAME)
-    assert isinstance(ret, str)
-    grps.del_group(ADD_NAME)
+    new_name = grps._get_test_name()
+    new_member = grps._get_test_members()
+    ret = grps.add_group(new_name, new_member)
+    assert grps.exists(new_name)
+    assert isinstance(ret, bool)
+    grps.del_group(new_name)
+
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_add_restaurant(temp_group):
     name = temp_group
     grps.add_restaurant(name, grps.TEST_RESTAURANT)
     assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
+
 
 @pytest.mark.skip("skip till we connect to mogno")
 def test_add_member(temp_group):

@@ -8,16 +8,18 @@ import data.db_connect as dbc
 ID_LEN = 24
 BIG_NUM = 100_000_000_000_000_000_000
 MIN_Group_NAME_LEN = 2
+
 MOCK_ID = '0' * ID_LEN
+
 NAME = "Name"
 MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
-TEST_GROUP_NAME = 'Coffee Lover'
-TEST_OWNER_NAME = 'Callahan'
+
 GROUPS_COLLECT = 'groups'
 GROUP_NAME = 'group_name'
 TEST_RESTAURANT = "Domino's"
 TEST_MEMEBER = usrs.TEST_USER
+
 
 """
  Our Contract:
@@ -27,33 +29,15 @@ TEST_MEMEBER = usrs.TEST_USER
      - Each group must have a list of liked restaurants
 """
 
-# groups = {
-#     "Foodies": {
-#         MEMBERS: ["Marc"],
-#         RESTAURANTS: ["Shack Shake"],
-#      },
-#     TEST_GROUP_NAME: {
-#         MEMBERS: ["Red"],
-#         RESTAURANTS: ["Caine's"],
-#     },
-# }
+
+def get_groups() -> dict:
+    dbc.connect_db()
+    return dbc.fetch_all_as_dict(GROUP_NAME, GROUPS_COLLECT)
 
 
 def exists(name: str) -> bool:
     dbc.connect_db()
     return dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: name})
-
-
-def del_group(group_name: str):
-    if exists(group_name):
-        return dbc.del_one(GROUPS_COLLECT, {GROUP_NAME: group_name})
-    else:
-        raise ValueError(f'Delete failure: {group_name} not in database.')
-
-
-def get_groups() -> dict:
-    dbc.connect_db()
-    return dbc.fetch_all_as_dict(GROUP_NAME, GROUPS_COLLECT)
 
 
 def add_group(group_name: str, owner: str):
@@ -65,10 +49,17 @@ def add_group(group_name: str, owner: str):
     group = {}
     group[GROUP_NAME] = group_name
     group[MEMBERS] = [owner]
-    group[RESTAURANTS] = []
+    #group[RESTAURANTS] = []
     dbc.connect_db()
     _id = dbc.insert_one(GROUPS_COLLECT, group)
     return _id is not None
+
+
+def del_group(group_name: str):
+    if exists(group_name):
+        return dbc.del_one(GROUPS_COLLECT, {GROUP_NAME: group_name})
+    else:
+        raise ValueError(f'Delete failure: {group_name} not in database.')
 
 
 def add_member(group_name: str, user: str):
@@ -106,15 +97,9 @@ def add_member(group_name: str, user: str):
 #         raise ValueError(f'{group_name} does not exist')
 
 
-# def _gen_id() -> str:
-#     _id = random.randint(0, BIG_NUM)
-#     _id = str(_id)
-#     _id = _id.rjust(ID_LEN, '0')
-#     return _id
-
 
 # def get_group(group):
-#     return group.get(MEMBERS, '')
+#    return group.get(MEMBERS, '')
 
 
 # def get_members(group_name):
@@ -138,29 +123,36 @@ def add_member(group_name: str, user: str):
 
 # all tests
 def _get_test_name():
-    name = 'test'
+    name = 'Test Name'
     rand_part = random.randint(0, BIG_NUM)
     return name + str(rand_part)
 
 
-# def _get_test_members():
-#     name = 'John'
-#     rand_part = random.randint(0, BIG_NUM)
-#     return name + str(rand_part)
+def _get_test_members():
+    name = 'Test Member'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
 
 
-# def _get_test_resturants():
-#     name = 'Starbucks'
-#     rand_part = random.randint(0, BIG_NUM)
-#     return name + str(rand_part)
+def _get_test_resturants():
+    name = 'Test Resturant'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
 
 
-# def get_test_group():
-#     test_group = {}
-#     test_group[NAME] = _get_test_name()
-#     test_group[MEMBERS] = _get_test_members()
-#     test_group[RESTAURANTS] = _get_test_resturants()
-#     return test_group
+def get_test_group():
+    test_group = {}
+    test_group[NAME] = _get_test_name()
+    test_group[MEMBERS] = _get_test_members()
+    #test_group[RESTAURANTS] = _get_test_resturants()
+    return test_group
+
+
+def _gen_id() -> str:
+    _id = random.randint(0, BIG_NUM)
+    _id = str(_id)
+    _id = _id.rjust(ID_LEN, '0')
+    return _id
 
 
 # def get_group_size(group_name: str) -> tuple:
