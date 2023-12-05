@@ -70,7 +70,7 @@ def add_member(group_name: str, user: str):
             raise ValueError(f'User {user} does not exist')
     else:
         raise ValueError(f'Group {group_name} does not exist')
-
+    
 
 # def add_restaurant(group_name: str, restaurant: str):
 #     if restaurant in groups[group_name][RESTAURANTS]:
