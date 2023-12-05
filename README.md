@@ -8,7 +8,7 @@ The project idea is to create an application that allows friends and family to u
 - Hah-Young Kim
 - Swanyee Aung
 - Tahmid Asif
-- Notes: https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing
+- [SWE Team Notes](https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing)
 
 ## Requirements:
 ### User Endpoints:
