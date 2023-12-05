@@ -85,5 +85,5 @@ def fetch_all_as_dict(key, collection, db=USER_DB):
         ret[doc[key]] = doc
     return ret
 
-def update_doc(collection, filters, update_dict, db=GAME_DB):
+def update_doc(collection, filters, update_dict, db=USER_DB):
     return client[db][collection].update_one(filters, {'$set': update_dict})
