@@ -30,11 +30,6 @@ TEST_MEMEBER = usrs.TEST_USER
 """
 
 
-def get_groups() -> dict:
-    dbc.connect_db()
-    return dbc.fetch_all_as_dict(GROUP_NAME, GROUPS_COLLECT)
-
-
 def exists(name: str) -> bool:
     dbc.connect_db()
     return dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: name})

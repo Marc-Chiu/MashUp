@@ -47,6 +47,7 @@ RESTAURANTS_EP = '/restaurants'
 RESTAURANTS_MENU_EP = '/restaurants_menu'
 RESTAURANTS_MENU_NM = 'Restaurant Menu'
 RESTAURANT_ID = 'Restaurant ID'
+DEL_RESTAURANT_EP = f'{RESTAURANTS_EP}/{DELETE}'
 
 
 @api.route('/endpoints')
@@ -298,7 +299,7 @@ restaurants_field = api.model('NewRestaurant', {
 @api.route(f'{RESTAURANTS_EP}')
 class Restaurants(Resource):
     """
-    This class supports fetching a list of all groups.
+    This class supports fetching a list of all restaurants.
     """
     def get(self):
         """
@@ -317,9 +318,9 @@ class Restaurants(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
         """
-        Add a game.
+        Add a restauarant.
         """
-        print(f'{request.json=}')
+
         name = request.json[restrnts.NAME]
         rating = request.json[restrnts.RATING]
         price = request.json[restrnts.PRICE]
@@ -332,3 +333,21 @@ class Restaurants(Resource):
             return {RESTAURANT_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{DEL_RESTAURANT_EP}/<name>')
+class DelRestaurant(Resource):
+    """
+    Deletes a restaurant by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, name):
+        """
+        Deletes a restaurant by name.
+        """
+        try:
+            restrnts.del_restaurant(name)
+            return {name: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
