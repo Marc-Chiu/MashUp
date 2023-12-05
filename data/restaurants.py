@@ -1,7 +1,7 @@
 """
 This module interfaces to our restaraunts data
 """
-# import random
+import random
 # from haversine import haversine
 import data.db_connect as dbc
 
@@ -14,14 +14,12 @@ ADDRESS = "Address"
 PRICE = "Price"
 
 
-# MIN_Group_NAME_LEN = 2
-# MIN_RESTAURANT_NAME_LEN = 2
-# ID_LEN = 24
-# BIG_NUM = 100000000000000000000
-# MOCK_ID = '0' * ID_LEN
-# TEST_NAME = 'TEST'
-# MEMBERS = 'members'
-# MENU = 'MENU'
+MIN_RESTAURANT_NAME_LEN = 2
+ID_LEN = 24
+BIG_NUM = 100000000000000000000
+MOCK_ID = '0' * ID_LEN
+MEMBERS = 'members'
+MENU = 'MENU'
 
 
 """
@@ -32,27 +30,6 @@ Our Contract:
  - Each restaraunt must have a rating (int)
  """
 
-
-# restaurants = {
-#      "Shake Shack": {
-#          RATING: 4,
-#          PRICE: "$$",
-#          CUISINE: "American",
-#          ADDRESS: "123 E 6th Street"
-#      },
-#      "Caine's": {
-#          RATING: 5,
-#          PRICE: "$$",
-#          CUISINE: "American",
-#          ADDRESS: "223 E 4th Street"
-#      },
-#      TEST_NAME: {
-#          RATING: 3,
-#          PRICE: "$$",
-#          CUISINE: "Japanese",
-#          ADDRESS: "test road"
-#      },
-# }
 
 def exists(name: str) -> bool:
     dbc.connect_db()
@@ -69,6 +46,7 @@ def add_restaurant(name: str, rating: int, price: str, cuisine: str, address: st
     restaurant[RATING] = rating
     restaurant[PRICE] = price
     restaurant[ADDRESS] = address
+    restaurant[CUISINE] = cuisine
     dbc.connect_db()
     _id = dbc.insert_one(RESTAURANST_COLLECT, restaurant)
     return _id is not None
@@ -93,6 +71,22 @@ def del_restaurant(name):
         return dbc.del_one(RESTAURANST_COLLECT, {NAME: name})
     else:
         raise ValueError(f'Delete failure: {name} not in database.')
+
+
+# tests for endpoint
+def get_test_restaurant():
+    test_restaurant = {}
+    test_restaurant[NAME] = _get_test_name()
+    test_restaurant[RATING] = 2
+    test_restaurant[PRICE] = "$$$"
+    test_restaurant[CUISINE] = "Tacos"
+    test_restaurant[ADDRESS] = "abc ave"
+    return test_restaurant
+
+def _get_test_name():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
 
 
 # def get_restaurant_by_name(restaurant_name: str):
@@ -217,19 +211,6 @@ def del_restaurant(name):
 #         return f"{restaurant_name} not found in reviews."
 
 
-# def get_test_restaurant():
-#     test_restaurant = {}
-#     test_restaurant[NAME] = _get_test_name()
-#     test_restaurant[RATING] = 2
-#     test_restaurant[PRICE] = "$$$"
-#     test_restaurant[CUISINE] = "Tacos"
-#     test_restaurant[ADDRESS] = "abc ave"
-#     return test_restaurant
-
-# def _get_test_name():
-#     name = 'test'
-#     rand_part = random.randint(0, BIG_NUM)
-#     return name + str(rand_part)
 
 # def _gen_id() -> str:
 #     _id = random.randint(0, BIG_NUM)

@@ -29,6 +29,10 @@ TEST_MEMEBER = usrs.TEST_USER
      - Each group must have a list of liked restaurants
 """
 
+def get_groups() -> dict:
+    dbc.connect_db()
+    return dbc.fetch_all_as_dict(GROUP_NAME, GROUPS_COLLECT)
+
 
 def exists(name: str) -> bool:
     dbc.connect_db()

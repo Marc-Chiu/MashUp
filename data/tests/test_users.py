@@ -26,7 +26,7 @@ def test_register_user():
     usrs.register_user(test_username, test_password)
 
     users = usrs.get_users()
-    assert test_username in users
+    assert usrs.exists(test_username)
     assert isinstance(users[test_username], dict)
     assert users[test_username][usrs.PASSWORD]==test_password
 
