@@ -70,8 +70,9 @@ def add_group(group_name: str, owner: str):
     _id = dbc.insert_one(GROUPS_COLLECT, group)
     return _id is not None
 
+
 def add_member(group_name: str, user: str):
-    groups = get_groups() 
+    groups = get_groups()
     if group_name in groups:
         if usrs.exists(user):
             groups[group_name][MEMBERS].append(user)

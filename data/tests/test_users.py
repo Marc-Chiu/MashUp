@@ -18,7 +18,7 @@ def test_get_users():
         assert isinstance(user[usrs.PASSWORD], str)
         # assert len(user[usrs.PASSWORD]) >= usrs.MIN_PASSWORD_LEN
 
-# @pytest.mark.skip("skip till we connect to mogno")
+# @pytest.mark.skip("working, github actions not connected")
 def test_register_user():
     test_username = "testuser"
     test_password = "testpassword123"
@@ -45,7 +45,7 @@ def test_change_password():
     assert(passwords[username], new_password)
 
 
-# @pytest.mark.skip("skip till we connect to mogno")
+# @pytest.mark.skip("working, github actions not yet connected")
 def test_del_user():
     test_username = "testuser_for_removal"
     test_password = "testpassword"

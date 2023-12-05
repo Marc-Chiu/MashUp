@@ -1,6 +1,11 @@
 import os
-
 import pymongo as pm
+from dotenv import load_dotenv
+from pathlib import Path
+
+dotenv_path = Path('data/.env')
+load_dotenv(dotenv_path=dotenv_path)
+
 
 LOCAL = "0"
 CLOUD = "1"
@@ -23,8 +28,9 @@ def connect_db():
     global client
     if client is None:  # not connected yet!
         print("Setting client because it is None.")
-        if os.environ.get("CLOUD_MONGO", LOCAL) == CLOUD:
-            password = os.environ.get("MONGO_PASSWORD")
+        if os.getenv("CLOUD_MONGO", LOCAL) == CLOUD:
+            password = os.getenv("MONGO_PASSWORD")
+            print(password)
             if not password:
                 raise ValueError('You must set your password '
                                  + 'to use Mongo in the cloud.')
