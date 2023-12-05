@@ -18,7 +18,7 @@ RESTAURANTS = "Restaurants"
 GROUPS_COLLECT = 'groups'
 GROUP_NAME = 'group_name'
 TEST_RESTAURANT = "Domino's"
-TEST_MEMEBER = usrs.TEST_USER
+TEST_MEMBER = usrs.TEST_USER
 
 
 """
@@ -28,6 +28,7 @@ TEST_MEMEBER = usrs.TEST_USER
      - Each group must have a list of memembers
      - Each group must have a list of liked restaurants
 """
+
 
 def get_groups() -> dict:
     dbc.connect_db()
@@ -48,7 +49,7 @@ def add_group(group_name: str, owner: str):
     group = {}
     group[GROUP_NAME] = group_name
     group[MEMBERS] = [owner]
-    #group[RESTAURANTS] = []
+    # group[RESTAURANTS] = []
     dbc.connect_db()
     _id = dbc.insert_one(GROUPS_COLLECT, group)
     return _id is not None
@@ -66,11 +67,14 @@ def add_member(group_name: str, user: str):
     if group_name in groups:
         if usrs.exists(user):
             groups[group_name][MEMBERS].append(user)
+            dbc.connect_db()
+            dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+                           {MEMBERS: groups[group_name][MEMBERS]})
         else:
             raise ValueError(f'User {user} does not exist')
     else:
         raise ValueError(f'Group {group_name} does not exist')
-    
+
 
 # def add_restaurant(group_name: str, restaurant: str):
 #     if restaurant in groups[group_name][RESTAURANTS]:
@@ -96,13 +100,17 @@ def add_member(group_name: str, user: str):
 #         raise ValueError(f'{group_name} does not exist')
 
 
+def get_group(group):
+    dbc.connect_db()
+    ret = dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: group})
+    return ret
 
-# def get_group(group):
-#    return group.get(MEMBERS, '')
 
-
-# def get_members(group_name):
-#     return groups[group_name][MEMBERS]
+def get_members(group_name: str):
+    group = get_group(group_name)
+    if group is None:
+        raise ValueError(f'{group_name} does not exist')
+    return group.get(MEMBERS, [])
 
 
 # def get_restaurants(group: str) -> list:
@@ -128,7 +136,7 @@ def _get_test_name():
 
 
 def _get_test_members():
-    name = 'Test Member'
+    name = TEST_MEMBER
     rand_part = random.randint(0, BIG_NUM)
     return name + str(rand_part)
 
@@ -143,7 +151,7 @@ def get_test_group():
     test_group = {}
     test_group[NAME] = _get_test_name()
     test_group[MEMBERS] = _get_test_members()
-    #test_group[RESTAURANTS] = _get_test_resturants()
+    # test_group[RESTAURANTS] = _get_test_resturants()
     return test_group
 
 

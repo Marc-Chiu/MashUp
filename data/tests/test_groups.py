@@ -1,5 +1,6 @@
 import data.groups as grps
 import pytest
+from unittest.mock import patch
 
 
 ADD_NAME = 'TEST NEW GROUP'
@@ -136,8 +137,34 @@ def test_add_restaurant(temp_group):
     assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
 
 
-@pytest.mark.skip("skip till we connect to mogno")
-def test_add_member(temp_group):
+# @pytest.mark.skip("skip till we connect to mogno")
+@patch('data.users.exists', return_value=True)
+def test_add_member(mock_exists, temp_group):
     name = temp_group
-    grps.add_member(name, grps.TEST_MEMEBER)
-    assert grps.TEST_MEMEBER in grps.get_members(name)
+    grps.add_member(name, grps.TEST_MEMBER)
+    assert grps.TEST_MEMBER in grps.get_members(name)
+
+
+def test_get_group(temp_group):
+    ret = grps.get_group(temp_group)
+    print(f'{ret=}')
+    assert ret[grps.GROUP_NAME] == temp_group
+
+
+def test_get_members(temp_group):
+    group = grps.get_group(temp_group)
+    assert group
+    members = grps.get_members(temp_group)
+    assert isinstance(members, list)
+    for member in members:
+        if member.startswith(grps.TEST_MEMBER):
+            assert True
+            return
+    assert False
+
+
+def test_get_members_group_not_there():
+    with pytest.raises(ValueError):
+        grps.get_members("This is not a group name!")
+
+# if there are no members write a test that will check for an empty list
