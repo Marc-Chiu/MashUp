@@ -219,6 +219,12 @@ class DelGroup(Resource):
             return {name: 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
+        
+MEMBER = 'member'
+add_member_fields = api.model('AddMember', {
+    grps.GROUP_NAME: fields.String,
+    MEMBER: fields.String,
+})
 
 
 @api.route(f'{ADD_MEMBER_EP}/<group>/<name>')
@@ -226,6 +232,7 @@ class AddMember(Resource):
     """
     Add a member by name
     """
+    @api.expect(add_member_fields)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def post(self, name, group):
@@ -233,8 +240,10 @@ class AddMember(Resource):
         add a member to a group by name.
         """
         try:
-            grps.add_member(group, name)
-            return {name: 'added'}
+            if grps.add_member(group, name) is not None:
+                return {name: 'added'}
+            else:
+                return {name: 'not added'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 
@@ -275,7 +284,7 @@ class Groups(Resource):
         members = request.json[grps.MEMBERS]
         #restaurants = request.json[grps.RESTAURANTS]
         try:
-            new_id = grps.add_group(group_name, members,)
+            new_id = grps.add_group(group_name, members)
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {GROUP_ID: new_id}

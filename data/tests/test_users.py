@@ -1,9 +1,20 @@
 import data.users as usrs
 import pytest
 
+TEST_USER = "Test User"
+TEST_PASSWORD = "Test Password"
+
+
+@pytest.fixture(scope='function')
+def temp_user():
+    ret = usrs.register_user(TEST_USER, TEST_PASSWORD)
+    yield TEST_USER
+    if usrs.exists(TEST_USER):
+        usrs.del_user(TEST_USER)
+
 
 # @pytest.mark.skip("working, but github actions not yet connected to mongo")
-def test_get_users():
+def test_get_users(temp_user):
     users = usrs.get_users()
     assert isinstance(users, dict)
     print(users)
@@ -17,6 +28,7 @@ def test_get_users():
         assert usrs.PASSWORD in user
         assert isinstance(user[usrs.PASSWORD], str)
         # assert len(user[usrs.PASSWORD]) >= usrs.MIN_PASSWORD_LEN
+    assert usrs.exists(temp_user)
 
 # @pytest.mark.skip("working, github actions not connected")
 def test_register_user():
@@ -46,14 +58,15 @@ def test_change_password():
 
 
 # @pytest.mark.skip("working, github actions not yet connected")
-def test_del_user():
-    test_username = "testuser_for_removal"
-    test_password = "testpassword"
-    usrs.register_user(test_username, test_password)
+def test_del_user(temp_user):
+    # test_username = "testuser_for_removal"
+    # test_password = "testpassword"
+    # usrs.register_user(test_username, test_password)
 
-    assert test_username in usrs.get_users()
-    assert usrs.del_user(test_username)
-    assert test_username not in usrs.get_users()
+    name = temp_user
+    # assert test_username in usrs.get_users()
+    usrs.del_user(name)
+    assert not usrs.exists(name)
 
 
 @pytest.mark.skip("don't understand this test")
