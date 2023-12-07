@@ -1,3 +1,0 @@
-{"_id":{"$oid":"656a70993d864635d6ab6f3e"},"group_name":"string","Members":[["string"]],"Restaurants":[]}
-{"_id":{"$oid":"656a7228cd54d894d31be06a"},"group_name":"New Group","Members":["owner"],"Restaurants":[]}
-{"_id":{"$oid":"65723e98060610ccfcd7c3af"},"group_name":"h","Members":[["h"]]}
