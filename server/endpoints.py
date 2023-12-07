@@ -38,7 +38,7 @@ USER_ID = 'User ID'
 
 GROUPS_EP = '/groups'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
-ADD_MEMBER_EP = f'{GROUPS_EP}/{ADD}'
+ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -219,12 +219,6 @@ class DelGroup(Resource):
             return {name: 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
-        
-MEMBER = 'member'
-add_member_fields = api.model('AddMember', {
-    grps.GROUP_NAME: fields.String,
-    MEMBER: fields.String,
-})
 
 
 @api.route(f'{ADD_MEMBER_EP}/<group>/<name>')
@@ -232,7 +226,6 @@ class AddMember(Resource):
     """
     Add a member by name
     """
-    @api.expect(add_member_fields)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def post(self, name, group):

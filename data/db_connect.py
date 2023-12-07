@@ -86,10 +86,11 @@ def fetch_all_as_dict(key, collection, db=USER_DB):
         ret[doc[key]] = doc
     return ret
 
-# might want to change this
+
 def update_doc(collection, filters, update_dict, db=USER_DB):
-    result = client[db][collection].update_one(filters, {'$set': update_dict})
-    if result['modified_count'] != 1:
-        return None
-    else:
-        return result
+    return client[db][collection].update_one(filters, {'$set': update_dict})
+    # if result['modified_count'] != 1:
+    #     return None
+    # else:
+    #     return result
+    # we want to see how to check the modified count

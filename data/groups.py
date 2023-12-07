@@ -64,6 +64,7 @@ def del_group(group_name: str):
 
 def add_member(group_name: str, user: str):
     groups = get_groups()
+    print(f'{groups=}')
     if group_name in groups:
         if usrs.exists(user):
             groups[group_name][MEMBERS].append(user)

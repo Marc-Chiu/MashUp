@@ -17,7 +17,7 @@ IMP=/usr/local/bin/mongoimport
 
 if [ -z $MONGO_PASSWORD ]
 then
-    echo "You must set MONGO_PASSWD in your env before running this script."
+    echo "You must set MONGO_PASSWORD in your env before running this script."
     exit 1
 fi
 
