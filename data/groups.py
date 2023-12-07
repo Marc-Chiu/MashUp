@@ -90,14 +90,18 @@ def add_member(group_name: str, user: str):
 #     return groups
 
 
-# def remove_memember(group_name: str, user: str):
-#     if group_name in groups:
-#         if user in groups[group_name]:
-#             groups[group_name][MEMBERS].remove(user)
-#         else:
-#             raise ValueError(f'{user} is not in {group_name}')
-#     else:
-#         raise ValueError(f'{group_name} does not exist')
+def remove_memember(group_name: str, user: str):
+    groups = get_groups()
+    if group_name in groups:
+        if user in groups[group_name]:
+            groups[group_name][MEMBERS].remove(user)
+            dbc.connect_db()
+            dbc.del_one(GROUPS_COLLECT, {GROUP_NAME: group_name},
+                           {MEMBERS: groups[group_name][MEMBERS]})
+        else:
+            raise ValueError(f'{user} is not in {group_name}')
+    else:
+        raise ValueError(f'{group_name} does not exist')
 
 
 def get_group(group):
