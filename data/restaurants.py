@@ -73,7 +73,7 @@ def del_restaurant(name):
         raise ValueError(f'Delete failure: {name} not in database.')
 
 
-# tests for endpoint
+# tests for endpoints
 def get_test_restaurant():
     test_restaurant = {}
     test_restaurant[NAME] = _get_test_name()

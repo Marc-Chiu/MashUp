@@ -5,7 +5,7 @@ echo "Importing from common.sh"
 
 DB=frontierDB
 USER=mmc9967
-CONNECT_STR="mongodb+srv://FrontierDB.yud9b.mongodb.net/"
+CONNECT_STR="mongodb+srv://frontier.5dsrn7a.mongodb.net/"
 # f'mongodb+srv://mmc9967:{password}@frontier.5dsrn7a.mongodb.net/{USER_DB}?retryWrites=true&w=majority
 if [ -z $DATA_DIR ]
 then
