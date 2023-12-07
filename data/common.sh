@@ -21,4 +21,4 @@ then
     exit 1
 fi
 
-declare -a FrontierCollections=("users groups restaurants")
+declare -a FrontierCollections=("users groups restaurant")
