@@ -207,13 +207,13 @@ This section is for Groups
 @api.route(f'{DEL_USER_GROUP_EP}/<username>')
 class Del_User_Group(Resource):
     """
-    Deletes a group by name.
+    Deletes a user from the group.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def delete(self, username):
         """
-        Deletes a group by name.
+        Deletes a user from group.
         """
         try:
             grps.del_user(username)
