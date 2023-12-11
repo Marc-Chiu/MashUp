@@ -37,6 +37,7 @@ USER_MENU_NM = 'User Menu'
 USER_ID = 'User ID'
 
 GROUPS_EP = '/groups'
+DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
 GROUP_MENU_EP = '/groups_menu'
@@ -203,6 +204,23 @@ class DelUser(Resource):
 This section is for Groups
 
 """
+@api.route(f'{DEL_USER_GROUP_EP}/<username>')
+class Del_User_Group(Resource):
+    """
+    Deletes a group by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, username):
+        """
+        Deletes a group by name.
+        """
+        try:
+            grps.del_user(username)
+            return {username: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
 @api.route(f'{DEL_GROUP_EP}/<name>')
 class DelGroup(Resource):
     """
