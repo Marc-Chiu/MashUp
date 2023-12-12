@@ -204,19 +204,19 @@ class DelUser(Resource):
 This section is for Groups
 
 """
-@api.route(f'{DEL_USER_GROUP_EP}/<username>')
+@api.route(f'{DEL_USER_GROUP_EP}/<username>/<group>')
 class Del_User_Group(Resource):
     """
     Deletes a user from the group.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    def delete(self, username):
+    def delete(self, username, group):
         """
         Deletes a user from group.
         """
         try:
-            grps.del_user(username)
+            grps.remove_member(group, username)
             return {username: 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')

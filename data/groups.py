@@ -30,6 +30,8 @@ TEST_MEMBER = usrs.TEST_USER
 """
 
 # get groups gets all the groups information and is connected to the endpoint
+
+
 def get_groups() -> dict:
     dbc.connect_db()
     return dbc.fetch_all_as_dict(GROUP_NAME, GROUPS_COLLECT)
@@ -91,20 +93,22 @@ def add_member(group_name: str, user: str):
 #     return groups
 
 
-def remove_memember(group_name: str, user: str):
+def remove_member(group_name: str, user: str):
     groups = get_groups()
     if group_name in groups:
-        if user in groups[group_name]:
+        if user in groups[group_name][MEMBERS]:
             groups[group_name][MEMBERS].remove(user)
             dbc.connect_db()
-            dbc.del_one(GROUPS_COLLECT, {GROUP_NAME: group_name},
-                        {MEMBERS: groups[group_name][MEMBERS]})
+            dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+                           {MEMBERS: groups[group_name][MEMBERS]})
         else:
             raise ValueError(f'{user} is not in {group_name}')
     else:
         raise ValueError(f'{group_name} does not exist')
 
 # one group's information
+
+
 def get_group(group):
     dbc.connect_db()
     ret = dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: group})
