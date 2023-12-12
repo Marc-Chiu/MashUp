@@ -221,6 +221,7 @@ class Del_User_Group(Resource):
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 
+
 @api.route(f'{DEL_GROUP_EP}/<name>')
 class DelGroup(Resource):
     """
