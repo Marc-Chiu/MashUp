@@ -62,15 +62,29 @@ def del_user(username):
 # no way to update as of now that I know of.
 def change_password(username, old_password, new_password):
     if exists(username):
-        dbc.connect_db()
-        users = dbc.fetch_all_as_dict(USERNAME, USERS_COLLECT)
-        user = users[username]
-        if user[PASSWORD] == old_password:
-            user[PASSWORD] = new_password
-            return True
+        users = get_users()
+        if old_password == users[username][PASSWORD]:
+            dbc.connect_db()
+            return dbc.update_doc(USERS_COLLECT, {USERNAME: username},
+                                  {PASSWORD: new_password})
         else:
             raise ValueError(f'{old_password} does not match password')
     else:
         raise ValueError(f'{username} does not exists')
+
+
+# def add_member(group_name: str, user: str):
+#     groups = get_groups()
+#     print(f'{groups=}')
+#     if group_name in groups:
+#         if usrs.exists(user):
+#             groups[group_name][MEMBERS].append(user)
+#             dbc.connect_db()
+#             return dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+#                                   {MEMBERS: groups[group_name][MEMBERS]})
+#         else:
+#             raise ValueError(f'User {user} does not exist')
+#     else:
+#         raise ValueError(f'Group {group_name} does not exist')
 
 

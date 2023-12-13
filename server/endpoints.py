@@ -78,14 +78,26 @@ class MainMenu(Resource):
         return {TITLE: MAIN_MENU_NM,
                 DEFAULT: 2,
                 'Choices': {
-                    '1': {'url': '/', 'method': 'get',
-                          'text': 'List Available Characters'},
-                    '2': {'url': '/',
-                          'method': 'get', 'text': 'List Active Games'},
+                    '1': {'url': '/endpoints', 'method': 'get',
+                          'text': 'List of All Endpoints'},
+                    '2': {'url': f'{GROUPS_EP}',
+                          'method': 'get', 'text': 'List Groups'},
                     '3': {'url': f'{USERS_EP}',
                           'method': 'get', 'text': 'List Users'},
-                    '4': {'url': f'{USERS_EP}',
-                          'method': 'get', 'text': 'Illustrating a Point!'},
+                    '4': {'url': f'{RESTAURANTS_EP}',
+                          'method': 'get', 'text': 'List Restaurants'},
+                    '5': {'url': f'{DEL_GROUP_EP}',
+                          'method': 'del', 'text': 'Delete Group'},
+                    '6': {'url': f'{DEL_USER_EP}',
+                          'method': 'del', 'text': 'Delete User'},
+                    '7': {'url': f'{DEL_RESTAURANT_EP}',
+                          'method': 'del', 'text': 'Delete Restaurant'},
+                    '8': {'url': f'{ADD_MEMBER_EP}',
+                          'method': 'post', 'text': 'Add memeber'},
+                    '9': {'url': f'{ADD_USER_EP}',
+                          'method': 'post', 'text': 'Add User'},
+                    '10': {'url': f'{RESTAURANTS_EP}',
+                          'method': 'post', 'text': 'Add Restaurant'},
                     'X': {'text': 'Exit'},
                 }}
 
@@ -173,6 +185,7 @@ class Users(Resource):
         new_password = request.json[users.PASSWORD]
         try:
             new_id = users.change_password(username, old_password, new_password)
+            print(new_id)
             if not new_id:
                 raise wz.NotFound('User not found.')
             return {"message": "User updated successfully"}
