@@ -45,16 +45,16 @@ def test_register_user():
     usrs.del_user(test_username)
 
 
-@pytest.mark.skip("skip till we can update mogno")
-def test_change_password():
-    passwords = usrs.get_passwords()
-    username = 'Reddy'
-    old_password = 'Restaurant2'
-    new_password = 'test_password'
-    usrs.register_user(username, new_password)
-    result = usrs.change_password(username, old_password, new_password, passwords)
-    print(passwords)
-    assert(passwords[username], new_password)
+#@pytest.mark.skip("skip till we can update mogno")
+def test_change_password(temp_user):
+    name = temp_user
+    new_password = 'new_test_password'
+    result = usrs.change_password(TEST_USER, TEST_PASSWORD, new_password)
+    user = usrs.get_users()[TEST_USER]
+    password = user[usrs.PASSWORD]
+    assert(password == new_password)
+    #assert(result)
+    usrs.del_user(name)
 
 
 # @pytest.mark.skip("working, github actions not yet connected")
