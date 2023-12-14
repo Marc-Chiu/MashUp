@@ -24,7 +24,6 @@ def test_get_group_details():
     assert actual_details == expected_details
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_get_test_name():
     name = grps._get_test_name()
     assert isinstance(name, str)
@@ -51,19 +50,16 @@ def test_group_size():
     assert expected_size == 2
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_gen_id():
     _id = grps._gen_id()
     assert isinstance(_id, str)
     assert len(_id) == grps.ID_LEN
 
 
-#@pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_group():
     assert isinstance(grps.get_test_group(), dict)
 
 
-#@pytest.mark.skip("skip till we connect to mogno")
 def test_get_groups(temp_group):
      groups = grps.get_groups()
      assert isinstance(groups, dict)
@@ -87,7 +83,6 @@ def test_get_restaurants(temp_group):
             assert isinstance(restaurant, str)
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group_dup_name(temp_group):
     """
     Make sure a duplicate group name raises a ValueError.
@@ -97,7 +92,6 @@ def test_add_group_dup_name(temp_group):
         grps.add_group(temp_group, 'test_member')
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group_blank_name():
     """
     Make sure a blank group name raises a ValueError.
@@ -106,21 +100,18 @@ def test_add_group_blank_name():
         grps.add_group('', 'test_member')
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo)
 def test_del_group(temp_group):
     name = temp_group
     grps.del_group(name)
     assert not grps.exists(name)
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_del_group_not_there():
     name = grps._get_test_name()
     with pytest.raises(ValueError):
         grps.del_group(name)
 
 
-#@pytest.mark.skip("working, but github actions not yet connected to mongo")
 def test_add_group():
     new_name = grps._get_test_name()
     new_member = grps._get_test_members()
@@ -137,7 +128,6 @@ def test_add_restaurant(temp_group):
     assert grps.TEST_RESTAURANT in grps.get_restaurants(name)
 
 
-# @pytest.mark.skip("skip till we connect to mogno")
 @patch('data.users.exists', return_value=True)
 def test_add_member(mock_exists, temp_group):
     name = temp_group
