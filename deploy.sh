@@ -2,8 +2,8 @@
 # This shell script deploys a new version to a server.
 
 PROJ_DIR=MashUp
-VENV=mashup23
-PA_DOMAIN="mashup23.pythonanywhere.com"
+VENV=MashUp23
+PA_DOMAIN="MashUp23.pythonanywhere.com"
 PA_USER='mashup23'
 echo "Project dir = $PROJ_DIR"
 echo "PA domain = $PA_DOMAIN"
