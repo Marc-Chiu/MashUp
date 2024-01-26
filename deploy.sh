@@ -4,7 +4,7 @@
 PROJ_DIR=MashUp
 VENV=MashUp23
 PA_DOMAIN="MashUp23.pythonanywhere.com"
-PA_USER='mashup23'
+PA_USER='MashUp23'
 echo "Project dir = $PROJ_DIR"
 echo "PA domain = $PA_DOMAIN"
 echo "Virtual env = $VENV"

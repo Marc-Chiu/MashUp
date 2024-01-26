@@ -1,9 +1,9 @@
 # MashUp:
 The project idea is to create an application that allows friends and family to upload nearby restaurants that best match their food preferences. There will be two main functions of our app:
-- Find restaurants, so we will need add all the restaurants and the let the user filter 
+- Find restaurants, so we will need add all the restaurants and the let the user filter
 - Create a group of friends to share restaurants
 
-### Group Members: 
+### Group Members:
 - Marc Chiu
 - Hah-Young Kim
 - Swanyee Aung
@@ -37,3 +37,6 @@ The project idea is to create an application that allows friends and family to u
 - Filter By Name
 - Filter By Rating
 - Filter By Price
+
+
+[Progress and Goals](Progress_and_goals.md)
