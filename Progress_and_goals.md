@@ -25,4 +25,8 @@
 - Insert more real and/or fake data to test our webapp more
 - Connect our Back End to the Front End once we make it
 - Have a fully tested and function webpage
-- Work on front-end development with React.js to allow user interaction and improve user experience (e.g. color changes when hovering or clicking on a button)
+- Work on front-end development with React.js to allow user interaction and improve user experience (e.g. color changes when hovering or clicking on a button) using testing procedures that are part of our atuomated testing requirement
+- Having meetings with team members to stay up to date on what needs to be done, what has been completed, distribution of work etc. This will enable us to achieve the goals quicker and efficiently
+- Continue regularly updating our progress in README files
+- Continue making sure we document our code for team members to follow along
+
