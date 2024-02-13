@@ -8,7 +8,12 @@ The project idea is to create an application that allows friends and family to u
 - Hah-Young Kim
 - Swanyee Aung
 - Tahmid Asif
-- [SWE Team Notes](https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing)
+
+### Frontend: 
+https://github.com/Marc-Chiu/MashUp-Frontend
+
+### Progress and Goals: 
+[Progress and Goals](Progress_and_goals.md)
 
 ## Requirements:
 ### User Endpoints:
@@ -38,5 +43,5 @@ The project idea is to create an application that allows friends and family to u
 - Filter By Rating
 - Filter By Price
 
-
-[Progress and Goals](Progress_and_goals.md)
+## Team Notes:
+[SWE Team Notes](https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing)
