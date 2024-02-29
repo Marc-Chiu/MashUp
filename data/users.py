@@ -41,7 +41,7 @@ def register_user(username, password):
 def get_user(username):
     if exists(username):
         dbc.connect_db()
-        return dbc.fetch_one(USERS_COLLECT, username)
+        return dbc.fetch_one(USERS_COLLECT, {USERNAME: username})
     else:
         raise ValueError(f'{username} not found')
 

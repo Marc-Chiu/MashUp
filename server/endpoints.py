@@ -32,6 +32,7 @@ MAIN_MENU_EP = '/MainMenu'
 MAIN_MENU_NM = "Welcome to MashUp!"
 
 USERS_EP = '/users'
+USERS_BYNAME_EP = f'{USERS_EP}/byname'
 ADD_USER_EP = f'{USERS_EP}/{ADD}'
 DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
@@ -194,6 +195,24 @@ class Users(Resource):
         except Exception as e:
             # Handle other exceptions as necessary
             raise wz.ServiceUnavailable(f'Error: {str(e)}')
+
+
+@api.route(f'{USERS_BYNAME_EP}/<username>')
+class GetUserByName(Resource):
+    """
+    Gets a user by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self, username):
+        """
+        Gets a user by name.
+        """
+        try:
+            user = users.get_user(username)
+            return user #{username: 'Found'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
 
 
 @api.route(f'{DEL_USER_EP}/<username>')
