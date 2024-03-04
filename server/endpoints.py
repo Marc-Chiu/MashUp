@@ -13,6 +13,7 @@ import werkzeug.exceptions as wz
 import data.users as users
 import data.groups as grps
 import data.restaurants as restrnts
+import data.categories as cats
 
 app = Flask(__name__)
 CORS(app)
@@ -52,6 +53,10 @@ RESTAURANTS_MENU_EP = '/restaurants_menu'
 RESTAURANTS_MENU_NM = 'Restaurant Menu'
 RESTAURANT_ID = 'Restaurant ID'
 DEL_RESTAURANT_EP = f'{RESTAURANTS_EP}/{DELETE}'
+
+CATEGORIES_EP = '/categories'
+CATEGORIES_MENU_EP = '/categories_menu'
+CATEGORY_ID = 'Category ID'
 
 
 @api.route('/endpoints')
@@ -350,7 +355,6 @@ restaurants_field = api.model('NewRestaurant', {
 })
 
 
-
 @api.route(f'{RESTAURANTS_EP}')
 class Restaurants(Resource):
     """
@@ -406,3 +410,46 @@ class DelRestaurant(Resource):
             return {name: 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
+
+
+"""
+This section is for Categories
+"""
+categories_field = api.model('NewCategory', {
+    cats.CATEGORY: fields.String,
+})
+
+
+@api.route(f'{CATEGORIES_EP}')
+class Categories(Resource):
+    """
+    This class supports fetching a list of all restaurants.
+    """
+    def get(self):
+        """
+        This method returns all groups.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: 'Current categories',
+            DATA: cats.get_categories(),
+            MENU: CATEGORIES_MENU_EP,
+            RETURN: MAIN_MENU_EP
+            }
+
+    @api.expect(categories_field)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a category.
+        """
+
+        category = request.json[cats.CATEGORY]
+        try:
+            new_id = cats.add_category(category)
+            if new_id is None:
+                raise wz.ServiceUnavailable('We have a technical problem.')
+            return {CATEGORY_ID: new_id}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
