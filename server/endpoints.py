@@ -243,6 +243,14 @@ class DelUser(Resource):
 This section is for Groups
 
 """
+
+group_fields = api.model('NewGroup', {
+    grps.GROUP_NAME: fields.String,
+    grps.PASSWORD: fields.String,
+    grps.NAME: fields.String,
+    #grps.RESTAURANTS: fields.List(cls_or_instance=fields.String),
+})
+
 @api.route(f'{DEL_USER_GROUP_EP}/<username>/<group>')
 class Del_User_Group(Resource):
     """
@@ -279,31 +287,28 @@ class DelGroup(Resource):
             raise wz.NotFound(f'{str(e)}')
 
 
-@api.route(f'{ADD_MEMBER_EP}/<group>/<name>')
+@api.route(f'{ADD_MEMBER_EP}')
 class AddMember(Resource):
     """
     Add a member by name
     """
+    @api.expect(group_fields)
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    def post(self, name, group):
+    def post(self):
         """
         add a member to a group by name.
         """
+        group = request.json[grps.GROUP_NAME]
+        name = request.json[grps.NAME]
+        password = request.json[grps.PASSWORD]
         try:
-            if grps.add_member(group, name) is not None:
+            if grps.add_member(group, name, password) is not None:
                 return {name: 'added'}
             else:
                 return {name: 'not added'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
-
-
-group_fields = api.model('NewGroup', {
-    grps.GROUP_NAME: fields.String,
-    grps.MEMBERS: fields.List(cls_or_instance=fields.String),
-    #grps.RESTAURANTS: fields.List(cls_or_instance=fields.String),
-})
 
 
 @api.route(f'{GROUPS_EP}')
@@ -328,14 +333,15 @@ class Groups(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
         """
-        Add a group.
+        Make a group.
         """
         print(f'{request.json=}')
         group_name = request.json[grps.GROUP_NAME]
-        members = request.json[grps.MEMBERS]
+        name = request.json[grps.NAME]
+        password = request.json[grps.PASSWORD]
         #restaurants = request.json[grps.RESTAURANTS]
         try:
-            new_id = grps.add_group(group_name, members)
+            new_id = grps.add_group(group_name, name, password)
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {GROUP_ID: new_id}

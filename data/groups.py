@@ -14,6 +14,7 @@ MOCK_ID = '0' * ID_LEN
 NAME = "Name"
 MEMBERS = "Members"
 RESTAURANTS = "Restaurants"
+PASSWORD = "Password"
 
 GROUPS_COLLECT = 'groups'
 GROUP_NAME = 'group_name'
@@ -42,7 +43,7 @@ def exists(name: str) -> bool:
     return dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: name})
 
 
-def add_group(group_name: str, owner: str):
+def add_group(group_name: str, owner: str, password: str):
     if exists(group_name):
         raise ValueError(f'Sorry {group_name} is already taken')
     if not group_name:
@@ -51,6 +52,7 @@ def add_group(group_name: str, owner: str):
     group = {}
     group[GROUP_NAME] = group_name
     group[MEMBERS] = [owner]
+    group[PASSWORD] = password
     # group[RESTAURANTS] = []
     dbc.connect_db()
     _id = dbc.insert_one(GROUPS_COLLECT, group)
@@ -64,15 +66,18 @@ def del_group(group_name: str):
         raise ValueError(f'Delete failure: {group_name} not in database.')
 
 
-def add_member(group_name: str, user: str):
+def add_member(group_name: str, user: str, password: str):
     groups = get_groups()
     print(f'{groups=}')
     if group_name in groups:
         if usrs.exists(user):
-            groups[group_name][MEMBERS].append(user)
-            dbc.connect_db()
-            return dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+            if password ==groups[group_name][PASSWORD]:
+                groups[group_name][MEMBERS].append(user)
+                dbc.connect_db()
+                return dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
                                   {MEMBERS: groups[group_name][MEMBERS]})
+            else:
+                raise ValueError(f'Password is incorrect')
         else:
             raise ValueError(f'User {user} does not exist')
     else:
