@@ -12,7 +12,7 @@ def temp_group():
     name = grps._get_test_name()
     member = grps._get_test_members()
     password = "test password"
-    ret = grps.add_group(name, member, password)
+    ret = grps.add_group(name, member, password, [])
     yield name
     if grps.exists(name):
         grps.del_group(name)
@@ -91,7 +91,7 @@ def test_add_group_dup_name(temp_group):
     `temp_game` is the name of the game that our fixture added.
     """
     with pytest.raises(ValueError):
-        grps.add_group(temp_group, 'test_member', TEST_PASSWORD)
+        grps.add_group(temp_group, 'test_member', TEST_PASSWORD, [])
 
 
 def test_add_group_blank_name():
@@ -99,7 +99,7 @@ def test_add_group_blank_name():
     Make sure a blank group name raises a ValueError.
     """
     with pytest.raises(ValueError):
-        grps.add_group('', 'test_member', TEST_PASSWORD)
+        grps.add_group('', 'test_member', TEST_PASSWORD, [])
 
 
 def test_del_group(temp_group):
@@ -116,7 +116,7 @@ def test_del_group_not_there():
 def test_add_group():
     new_name = grps._get_test_name()
     new_member = grps._get_test_members()
-    ret = grps.add_group(new_name, new_member, TEST_PASSWORD)
+    ret = grps.add_group(new_name, new_member, TEST_PASSWORD, [])
     assert grps.exists(new_name)
     assert isinstance(ret, bool)
     grps.del_group(new_name)

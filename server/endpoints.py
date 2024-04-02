@@ -44,6 +44,7 @@ GROUPS_EP = '/groups'
 DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
+ADD_RESTAURANT_EP = f'{GROUPS_EP}/add_restaurant'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -248,7 +249,12 @@ group_fields = api.model('NewGroup', {
     grps.GROUP_NAME: fields.String,
     grps.PASSWORD: fields.String,
     grps.NAME: fields.String,
-    #grps.RESTAURANTS: fields.List(cls_or_instance=fields.String),
+    #grps.RESTAURANTS: fields.List(cls_or_instance=fields.ClassName('Restaurant')),
+})
+
+add_restaurant_fields = api.model('NewAddRestaurant', {
+    grps.GROUP_NAME: fields.String,
+    grps.RESTAURANTS: fields.String,
 })
 
 @api.route(f'{DEL_USER_GROUP_EP}/<username>/<group>')
@@ -311,6 +317,28 @@ class AddMember(Resource):
             raise wz.NotFound(f'{str(e)}')
 
 
+@api.route(f'{ADD_RESTAURANT_EP}')
+class AddRestaurant(Resource):
+    """
+    Add a member by name
+    """
+    @api.expect(add_restaurant_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def post(self):
+        """
+        add a restaurant to a group by name.
+        """
+        group = request.json[grps.GROUP_NAME]
+        restaurant = request.json[grps.RESTAURANTS]
+        try:
+            if grps.add_restaurant(group, restaurant) is not None:
+                return {restaurant: 'added'}
+            else:
+                return {restaurant: 'not added'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
 @api.route(f'{GROUPS_EP}')
 class Groups(Resource):
     """
@@ -341,7 +369,7 @@ class Groups(Resource):
         password = request.json[grps.PASSWORD]
         #restaurants = request.json[grps.RESTAURANTS]
         try:
-            new_id = grps.add_group(group_name, name, password)
+            new_id = grps.add_group(group_name, name, password, [])
             if new_id is None:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {GROUP_ID: new_id}

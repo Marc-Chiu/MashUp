@@ -43,7 +43,7 @@ def exists(name: str) -> bool:
     return dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: name})
 
 
-def add_group(group_name: str, owner: str, password: str):
+def add_group(group_name: str, owner: str, password: str, restaurant: list):
     if exists(group_name):
         raise ValueError(f'Sorry {group_name} is already taken')
     if not group_name:
@@ -53,6 +53,7 @@ def add_group(group_name: str, owner: str, password: str):
     group[GROUP_NAME] = group_name
     group[MEMBERS] = [owner]
     group[PASSWORD] = password
+    group[RESTAURANTS] = restaurant
     # group[RESTAURANTS] = []
     dbc.connect_db()
     _id = dbc.insert_one(GROUPS_COLLECT, group)
@@ -84,18 +85,20 @@ def add_member(group_name: str, user: str, password: str):
         raise ValueError(f'Group {group_name} does not exist')
 
 
-# def add_restaurant(group_name: str, restaurant: str):
-#     if restaurant in groups[group_name][RESTAURANTS]:
-#         raise ValueError(f'{restaurant} has already been added')
-#     groups[group_name][RESTAURANTS].append(restaurant)
-#     return groups
+def add_restaurant(group_name: str, restaurant: str):
+    group = get_group(group_name)
+    if restaurant in group[RESTAURANTS]:
+        raise ValueError(f'{restaurant} has already been added')
+    group[group_name][RESTAURANTS].append(restaurant)
+    return group
 
 
-# def remove_restaurant(group_name: str, restaurant: str):
-#     if restaurant not in groups[group_name]:
-#         raise ValueError(f'{restaurant} is not in your list')
-#     groups[group_name][RESTAURANTS].remove(restaurant)
-#     return groups
+def remove_restaurant(group_name: str, restaurant: str):
+    group = get_group(group_name)
+    if restaurant not in group[RESTAURANTS]:
+        raise ValueError(f'{restaurant} is not in your list')
+    group[group_name][RESTAURANTS].remove(restaurant)
+    return group
 
 
 def remove_member(group_name: str, user: str):
