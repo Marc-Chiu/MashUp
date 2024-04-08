@@ -3,6 +3,7 @@ This module interfaces to our groups data
 """
 import random
 from data import users as usrs
+from data import restaurants as rstrnts
 import data.db_connect as dbc
 
 ID_LEN = 24
@@ -89,8 +90,13 @@ def add_restaurant(group_name: str, restaurant: str):
     group = get_group(group_name)
     if restaurant in group[RESTAURANTS]:
         raise ValueError(f'{restaurant} has already been added')
-    group[group_name][RESTAURANTS].append(restaurant)
-    return group
+    if rstrnts.exists(restaurant):
+        group[RESTAURANTS].append(restaurant)
+        dbc.connect_db()
+        return dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+                                  {RESTAURANTS: group[RESTAURANTS]})
+    else:
+        raise ValueError(f'{restaurant} does not exist')
 
 
 def remove_restaurant(group_name: str, restaurant: str):

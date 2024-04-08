@@ -6,7 +6,7 @@ import random
 import data.db_connect as dbc
 
 
-RESTAURANST_COLLECT = 'restaurant'
+RESTAURANTS_COLLECT = 'restaurant'
 NAME = 'name'
 RATING = "Rating"
 CUISINE = "Cuisine"
@@ -33,7 +33,7 @@ Our Contract:
 
 def exists(name: str) -> bool:
     dbc.connect_db()
-    return dbc.fetch_one(RESTAURANST_COLLECT, {NAME: name})
+    return dbc.fetch_one(RESTAURANTS_COLLECT, {NAME: name})
 
 
 def add_restaurant(name: str, rating: int, price: str, cuisine: str, address: str):
@@ -48,19 +48,28 @@ def add_restaurant(name: str, rating: int, price: str, cuisine: str, address: st
     restaurant[ADDRESS] = address
     restaurant[CUISINE] = cuisine
     dbc.connect_db()
-    _id = dbc.insert_one(RESTAURANST_COLLECT, restaurant)
+    _id = dbc.insert_one(RESTAURANTS_COLLECT, restaurant)
     return _id is not None
 
 
 def get_restaurants():
     dbc.connect_db()
-    return dbc.fetch_all_as_dict(NAME, RESTAURANST_COLLECT)
+    return dbc.fetch_all_as_dict(NAME, RESTAURANTS_COLLECT)
+
+
+def get_restaurants_by_name(restaurant: str):
+    if exists(restaurant):
+        dbc.connect_db()
+        return dbc.fetch_one(RESTAURANTS_COLLECT, {NAME: restaurant})
+    else:
+        raise ValueError(f'{restaurant} not found')
+
 
 
 def get_restaurant(name):
     if exists(name):
         dbc.connect_db()
-        return dbc.fetch_one(RESTAURANST_COLLECT, name)
+        return dbc.fetch_one(RESTAURANTS_COLLECT, name)
     else:
         raise ValueError(f'{name} not found')
 
@@ -68,7 +77,7 @@ def get_restaurant(name):
 def del_restaurant(name):
     if exists(name):
         dbc.connect_db()
-        return dbc.del_one(RESTAURANST_COLLECT, {NAME: name})
+        return dbc.del_one(RESTAURANTS_COLLECT, {NAME: name})
     else:
         raise ValueError(f'Delete failure: {name} not in database.')
 

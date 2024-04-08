@@ -53,6 +53,7 @@ RESTAURANTS_EP = '/restaurants'
 RESTAURANTS_MENU_EP = '/restaurants_menu'
 RESTAURANTS_MENU_NM = 'Restaurant Menu'
 RESTAURANT_ID = 'Restaurant ID'
+RESTAURANTS_BYNAME_EP = f'{RESTAURANTS_EP}/byname'
 DEL_RESTAURANT_EP = f'{RESTAURANTS_EP}/{DELETE}'
 
 CATEGORIES_EP = '/categories'
@@ -396,7 +397,7 @@ class Restaurants(Resource):
     """
     def get(self):
         """
-        This method returns all groups.
+        This method returns all restaurants.
         """
         return {
             TYPE: DATA,
@@ -442,6 +443,23 @@ class DelRestaurant(Resource):
         try:
             restrnts.del_restaurant(name)
             return {name: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+@api.route(f'{RESTAURANTS_BYNAME_EP}/<name>')
+class GetRestaurantByName(Resource):
+    """
+    Gets a restaurant by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self, name):
+        """
+        Gets a user by name.
+        """
+        try:
+            restaurant = restrnts.get_restaurants_by_name(name)
+            return restaurant #{username: 'Found'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 
