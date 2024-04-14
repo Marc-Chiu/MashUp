@@ -41,6 +41,7 @@ USER_MENU_NM = 'User Menu'
 USER_ID = 'User ID'
 
 GROUPS_EP = '/groups'
+GROUPS_BYNAME_EP = f'{GROUPS_EP}/byname'
 DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
@@ -376,6 +377,23 @@ class Groups(Resource):
             return {GROUP_ID: new_id}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+@api.route(f'{GROUPS_BYNAME_EP}/<groupname>')
+class GetGroupByName(Resource):
+    """
+    Gets a Group by name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def get(self, groupname):
+        """
+        Gets a Group by name.
+        """
+        try:
+            group = grps.get_group(groupname)
+            return group
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
 
 
 """
