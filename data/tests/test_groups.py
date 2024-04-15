@@ -158,4 +158,11 @@ def test_get_members_group_not_there():
     with pytest.raises(ValueError):
         grps.get_members("This is not a group name!")
 
+# def test_add_duplicate_restaurant(temp_group):
+#     name = temp_group
+#     grps.add_restaurant(name, grps.TEST_RESTAURANT)
+#     with pytest.raises(ValueError):
+#         grps.add_restaurant(name, grps.TEST_RESTAURANT)
+#     grps.del_group(name)
+
 # if there are no members write a test that will check for an empty list

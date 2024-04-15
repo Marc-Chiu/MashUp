@@ -322,7 +322,7 @@ class AddMember(Resource):
 @api.route(f'{ADD_RESTAURANT_EP}')
 class AddRestaurant(Resource):
     """
-    Add a member by name
+    Add a Restaurant by name
     """
     @api.expect(add_restaurant_fields)
     @api.response(HTTPStatus.OK, 'Success')
