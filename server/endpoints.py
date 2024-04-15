@@ -46,6 +46,7 @@ DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
 ADD_RESTAURANT_EP = f'{GROUPS_EP}/add_restaurant'
+DEL_RESTAURANT_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -340,6 +341,23 @@ class AddRestaurant(Resource):
                 return {restaurant: 'not added'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
+
+    @api.expect(add_restaurant_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self):
+        """
+        removes a restaurant from group.
+        """
+        group = request.json[grps.GROUP_NAME]
+        restaurant = request.json[grps.RESTAURANTS]
+        try:
+            print(group, restaurant)
+            grps.remove_restaurant(group, restaurant)
+            return {restaurant: 'removed'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
 
 @api.route(f'{GROUPS_EP}')
 class Groups(Resource):

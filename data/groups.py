@@ -100,11 +100,18 @@ def add_restaurant(group_name: str, restaurant: str):
 
 
 def remove_restaurant(group_name: str, restaurant: str):
-    group = get_group(group_name)
-    if restaurant not in group[RESTAURANTS]:
-        raise ValueError(f'{restaurant} is not in your list')
-    group[group_name][RESTAURANTS].remove(restaurant)
-    return group
+    groups = get_groups()
+    print("deleting restaurant")
+    if group_name in groups:
+        if restaurant in groups[group_name][RESTAURANTS]:
+            groups[group_name][RESTAURANTS].remove(restaurant)
+            dbc.connect_db()
+            dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
+                           {RESTAURANTS: groups[group_name][RESTAURANTS]})
+        else:
+            raise ValueError(f'{restaurant} is not in {group_name}')
+    else:
+        raise ValueError(f'{group_name} does not exist')
 
 
 def remove_member(group_name: str, user: str):
