@@ -42,11 +42,11 @@ USER_ID = 'User ID'
 
 GROUPS_EP = '/groups'
 GROUPS_BYNAME_EP = f'{GROUPS_EP}/byname'
-DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
+DEL_USER_GROUP_EP = f'{GROUPS_EP}/{DELETE}/user'
+DEL_REST_GROUP_EP = f'{GROUPS_EP}/{DELETE}/restaurant'
 DEL_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 ADD_MEMBER_EP = f'{GROUPS_EP}/add_member'
 ADD_RESTAURANT_EP = f'{GROUPS_EP}/add_restaurant'
-DEL_RESTAURANT_GROUP_EP = f'{GROUPS_EP}/{DELETE}'
 GROUP_MENU_EP = '/groups_menu'
 GROUP_MENU_NM = 'Group Menu'
 GROUP_ID = 'Group ID'
@@ -260,6 +260,24 @@ add_restaurant_fields = api.model('NewAddRestaurant', {
     grps.RESTAURANTS: fields.String,
 })
 
+@api.route(f'{DEL_REST_GROUP_EP}/<name>/<group>')
+class Del_Rest_Group(Resource):
+    """
+    Deletes restaurant from the group.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, name, group):
+        """
+        Deletes a restaurant from group.
+        """
+        try:
+            grps.remove_restaurant(group, name)
+            return {name: 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
 @api.route(f'{DEL_USER_GROUP_EP}/<username>/<group>')
 class Del_User_Group(Resource):
     """
@@ -339,22 +357,6 @@ class AddRestaurant(Resource):
                 return {restaurant: 'added'}
             else:
                 return {restaurant: 'not added'}
-        except ValueError as e:
-            raise wz.NotFound(f'{str(e)}')
-
-    @api.expect(add_restaurant_fields)
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    def delete(self):
-        """
-        removes a restaurant from group.
-        """
-        group = request.json[grps.GROUP_NAME]
-        restaurant = request.json[grps.RESTAURANTS]
-        try:
-            print(group, restaurant)
-            grps.remove_restaurant(group, restaurant)
-            return {restaurant: 'removed'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 

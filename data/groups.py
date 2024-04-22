@@ -101,7 +101,6 @@ def add_restaurant(group_name: str, restaurant: str):
 
 def remove_restaurant(group_name: str, restaurant: str):
     groups = get_groups()
-    print("deleting restaurant")
     if group_name in groups:
         if restaurant in groups[group_name][RESTAURANTS]:
             groups[group_name][RESTAURANTS].remove(restaurant)
@@ -128,8 +127,6 @@ def remove_member(group_name: str, user: str):
         raise ValueError(f'{group_name} does not exist')
 
 # one group's information
-
-
 def get_group(group):
     dbc.connect_db()
     ret = dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: group})
