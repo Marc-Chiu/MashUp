@@ -31,8 +31,6 @@ TEST_MEMBER = usrs.TEST_USER
      - Each group must have a list of liked restaurants
 """
 
-# get groups gets all the groups information and is connected to the endpoint
-
 
 def get_groups() -> dict:
     dbc.connect_db()
@@ -126,7 +124,7 @@ def remove_member(group_name: str, user: str):
     else:
         raise ValueError(f'{group_name} does not exist')
 
-# one group's information
+
 def get_group(group):
     dbc.connect_db()
     ret = dbc.fetch_one(GROUPS_COLLECT, {GROUP_NAME: group})
@@ -138,21 +136,6 @@ def get_members(group_name: str):
     if group is None:
         raise ValueError(f'{group_name} does not exist')
     return group.get(MEMBERS, [])
-
-
-# def get_restaurants(group: str) -> list:
-#     if group in get_groups():
-#         return groups[group][RESTAURANTS]
-#     else:
-#         raise ValueError(f'{group} does not exist')
-
-
-# def restaurant_exists(group: str, restaurant: str) -> bool:
-#     if group in get_groups():
-#         if restaurant in groups:
-#             return restaurant in get_groups()
-#     else:
-#         raise ValueError(f'{group} does not exist')
 
 
 # all tests
@@ -168,7 +151,7 @@ def _get_test_members():
     return name + str(rand_part)
 
 
-def _get_test_resturants():
+def _get_test_restaurants():
     name = 'Test Resturant'
     rand_part = random.randint(0, BIG_NUM)
     return name + str(rand_part)
@@ -190,19 +173,3 @@ def _gen_id() -> str:
     return _id
 
 
-# def get_group_size(group_name: str) -> tuple:
-#     if group_name in groups:
-#         return len(groups[group_name])
-#     else:
-#         return 0
-
-
-# def get_group_details(group_name: str) -> dict:
-#     if exists(group_name):
-#         group_details = {
-#             MEMBERS: groups[group_name][MEMBERS],
-#             RESTAURANTS: groups[group_name][RESTAURANTS],
-#         }
-#         return group_details
-#     else:
-#         raise ValueError(f'{group_name} does not exist')

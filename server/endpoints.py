@@ -242,7 +242,6 @@ class DelUser(Resource):
             raise wz.NotFound(f'{str(e)}')
 
 
-
 """
 This section is for Groups
 
@@ -261,7 +260,7 @@ add_restaurant_fields = api.model('NewAddRestaurant', {
 })
 
 @api.route(f'{DEL_REST_GROUP_EP}/<name>/<group>')
-class Del_Rest_Group(Resource):
+class DelRestGroup(Resource):
     """
     Deletes restaurant from the group.
     """
@@ -279,7 +278,7 @@ class Del_Rest_Group(Resource):
 
 
 @api.route(f'{DEL_USER_GROUP_EP}/<username>/<group>')
-class Del_User_Group(Resource):
+class DelUserGroup(Resource):
     """
     Deletes a user from the group.
     """
@@ -534,7 +533,6 @@ class Categories(Resource):
         """
         Add a category.
         """
-
         category = request.json[cats.CATEGORY]
         try:
             new_id = cats.add_category(category)

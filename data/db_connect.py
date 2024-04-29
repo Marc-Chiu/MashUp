@@ -9,11 +9,8 @@ load_dotenv(dotenv_path=dotenv_path)
 
 LOCAL = "0"
 CLOUD = "1"
-
 USER_DB = 'frontierDB'
-
 client = None
-
 MONGO_ID = '_id'
 
 
