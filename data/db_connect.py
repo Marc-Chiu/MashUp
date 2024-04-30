@@ -2,6 +2,7 @@ import os
 import pymongo as pm
 from dotenv import load_dotenv
 from pathlib import Path
+import certifi
 
 dotenv_path = Path('data/.env')
 load_dotenv(dotenv_path=dotenv_path)
@@ -35,7 +36,10 @@ def connect_db():
                 raise ValueError('You must set your password '
                                  + 'to use Mongo in the cloud.')
             print("Connecting to Mongo in the cloud.")
-            client = pm.MongoClient(f'mongodb+srv://mmc9967:{password}@frontier.5dsrn7a.mongodb.net/{USER_DB}?retryWrites=true&w=majority')
+            client = pm.MongoClient(f'mongodb+srv://mmc9967:{password}'
+                                    + '@frontier.5dsrn7a.mongodb.net/'
+                                    + '{USER_DB}?retryWrites=true&w=majority',
+                                    tlscafile=certifi.where())
             # PA recommends these settings:
             # + 'connectTimeoutMS=30000&'
             # + 'socketTimeoutMS=None
