@@ -1,18 +1,19 @@
-# MashUp:
+##  MashUp:
 The project idea is to create an application that allows friends and family to upload nearby restaurants that best match their food preferences. There will be two main functions of our app:
 - Find restaurants, so we will need add all the restaurants and the let the user filter
 - Create a group of friends to share restaurants
 
-### Group Members:
-- Marc Chiu
-- Hah-Young Kim
-- Swanyee Aung
-- Tahmid Asif
+## Build Instructions
+- To build production, run `make prod` 
+- To create new env, run `make dev_env`
 
-### Frontend: 
-https://github.com/Marc-Chiu/MashUp-Frontend
+## Web Link
+http://mashup23.pythonanywhere.com/
 
-### Progress and Goals: 
+## React App: 
+Visit the [MashUp Front end](https://github.com/Marc-Chiu/MashUp-Frontend) Repository
+
+## Progress and Goals: 
 [Progress and Goals](Progress_and_goals.md)
 
 ## Requirements:
@@ -42,6 +43,3 @@ https://github.com/Marc-Chiu/MashUp-Frontend
 - Filter By Name
 - Filter By Rating
 - Filter By Price
-
-## Team Notes:
-[SWE Team Notes](https://docs.google.com/document/d/1LmIkYmSWN3BWezEBZ9w3GY94gBJcTh0YjGaXqE0AJw0/edit?usp=sharing)
