@@ -18,38 +18,22 @@ def temp_group():
         grps.del_group(name)
 
 
-@pytest.mark.skip("skip till we connect to mogno")
-def test_get_group_details():
-    test_group_name = "Foodies"
-    expected_details = grps.groups["Foodies"]
-    actual_details = grps.get_group_details(test_group_name)
-    assert actual_details == expected_details
-
-
 def test_get_test_name():
     name = grps._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
 
 
-@pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_members():
     members = grps._get_test_members()
     assert isinstance(members, str)
     assert len(members) > 0
 
 
-@pytest.mark.skip("skip till we connect to mogno")
 def test_get_test_restaurants():
-    restaurant = grps._get_test_resturants()
+    restaurant = grps._get_test_restaurants()
     assert isinstance(restaurant, str)
     assert len(restaurant) > 0
-
-
-@pytest.mark.skip("skip till we connect to mogno")
-def test_group_size():
-    expected_size = grps.get_group_size("Foodies")
-    assert expected_size == 2
 
 
 def test_gen_id():
@@ -75,10 +59,10 @@ def test_get_groups(temp_group):
      assert grps.exists(temp_group)
 
 
-@pytest.mark.skip("skip till we connect to mogno")
+# @pytest.mark.skip("skip till we connect to mogno")
 def test_get_restaurants(temp_group):
     name = temp_group
-    restaurants = grps.get_restaurants(name)
+    restaurants = grps.get_group(name)[grps.RESTAURANTS]
     assert isinstance(restaurants, list)
     if len(restaurants) > 0:
         for restaurant in restaurants:
@@ -157,12 +141,3 @@ def test_get_members(temp_group):
 def test_get_members_group_not_there():
     with pytest.raises(ValueError):
         grps.get_members("This is not a group name!")
-
-# def test_add_duplicate_restaurant(temp_group):
-#     name = temp_group
-#     grps.add_restaurant(name, grps.TEST_RESTAURANT)
-#     with pytest.raises(ValueError):
-#         grps.add_restaurant(name, grps.TEST_RESTAURANT)
-#     grps.del_group(name)
-
-# if there are no members write a test that will check for an empty list

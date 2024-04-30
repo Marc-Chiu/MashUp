@@ -8,9 +8,7 @@ CATEGORY = 'category'
 PASSWORD = 'password'
 CATEGORIES_COLLECT = "categories"
 
-
 # Basic CRUD Operations
-
 def exists(name: str) -> bool:
     dbc.connect_db()
     return dbc.fetch_one(CATEGORIES_COLLECT, {CATEGORY: name})

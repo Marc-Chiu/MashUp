@@ -72,19 +72,3 @@ def change_password(username, old_password, new_password):
     else:
         raise ValueError(f'{username} does not exists')
 
-
-# def add_member(group_name: str, user: str):
-#     groups = get_groups()
-#     print(f'{groups=}')
-#     if group_name in groups:
-#         if usrs.exists(user):
-#             groups[group_name][MEMBERS].append(user)
-#             dbc.connect_db()
-#             return dbc.update_doc(GROUPS_COLLECT, {GROUP_NAME: group_name},
-#                                   {MEMBERS: groups[group_name][MEMBERS]})
-#         else:
-#             raise ValueError(f'User {user} does not exist')
-#     else:
-#         raise ValueError(f'Group {group_name} does not exist')
-
-

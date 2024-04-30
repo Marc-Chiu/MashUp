@@ -15,8 +15,6 @@ import server.endpoints as ep
 
 TEST_CLIENT = ep.app.test_client()
 
-
-
 """
 This section is for User Tests
 """
@@ -52,7 +50,6 @@ def test_users_bad_del(mock_del):
     """
     resp = TEST_CLIENT.delete(f'{ep.DEL_USER_EP}/AnyName')
     assert resp.status_code == NOT_FOUND
-
 
 
 """
@@ -100,14 +97,14 @@ def test_groups_bad_del(mock_del):
 #     resp = TEST_CLIENT.post(ep.GROUPS_EP, json=grps.get_test_group())
 #     assert resp.status_code == NOT_ACCEPTABLE
 
-@pytest.mark.skip("skip")
-@patch('data.groups.add_member', side_effect=grps.MOCK_ID, autospec=True)
-def test_groups_add_member(mock_add):
-    """
-    Testing we do the right thing with a good return from add_member.
-    """
-    resp = TEST_CLIENT.post(f'{ep.ADD_MEMBER_EP}/AnyGroup/AnyName', json=grps.get_test_group())
-    assert resp.status_code == OK
+# # @pytest.mark.skip("skip")
+# @patch('data.groups.add_member', side_effect=grps.MOCK_ID, autospec=True)
+# def test_groups_add_member(mock_add):
+#     """
+#     Testing we do the right thing with a good return from add_member.
+#     """
+#     resp = TEST_CLIENT.post(f'{ep.ADD_MEMBER_EP}/AnyGroup/AnyName', json=grps.get_test_group())
+#     assert resp.status_code == OK
 
 
 @patch('data.groups.add_member', side_effect=ValueError(), autospec=True)
@@ -169,3 +166,14 @@ def test_restaurant_bad_del(mock_del):
     """
     resp = TEST_CLIENT.delete(f'{ep.DEL_RESTAURANT_EP}/AnyName')
     assert resp.status_code == NOT_FOUND
+
+
+"""
+This section is for Category Tests
+"""
+
+def test_categories_get():
+    resp = TEST_CLIENT.get(ep.CATEGORIES_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
