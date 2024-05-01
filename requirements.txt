@@ -5,3 +5,4 @@ pymongo
 werkzeug
 haversine
 python-dotenv
+certifi
