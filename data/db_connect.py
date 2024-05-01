@@ -93,4 +93,3 @@ def update_doc(collection, filters, update_dict, db=USER_DB):
         return None
     else:
         return result
-    # we want to see how to check the modified count
