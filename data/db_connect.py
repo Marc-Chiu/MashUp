@@ -61,6 +61,7 @@ def fetch_one(collection, filt, db=USER_DB):
     """
     for doc in client[db][collection].find(filt):
         if MONGO_ID in doc:
+            # Convert mongo ID to a string so it works as JSON
             doc[MONGO_ID] = str(doc[MONGO_ID])
         return doc
 
@@ -93,3 +94,4 @@ def update_doc(collection, filters, update_dict, db=USER_DB):
         return None
     else:
         return result
+    # we want to see how to check the modified count
