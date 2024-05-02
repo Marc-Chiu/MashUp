@@ -16,13 +16,15 @@ def exists(name: str) -> bool:
 
 def add_category(category):
     if exists(category):
-        raise ValueError("Categpry already exists.")
+        raise ValueError("Category already exists.")
     else:
-        cat = {}
-        cat[CATEGORY] = category
+        cat = {CATEGORY: category}
         dbc.connect_db()
         _id = dbc.insert_one(CATEGORIES_COLLECT, cat)
-        return _id is not None
+        if _id is not None:
+            return _id is not None
+        else:
+            raise Exception("Insert operation failed")
 
 
 def get_category(category):
@@ -45,3 +47,13 @@ def del_category(category):
     else:
         raise ValueError(f'Delete failure: {CATEGORY} not in database.')
 
+
+# def add_category(category):
+#     if exists(category):
+#         raise ValueError("Categpry already exists.")
+#     else:
+#         cat = {}
+#         cat[CATEGORY] = category
+#         dbc.connect_db()
+#         _id = dbc.insert_one(CATEGORIES_COLLECT, cat)
+#         return _id is not None
