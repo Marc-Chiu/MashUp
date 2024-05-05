@@ -6,6 +6,9 @@ The project idea is to create an application that allows friends and family to u
 ## Build Instructions
 - To build production, run `make prod` 
 - To create new env, run `make dev_env`
+- export PYTHONPATH=$PYTHONPATH:$(pwd);
+- export MONGO_PASSWORD=testpassword;
+- export CLOUD_MONGO=1'
 
 ## Web Link
 http://mashup23.pythonanywhere.com/
