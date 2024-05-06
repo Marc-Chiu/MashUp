@@ -516,7 +516,7 @@ class Categories(Resource):
     """
     def get(self):
         """
-        This method returns all groups.
+        This method returns all categories.
         """
         return {
             TYPE: DATA,
