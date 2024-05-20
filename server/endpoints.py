@@ -432,14 +432,18 @@ class Restaurants(Resource):
     """
     This class supports fetching a list of all restaurants.
     """
+
+    @api.doc(params={'cuisine': "Cuisine type"})
     def get(self):
         """
         This method returns all restaurants.
         """
+        args = request.args.to_dict()
+        cuisine = args.get('cuisine', None)
         return {
             TYPE: DATA,
             TITLE: 'Current RESTAURANTS',
-            DATA: restrnts.get_restaurants(),
+            DATA: restrnts.get_restaurants(cuisine),
             MENU: RESTAURANTS_MENU_EP,
             RETURN: MAIN_MENU_EP
             }
