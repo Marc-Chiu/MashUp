@@ -52,9 +52,18 @@ def add_restaurant(name: str, rating: int, price: str, cuisine: str, address: st
     return _id is not None
 
 
-def get_restaurants():
+def get_restaurants(cuisine=None):
     dbc.connect_db()
-    return dbc.fetch_all_as_dict(NAME, RESTAURANTS_COLLECT)
+    restaurants = dbc.fetch_all_as_dict(NAME, RESTAURANTS_COLLECT)
+    if cuisine is not None:
+        deletes = []
+        for name, restaurant in restaurants.items():
+            print(f'{name}, {restaurant}')
+            if restaurant[CUISINE] != cuisine:
+                deletes.append(restaurant[NAME])
+        for restaurant in deletes:
+            del restaurants[restaurant]
+    return restaurants
 
 
 def get_restaurants_by_name(restaurant: str):
